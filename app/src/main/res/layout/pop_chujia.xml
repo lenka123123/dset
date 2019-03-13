@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:background="@drawable/drawable_btn_bg_color_white2"
+    >
+    <ImageView
+        android:id="@+id/delete_pop"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/pop_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+         android:layout_below="@+id/delete_pop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我要出价"
+            android:textColor="#000"/>
+
+
+            <TextView
+                android:id="@+id/item_baojia_price"
+                android:layout_marginTop="36dp"
+                android:layout_marginLeft="44dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#333"
+                android:text="参考价：333"/>
+
+
+        <TextView
+            android:id="@+id/item_baojia_num"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="44dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#333"
+            android:text="参考价：333"/>
+
+        <LinearLayout
+            android:layout_marginLeft="44dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#333"
+                android:text="我的出价："/>
+            <EditText
+                android:drawableBottom="@drawable/line"
+                android:background="@null"
+                android:id="@+id/my_edit"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="44dp"
+            android:layout_marginTop="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_tixin"/>
+            <TextView
+                android:id="@+id/dsyt_msg"
+                android:layout_marginLeft="5dp"
+                android:textSize="11sp"
+                android:textColor="#056196"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您将以80元的价格出售100达事"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/btnCommit"
+            android:layout_marginBottom="25dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/drawable_btn_bg_color_blue"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:text="提交"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background_all">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+       android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="2dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/drawable_btn_bg_color_white2">
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="323dp"
+        android:layout_height="112dp"
+        android:background="#f6f6F6">
+
+        <LinearLayout
+            android:id="@+id/lin_dsmoney"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:textColor="#222"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="金票"/>
+            <TextView
+                android:id="@+id/text_yue"
+                android:layout_marginTop="7dp"
+                android:textSize="20sp"
+                android:textColor="#056196"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:textColor="#222"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="积分"/>
+            <TextView
+                android:id="@+id/txt_jifen"
+                android:layout_marginTop="7dp"
+                android:textSize="20sp"
+                android:textColor="#056196"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buy_number"/>
+            <com.wokun.dset.ucenter.quanyi.CustomGridView
+                android:id="@+id/gv_lb_buy"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </com.wokun.dset.ucenter.quanyi.CustomGridView>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            <TextView
+                android:id="@+id/tv_lb_buy_sell_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buy_number"/>
+            <EditText
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/et_lb_buy_sell_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        
+
+        
+
+    </LinearLayout>
+     <LinearLayout
+         android:layout_marginRight="50dp"
+         android:layout_marginLeft="50dp"
+         android:layout_alignParentBottom="true"
+         android:layout_marginBottom="189dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+         <TextView
+             android:id="@+id/mairu_txt1"
+             android:textColor="#056196"
+             android:textSize="15sp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text=""
+             />
+         <TextView
+             android:id="@+id/mairu_txt2"
+             android:textColor="#056196"
+             android:textSize="15sp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text=""
+             />
+     </LinearLayout>
+    
+    
+    <TextView
+        android:id="@+id/btn_lb_buy"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="127dp"
+        android:background="@drawable/drawable_btn_bg_color_blue2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="立即发布"/>
+</RelativeLayout>

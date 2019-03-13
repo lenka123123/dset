@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:padding="10dp"
+    android:gravity="center"
+    android:layout_height="74dp">
+    <LinearLayout
+        android:id="@+id/item_de_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="达事余额："
+            android:textColor="#999"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/jl_dashiyue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#333"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_below="@+id/item_de_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="达事积分："
+        android:textColor="#999"
+        android:textSize="14sp"/>
+    <TextView
+        android:id="@+id/jl_dsjifen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#333"
+        android:textSize="15sp"/>
+</LinearLayout>
+
+
+    <TextView
+        android:id="@+id/jl_time"
+      android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:textSize="12sp"
+        android:textColor="#999"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""/>
+    <View
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eee"></View>
+</RelativeLayout>

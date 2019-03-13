@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <resources>
+    <!--自定义GridView-->
+    <declare-styleable name="gridStyleable">
+        <!-- 是否设置边框-->
+        <attr name="setFrame" format="boolean"></attr>
+        <!--边框颜色-->
+        <attr name="frameColor" format="color"></attr>
+    </declare-styleable>
+    <declare-styleable name="AmountView">
+        <!--控件宽度-->
+        <attr name="btnWidth" format="dimension" />
+        <!--中间TextView宽度-->
+        <attr name="tvWidth" format="dimension" />
+        <!--文字大小-->
+        <attr name="tvTextSize" format="dimension" />
+
+        <attr name="btnTextSize" format="dimension" />
+    </declare-styleable>
+
+        <declare-styleable name="CircleProgressView">
+            <!-- 背景色-->
+            <attr name="circleprogress_backgroundcolor" format="color" />
+            <!-- 前景色-->
+            <attr name="circleprogress_foregroundcolor" format="color" />
+            <!-- 进度条颜色 -->
+            <attr name="circleprogress_progresscolor" format="color" />
+            <!-- 字体颜色-->
+            <attr name="circleprogress_fontcolor" format="color" />
+            <!-- 最大进度 -->
+            <attr name="circleprogress_maxprogress" format="integer" />
+            <!-- 进度宽 -->
+            <attr name="circleprogress_width" format="integer" />
+            <!-- 字体大小-->
+            <attr name="circleprogress_textsize" format="integer" />
+        </declare-styleable>
+    <!-- 自定义验证码输入框-->
+    <declare-styleable name="VerificationCodeView">
+        <!--输入框的数量-->
+        <attr name="icv_et_number" format="integer" />
+        <!--输入框的宽度-->
+        <attr name="icv_et_width" format="dimension|reference" />
+        <!--输入框之间的分割线-->
+        <attr name="icv_et_divider_drawable" format="reference" />
+        <!--输入框文字颜色-->
+        <attr name="icv_et_text_color" format="color|reference" />
+        <!--输入框文字大小-->
+        <attr name="icv_et_text_size" format="dimension|reference" />
+        <!--输入框获取焦点时边框-->
+        <attr name="icv_et_bg_focus" format="reference" />
+        <!--输入框没有焦点时边框-->
+        <attr name="icv_et_bg_normal" format="reference" />
+        <!--是否是密码模式-->
+        <attr name="icv_et_pwd" format="boolean" />
+        <!--密码模式时,圆的半径-->
+        <attr name="icv_et_pwd_radius" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PswInputView">
+        <attr name="count" format="integer"/>
+        <attr name="border_color" format="color"/>
+        <attr name="dot_color" format="color"/>
+    </declare-styleable>
+</resources>

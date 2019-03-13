@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/my_linearlayout"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="20dp"
+    android:background="@drawable/drawable_btn_bg_color_white2">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:gravity="center_vertical">
+     <View
+         android:layout_width="4dp"
+         android:layout_height="37dp"
+         android:background="#056196"></View>
+           <TextView
+               android:id="@+id/baojia_danhao"
+               android:textSize="13sp"
+               android:textColor="#666"
+               android:layout_marginLeft="20dp"
+               android:layout_weight="1"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text=""/>
+        <TextView
+            android:id="@+id/baojia_time"
+            android:layout_marginRight="15dp"
+            android:textSize="13sp"
+            android:textColor="#666"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:background="#f6f6f6">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:textColor="#222"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="买入数量"/>
+            <TextView
+                android:id="@+id/baojia_count"
+                android:layout_marginTop="7dp"
+                android:textSize="20sp"
+                android:textColor="#056196"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18585"/>
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:textColor="#222"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="参考价"/>
+            <TextView
+                android:id="@+id/baojia_myprice"
+                android:layout_marginTop="7dp"
+                android:textSize="20sp"
+                android:textColor="#056196"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0546"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    </LinearLayout>
+
+</LinearLayout>

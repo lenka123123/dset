@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/background_all"
+    tools:context="com.wokun.dset.ucenter.renamepassword.RenamepaypwdActvitity">
+
+<TextView
+    android:id="@+id/my_phone"
+    android:layout_marginTop="10dp"
+   android:textSize="13sp"
+    android:layout_marginLeft="30dp"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:textColor="@color/colorWhite"
+    android:text="您正在为重置密码"/>
+
+    <RelativeLayout
+        android:id="@+id/re_name_get"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/drawable_btn_bg_color_white2"
+        style="@style/RelativeLayout_Default">
+      <!--  <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_place"
+            android:src="@drawable/ic_uc_place"/>-->
+
+        
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_place"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="我记得原来支付密码" />
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/re_name_forget"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/drawable_btn_bg_color_white2"
+        style="@style/RelativeLayout_Default">
+        <!--  <ImageView
+              android:layout_centerVertical="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/uc_place"
+              android:src="@drawable/ic_uc_place"/>-->
+
+
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_place"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="我忘记原来支付密码" />
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+
+</LinearLayout>

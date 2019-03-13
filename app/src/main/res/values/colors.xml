@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="colorPrimary">#100a32</color>
+    <color name="colorPrimaryDark">#100a32</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorWhite">#FFFFFFFF</color>
+    <color name="yellow">#FFD100</color>
+    <color name="titleColor">#757575</color>
+    <color name="transparent">#00000000</color>
+    <color name="main_color">#00ecf4</color>
+    <color name="status_bar_color">#051E41</color>
+    <color name="dialog_pwd_bg">#005a7f</color>
+    <color name="dialog_pwd_edit_bg">#17B8E2</color>
+    <color name="titleColorSelected">#F54D33</color>
+    <color name="colorBackground">#f0f0f0</color><!--全局Activity,Fragment背景颜色-->
+    <color name="color77">#777777</color>
+    <color name="colorAC">#acacac</color>
+    <color name="colorRed">#FF1100</color>
+    <color name="colorTextHint">#777777</color><!--EditText hint字体颜色-->
+    <color name="colorD2">#d2d2d2</color>
+    <color name="colorTextPrimary">#686868</color><!--界面默认黑灰text-->
+    <!--ToolBar全局颜色-->
+    <color name="colorToolBarTitle">#222222</color><!--toolbar标题颜色-->
+    <color name="colorToolBarText">#FFFFFF</color><!--toolbar字体颜色-->
+    <color name="colorTabAccent">#40C4FF</color>
+    <color name="colorToolBarBackground">#FFFFFF</color>
+    <color name="colorMenu">#52514f</color>
+    <color name="colorShopping">#FF8C2F</color><!--底部导航背景色-->
+    <color name="colorState">#ff7608</color>
+    <color name="color22">#222222</color>
+    <color name="colorF72B">#f72b2b</color>
+    <color name="colorF83139">#f83139</color>
+    <color name="colorShade">#55222222</color>
+</resources>

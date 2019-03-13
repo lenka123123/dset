@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:id="@+id/putong_top"
+    android:layout_marginTop="30dp"
+    android:orientation="horizontal">
+<LinearLayout
+    android:id="@+id/lin_futou"
+    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center">
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/ucenter_num_futou"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:text="0"/>
+        <TextView
+            android:id="@+id/ucenter_money_futou"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/100"/>
+
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="7dp"
+        android:textSize="13sp"
+        android:textColor="#fff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="兑换次数/限额"/>
+
+</LinearLayout>
+ <!--
+    <View
+        android:layout_width="1dp"
+        android:background="#eee"
+        android:layout_height="40dp"
+        android:layout_gravity="center"></View>-->
+    <LinearLayout
+        android:id="@+id/lin_uc_dsyue"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <TextView
+           android:id="@+id/ucenter_yue"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+        <TextView
+            android:layout_marginTop="7dp"
+            android:textSize="13sp"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="金票"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lin_uc_jifen"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/ucenter_jifen_total"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+        <TextView
+            android:layout_marginTop="7dp"
+            android:textSize="13sp"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="积分"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

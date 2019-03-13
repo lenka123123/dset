@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@mipmap/background_all"
+    tools:context="com.wokun.dset.login.LoginActivity">
+<RelativeLayout
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/ic_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete_white"
+        />
+    <TextView
+        android:id="@+id/register"
+        android:textSize="16sp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册"
+        android:textColor="@color/colorWhite"/>
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:background="@drawable/drawable_btn_bg_color_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.itheima.roundedimageview.RoundedImageView
+            android:id="@+id/user_head_img"
+            android:layout_marginLeft="@dimen/activity_margin_bottom_15"
+            android:layout_marginStart="@dimen/activity_margin_bottom_15"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:background="@drawable/ic_default_head_image"
+            android:scaleType="fitCenter"
+            app:riv_border_color="@color/colorWhite"
+            app:riv_border_width="0dp"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/dset_login_msg"
+            android:textSize="15sp"
+            android:layout_marginTop="15sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/user_head_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欢迎使用达事以太"
+            android:textColor="#000"
+            />
+
+        <LinearLayout
+            android:background="@drawable/item_bg_normal"
+            android:id="@+id/dset_login_lin"
+            android:layout_below="@+id/dset_login_msg"
+            style="@style/LinearLayout_Divider"
+            android:layout_marginTop="29dp"
+            android:showDividers="middle|end">
+        <com.wokun.dset.login.ClearEditText
+            android:hint="请输入手机号码"
+            android:id="@+id/et_mobile"
+            style="@style/EditText_Default_Mobile"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_bg_normal"
+                android:gravity="center_vertical">
+                <com.shantoo.widget.imageview.SelectorImageView
+                    android:id="@+id/action_siv_show_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/margin_default"
+                    android:layout_marginRight="@dimen/margin_default"
+                    android:src="@drawable/login_biyan"
+                    app:rx_selected_src="@drawable/login_zhenyan" />
+
+                <com.wokun.dset.login.ClearEditText
+                    android:hint="密码(6-20位字母，数字或者符号)"
+                    android:id="@+id/et_password"
+                    android:layout_marginRight="40dp"
+                    style="@style/EditText_Default_Password"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+        <Button
+
+            android:layout_below="@+id/dset_login_lin"
+           android:layout_marginTop="40dp"
+            android:id="@+id/action_login"
+            style="@style/TextView_Style_Submit"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:text="登录" />
+
+    <TextView
+        android:id="@+id/forget_password"
+        android:textColor="#056196"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/action_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="忘记密码"/>
+    </RelativeLayout>
+</LinearLayout>

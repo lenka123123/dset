@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    android:orientation="vertical">
+<!--    <RelativeLayout style="@style/RelativeLayout_Default">
+        <TextView
+            style="@style/TextView_Style_Title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="我的资产" />
+
+    </RelativeLayout>-->
+    <RelativeLayout
+        android:id="@+id/ucenter_zhuanzhang"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_zhuanzhang"
+            android:src="@drawable/ic_uc_zhuan"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/uc_zhuanzhang"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="转账" />
+
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ucenter_shoumoney"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_shoufu"
+            android:src="@drawable/ic_uc_zhuanzhang"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_shoufu"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="收付款" />
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ucenter_addcards"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_bank"
+            android:src="@drawable/ic_uc_mybank"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_bank"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="我的银行卡" />
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ucenter_supper"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_zhanghu"
+            android:src="@drawable/ic_uc_jiedian"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_zhanghu"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="申请超级节点" />
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+
+</LinearLayout>

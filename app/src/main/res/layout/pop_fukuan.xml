@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/drawable_btn_bg_color_white2"
+    style="@style/RelativeLayout_Default"
+    android:padding="15dp">
+    <ImageView
+        android:id="@+id/delete_pop"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/pop_delete"/>
+<LinearLayout
+
+    android:layout_marginTop="30dp"
+    android:layout_below="@+id/delete_pop"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="17sp"
+        android:textColor="#333"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上传凭证（支付成功的凭证）"/>
+    <com.itheima.roundedimageview.RoundedImageView
+        android:visibility="gone"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/yijian_img"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_default"
+        android:layout_toLeftOf="@+id/arrow"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_yijian"
+        app:riv_border_color="@android:color/transparent"
+        app:riv_border_width="@dimen/drawable_padding_1"
+        app:riv_oval="false" />
+     <ImageView
+         android:layout_marginTop="@dimen/dp_10"
+         android:src="@drawable/ic_yijian"
+         android:id="@+id/shangchuan_img"
+         android:layout_gravity="center"
+         android:layout_width="100dp"
+         android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/comit_txt"
+        android:layout_marginTop="30dp"
+        android:text="提交"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/drawable_btn_bg_color_blue"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="30dp"/>
+
+</LinearLayout>
+
+
+
+</RelativeLayout>

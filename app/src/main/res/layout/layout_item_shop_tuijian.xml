@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:padding="20dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        style="@style/LinearLayout_Divider"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        >
+        <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+           <View
+               android:background="#056196"
+               android:layout_width="40dp"
+               android:layout_height="2dp">
+           </View>
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_tuijian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+             />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="为您推荐"
+                android:textColor="#056196"/>
+            <View
+                android:layout_marginLeft="10dp"
+                android:background="#056196"
+                android:layout_width="40dp"
+                android:layout_height="2dp">
+            </View>
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

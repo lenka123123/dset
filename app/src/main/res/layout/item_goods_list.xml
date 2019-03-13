@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <ImageView
+        android:id="@+id/iv_goods_image"
+        android:contentDescription="@string/app_name"
+        android:background="@drawable/ic_moren"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/tv_goods_name"
+        android:layout_below="@+id/iv_goods_image"
+        android:textSize="@dimen/text_size_style_two"
+        android:textColor="@color/color22"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_default"
+        android:layout_marginRight="@dimen/margin_default"
+        android:gravity="start"
+        android:lines="2"
+        android:ellipsize="end"
+        android:maxLines="2" />
+
+    <TextView
+        android:id="@+id/tv_goods_rmb"
+        style="@style/TextView_Style_RMB"
+        android:layout_below="@+id/tv_goods_name"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_default"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_5" />
+
+    <TextView
+        android:id="@+id/tv_goods_price"
+        style="@style/TextView_Style_Content"
+        android:layout_alignBottom="@+id/tv_goods_rmb"
+        android:layout_toRightOf="@+id/tv_goods_rmb"
+        android:layout_toEndOf="@+id/tv_goods_rmb"
+        android:textColor="@color/colorState" />
+
+    <TextView
+        android:id="@+id/tv_month_sales_num"
+        android:textSize="@dimen/text_size_style_three"
+        android:textColor="@color/colorAC"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/tv_goods_name"
+        android:layout_marginRight="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ddd"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="270px" />
+
+
+    <!-- 商城头布局第一行 -->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/action_ask_service"
+            style="@style/TextView_Home_Navigation"
+            android:drawableTop="@drawable/ic_pinpai"
+            android:text="名牌驾到"
+            android:textColor="@color/colorMenu" />
+
+        <TextView
+            android:id="@+id/action_chain_stores"
+            style="@style/TextView_Home_Navigation"
+            android:drawableTop="@drawable/ic_shejian"
+            android:text="舌尖诱惑"
+            android:textColor="@color/colorMenu" />
+
+        <TextView
+            android:id="@+id/action_social_assets"
+            style="@style/TextView_Home_Navigation"
+            android:drawableTop="@drawable/ic_xie"
+            android:text="城纳百穿"
+            android:textColor="@color/colorMenu" />
+
+        <TextView
+            android:id="@+id/action_service_in"
+            style="@style/TextView_Home_Navigation"
+            android:drawableTop="@drawable/ic_jieyou"
+            android:text="解忧杂货"
+            android:textColor="@color/colorMenu" />
+    </LinearLayout>
+
+    <!-- 商城头布局第二行 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/action_face_online"
+            style="@style/TextView_Home_Navigation"
+            android:drawableTop="@drawable/ic_yanzhi"
+            android:text="颜值在线"
+            android:textColor="@color/colorMenu" />
+
+        <TextView
+            android:id="@+id/action_lives_slow"
+            style="@style/TextView_Home_Navigation"
+            android:drawableTop="@drawable/ic_manyang"
+            android:text="慢养生活"
+            android:textColor="@color/colorMenu" />
+
+        <TextView
+            android:id="@+id/action_super_card"
+            style="@style/TextView_Home_Navigation"
+            android:drawableTop="@drawable/ic_chaozhi"
+            android:text="超值神券"
+            android:textColor="@color/colorMenu" />
+
+        <TextView
+            android:id="@+id/action_exchange"
+            style="@style/TextView_Home_Navigation"
+            android:drawableTop="@drawable/ic_zhihuan"
+            android:text="置换专区"
+            android:textColor="@color/colorMenu" />
+    </LinearLayout>
+
+    <!--秒杀活动-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_naozhong"
+            android:drawablePadding="10dp"
+            android:text="秒杀活动"
+            android:textColor="#056196"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:text="距离活动结束："
+            android:textColor="#333"
+            android:textSize="12sp" />
+
+
+        <cn.iwgang.countdownview.CountdownView
+            android:id="@+id/cv_countdownViewTest21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:isHideTimeBackground="false"
+            app:isShowDay="true"
+            app:isShowHour="true"
+            app:isShowMillisecond="true"
+            app:isShowMinute="true"
+            app:isShowSecond="true"
+            app:isShowTimeBgDivisionLine="false"
+            app:isTimeTextBold="true"
+            app:suffixGravity="center"
+            app:suffixTextColor="#000000"
+            app:suffixTextSize="11sp"
+            app:timeBgColor="#000000"
+            app:timeBgSize="11dp"
+            app:timeTextColor="#FFFFFF"
+            app:timeTextSize="11sp" />
+
+    </LinearLayout>
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="200px"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/colorWhite" />
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20px"
+        android:background="@color/colorWhite" />
+
+
+    <!-- 品质精选 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_jinxuan"
+            android:drawablePadding="10dp"
+            android:text="品质精选"
+            android:textColor="#333"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/drawable_btn_bg_color_organe">
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10" />
+
+
+</LinearLayout>

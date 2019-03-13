@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    android:orientation="vertical">
+    <RelativeLayout style="@style/RelativeLayout_Default">
+        <TextView
+            style="@style/TextView_Style_Title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="权益中心" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:id="@+id/uc_zhanghu"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/ic_quanyi_center"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_zhanghu"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="权益账户" />
+
+        <TextView
+            android:id="@+id/uc_zhanghu_num"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentRight="true"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="0" />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/ucenter_quanyi"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_quanyi"
+            android:src="@drawable/ic_quanyi"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_quanyi"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="权益转让" />
+
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ucenter_jifen"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_jifen"
+            android:src="@drawable/ic_uc_jifen"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_jifen"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="积分兑换" />
+
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+</LinearLayout>

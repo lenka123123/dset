@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/background_all"
+    tools:context="com.wokun.dset.ucenter.ZhuanzhangActivity">
+<EditText
+    android:id="@+id/zhuanzhang_uid"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="45dp"
+    style="@style/EditText_Default2"
+      android:hint="请输入对方的UID" />
+    <EditText
+        android:id="@+id/zhuanzhang_phone"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        style="@style/EditText_Default2"
+        android:hint="请输入对方手机后四位" />
+    <EditText
+        android:id="@+id/zhuanzhang_yue"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        style="@style/EditText_Default2"
+        android:hint="请输入转账金额" />
+   <TextView
+       android:id="@+id/zhuanzhang_yue2"
+       android:textColor="#50ffffff"
+       android:layout_marginLeft="45dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="金票:"/>
+
+    
+    
+    <TextView
+        android:id="@+id/txt_zhuanzhang"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="60dp"
+        android:textSize="18sp"
+        android:text="立刻转账"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:background="@drawable/drawable_btn_bg_color_blue2"/>
+</LinearLayout>

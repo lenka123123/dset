@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/my_linear"
+    style="@style/LinearLayout_Divider"
+    >
+    <RelativeLayout
+
+        android:id="@+id/about_us_web"
+        style="@style/RelativeLayout_Default">
+
+        <TextView
+            android:id="@+id/item_aboutus_title"
+            android:textColor="#333"
+            style="@style/TextView_RelativeLayout"
+            android:text="特别声明" />
+
+        <ImageView style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+</LinearLayout>

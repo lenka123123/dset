@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/r"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorWhite"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="75dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                  android:textSize="18sp"
+                android:text="￥122"
+                android:textColor="#056196"/>
+            <TextView
+                android:id="@+id/txtType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 android:textSize="12sp"
+                android:text="库存：221件"
+                android:textColor="#999"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/imHead"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_moren"/>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/l"
+        android:layout_below="@+id/r"
+        android:showDividers="middle|end"
+        android:background="@color/colorWhite"
+        style="@style/LinearLayout_Divider">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/drawable_padding_15"
+            android:background="@color/colorWhite">
+
+            <TextView
+                style="@style/TextView_Style_Content"
+                android:text="颜色" />
+
+            <TextView
+                android:id="@+id/service_fee"
+                style="@style/TextView_Style_Content"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/drawable_padding_15"
+            android:background="@color/colorWhite">
+
+            <TextView
+                style="@style/TextView_Style_Content"
+                android:text="尺码:" />
+
+            <TextView
+                android:id="@+id/select_service_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_size_style_one" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/submit_height"
+            android:background="#056196"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:layout_below="@+id/l"
+            android:textSize="@dimen/text_size_style_one"
+            android:layout_marginTop="@dimen/margin_default"
+            android:text="确认" />
+    </LinearLayout>
+
+
+</RelativeLayout>

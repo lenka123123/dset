@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/colorWhite"
+    android:padding="10dp"
+    android:layout_height="74dp">
+<TextView
+    android:id="@+id/item_de_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="复投"
+    android:textColor="#333"
+    android:textSize="16sp"/>
+    <TextView
+        android:textSize="13sp"
+        android:textColor="#999"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/item_de_name"
+        android:id="@+id/item_de_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017-12-5 18.54.11"/>
+
+    <TextView
+        android:id="@+id/item_de_num"
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:textSize="17sp"
+        android:textColor="#333"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+300"/>
+
+
+</RelativeLayout>

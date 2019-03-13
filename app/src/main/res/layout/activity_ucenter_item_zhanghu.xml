@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    android:orientation="vertical">
+    <RelativeLayout style="@style/RelativeLayout_Default">
+        <TextView
+            style="@style/TextView_Style_Title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="我的账户" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ucenter_changepwd"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_pay_password"
+            android:src="@drawable/ic_uc_zhifu"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_pay_password"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="修改支付密码" />
+
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ucenter_yaoqin"
+    style="@style/RelativeLayout_Default">
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/uc_yaoqin"
+        android:src="@drawable/ic_uc_yao"/>
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/uc_yaoqin"
+        style="@style/TextView_Style_Title"
+        android:layout_centerVertical="true"
+        android:text="邀请注册" />
+
+
+    <ImageView
+        style="@style/ImageView_RelativeLayout_Right1" />
+</RelativeLayout>
+    <RelativeLayout
+         android:id="@+id/ucenter_place"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_place"
+            android:src="@drawable/ic_uc_place"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_place"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="地址管理" />
+
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ucenter_settings"
+        style="@style/RelativeLayout_Default">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uc_setting"
+            android:src="@drawable/ic_uc_setting"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/uc_setting"
+            style="@style/TextView_Style_Title"
+            android:layout_centerVertical="true"
+            android:text="账户设置" />
+
+
+        <ImageView
+            style="@style/ImageView_RelativeLayout_Right1" />
+    </RelativeLayout>
+
+</LinearLayout>

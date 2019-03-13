@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/background_all"
+    tools:context="com.wokun.dset.ucenter.ShouMoneyActivtity">
+    <LinearLayout
+        android:background="@drawable/drawable_btn_bg_color_white4"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="405dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+   <LinearLayout
+        android:background="@drawable/drawable_btn_bg_color_green4"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:drawableLeft="@drawable/ic_erweima"
+            android:drawablePadding="15dp"
+            android:textColor="#056196"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="店铺二维码"/>
+  </LinearLayout>
+    <ImageView
+        android:id="@+id/erweima_im"
+        android:layout_gravity="center"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@drawable/ic_moren"
+        android:layout_marginTop="40dp"/>
+
+<!--
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="长按，保存到手机或者发送给朋友"/>-->
+    <TextView
+        android:layout_marginBottom="20dp"
+        android:textColor="#056196"
+        android:textSize="15sp"
+        android:id="@+id/erweima_save"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存收款码"/>
+</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wokun.dset">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- 扫一扫 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <!-- 定位 -->
+    <!-- 权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <application
+        android:name=".DsetApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_logsure"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".WelcomeAty" />
+        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".login.AlterPwdActivity" />
+        <activity android:name=".hudongshop.changeshopActivity" />
+        <activity android:name=".hudongshop.ShopDetailsActivity" />
+        <activity android:name=".hudongshop.ServiceZhihiuiActivity" />
+        <activity android:name=".address.ui.AddressAddActivity" />
+        <activity android:name=".address.ui.AddressListActivity" />
+        <activity android:name=".address.ui.AddressEditActivity" />
+        <activity android:name=".ucenter.JifenchangeActivity" />
+        <activity android:name=".ucenter.FutouDetailsActivity" />
+        <activity android:name=".ucenter.JifenDetailsActivity" />
+        <activity android:name=".ucenter.YueDetailsActvitity" />
+        <activity android:name=".ucenter.DuihuanDetailsActivity" />
+        <activity android:name=".ucenter.ZhuanzhangActivity" />
+        <activity android:name=".ucenter.ZhuanzhangDetailsActivity" />
+        <activity android:name=".ucenter.ShouMoneyActivtity" />
+        <activity android:name=".ucenter.renamepassword.RenamepaypwdActvitity" />
+        <activity android:name=".ucenter.renamepassword.NamepasswordActivity" />
+        <activity android:name=".ucenter.renamepassword.NamepasswordActivity2" />
+        <activity android:name=".ucenter.renamepassword.NamepasswordActivity22" />
+        <activity android:name=".ucenter.renamepassword.NamepasswordActivity33" />
+        <activity android:name=".ucenter.renamepassword.NamepasswordActivity3" />
+        <activity android:name=".ucenter.renamepassword.ChangpwdsuccessActivity" />
+        <activity android:name=".ucenter.renamepassword.ForgetpwdActivity" />
+        <activity android:name=".ucenter.DsytYaoqingActivity" />
+        <activity android:name=".ucenter.EditPwdActivity" />
+        <activity android:name=".ucenter.addcards.BankTestActivity2" />
+        <activity android:name=".ucenter.addcards.TixianMoneyActivity2" />
+        <activity android:name=".ucenter.SettingsActivity" />
+        <activity android:name=".home.HuiyuanlevelActivity" />
+        <activity android:name=".home.HuiyuansayActivity" />
+        <activity android:name=".ucenter.PersonalInfoActivity" />
+        <activity android:name=".ucenter.quanyi.QuanyiActivity" />
+        <activity android:name=".ucenter.quanyi.BaijiaDetailsActivity" />
+        <activity android:name=".ucenter.quanyi.dashishop.PaydetailsActivity" />
+        <activity android:name=".ucenter.myyijian.ui.MyyijianActivity" />
+        <activity android:name=".ucenter.SaoyisaoActivity" />
+        <activity android:name=".ucenter.XiaoxiDetailsActvitity" />
+        <activity android:name=".home.NoticeWebActivity" />
+        <activity android:name=".home.FindDsyueActivity" />
+        <activity android:name=".ucenter.quanyi.dashishop.GoodsOrderActivity" />
+        <activity android:name=".home.DsyueshopActivity" />
+
+        <!-- 高德地图定位 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="5ff3bb8aa5654f95c5ee7ff3ffb14a94" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <activity android:name=".ucenter.AboutUsActivity" />
+        <activity android:name=".login.RegisterAboutActivity" />
+        <activity android:name=".home.AboutTyslActivity" />
+        <activity android:name=".ucenter.AboutWebActivity"></activity>
+
+ <!--    <provider
+            android:authorities="com.wokun.dset.fileprovider"
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"/>
+        </provider>-->
+
+
+    </application>
+
+</manifest>

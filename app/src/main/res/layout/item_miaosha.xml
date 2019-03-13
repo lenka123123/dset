@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:padding="@dimen/dp_10"
+    android:background="@color/colorWhite"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+<ImageView
+    android:scaleType="fitXY"
+    android:layout_width="101dp"
+    android:layout_height="101dp"
+    android:src="@drawable/ic_moren"/>
+    <TextView
+        android:text="这是苹果手机"
+        android:textSize="12sp"
+        android:textColor="#333"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"/>
+    <LinearLayout
+        android:padding="2dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_width="101dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="￥1222"
+            android:textSize="14sp"
+            android:textColor="#ff7608"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="￥1200"
+                android:textSize="12sp"
+                android:textColor="#999"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"/>
+            <View
+                android:layout_centerInParent="true"
+                android:background="#999"
+                android:layout_marginTop="33dp"
+                android:layout_width="40dp"
+                android:layout_height="1dp">
+            </View>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

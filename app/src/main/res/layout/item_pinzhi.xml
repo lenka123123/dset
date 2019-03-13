@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="111dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_height="120dp">
+   <TextView
+    android:textSize="11sp"
+    android:textColor="#333"
+    android:layout_marginTop="8dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="APPLE"/>
+    <TextView
+        android:textSize="11sp"
+        android:background="@drawable/drawable_btn_bg_color_organge4"
+        android:textColor="#fd8c12"
+        android:layout_marginTop="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="APPLE"/>
+   <ImageView
+       android:layout_marginTop="5dp"
+       android:layout_width="63dp"
+       android:layout_height="63dp"
+       android:src="@drawable/ic_moren"/>
+</LinearLayout>

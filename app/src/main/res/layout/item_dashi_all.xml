@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="204dp"
+    android:padding="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="@dimen/dp_10"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/drawable_btn_bg_color_white2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:gravity="center_vertical">
+        <View
+            android:layout_width="4dp"
+            android:layout_height="37dp"
+            android:background="#056196"></View>
+        <TextView
+            android:id="@+id/item_ds_dindan"
+            android:textSize="13sp"
+            android:textColor="#666"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="订单1223"/>
+        <TextView
+            android:id="@+id/item_ds_statu"
+            android:layout_marginRight="15dp"
+            android:textSize="13sp"
+            android:textColor="#056496"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单1223"/>
+    </LinearLayout>
+
+<LinearLayout
+    android:background="#f7f7f7"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical">
+    <com.itheima.roundedimageview.RoundedImageView
+        android:id="@+id/item_ds_img"
+        android:layout_marginLeft="@dimen/activity_margin_bottom_15"
+        android:layout_marginStart="@dimen/activity_margin_bottom_15"
+        android:layout_width="@dimen/image_size_style_header"
+        android:layout_height="@dimen/image_size_style_header"
+        android:background="@drawable/ic_default_head_image"
+        android:scaleType="fitCenter"
+        app:riv_border_color="@color/colorWhite"
+        app:riv_border_width="0dp"
+        app:riv_oval="true" />
+    <RelativeLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/item_ds_uid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="222"
+            android:textColor="#333"
+            android:textSize="14sp"/>
+        <TextView
+
+            android:textSize="14sp"
+            android:textColor="#333"
+            android:layout_marginTop="22dp"
+            android:layout_below="@+id/item_de_name"
+            android:id="@+id/item_ds_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22"/>
+
+        <TextView
+             android:id="@+id/item_ds_price"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:textSize="12sp"
+            android:textColor="#056496"
+            android:layout_centerVertical="true"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="2222"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+
+        <TextView
+            android:id="@+id/action_order_detail"
+            style="@style/TextView_RelativeLayout"
+            android:background="@drawable/drawable_btn_bg_color_ac"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="付款信息"
+            android:layout_marginLeft="18dp"
+            android:textColor="@color/colorAC"
+            />
+
+        <TextView
+
+            android:layout_marginLeft="18dp"
+            android:id="@+id/action_cancel_order"
+            style="@style/TextView_RelativeLayout"
+            android:background="@drawable/drawable_btn_bg_color_ac"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="取消订单"
+            android:textColor="@color/colorAC"
+            />
+        <TextView
+            android:id="@+id/action_sure_order"
+            android:layout_marginLeft="18dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@drawable/drawable_btn_bg_color_ac_blue"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="确认收款"
+            android:textColor="#056496"
+            />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/action_sure_myorder"
+            android:layout_marginLeft="18dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@drawable/drawable_btn_bg_color_ac_blue"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="确认付款"
+            android:textColor="#056496"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>
