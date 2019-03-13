@@ -96,6 +96,7 @@
         <activity android:name=".home.NoticeWebActivity" />
         <activity android:name=".home.FindDsyueActivity" />
         <activity android:name=".ucenter.quanyi.dashishop.GoodsOrderActivity" />
+
         <activity android:name=".home.DsyueshopActivity" />
 
         <!-- 高德地图定位 -->

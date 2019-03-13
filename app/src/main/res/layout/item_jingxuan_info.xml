@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y226"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y6"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="测试数据"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
+        android:textColor="@color/color_3_3_3"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/light"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/y40"
+        android:layout_gravity="center"
+        android:background="@drawable/textview_border_color"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="  面部识别技术  "
+        android:textColor="@color/color_fd_bc_12"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/x126"
+        android:layout_height="@dimen/y120"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/y6"
+        android:background="@drawable/ic"
+        android:scaleType="fitXY" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

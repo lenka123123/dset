@@ -27,22 +27,23 @@ import butterknife.Unbinder;
 
 public abstract class BaseBindingActivity extends AppCompatActivity {
 
- //   @BindColor(R.color.colorToolBarText)int color;
+    //   @BindColor(R.color.colorToolBarText)int color;
 
     private Unbinder unbinder;
     private LoadDialog mLoadDialog;
 
-     protected WidgetBar mWidgetBar;
+    protected WidgetBar mWidgetBar;
     protected MultipleStatusView mMultipleStatusView;
 
     protected String TAG = this.getClass().getSimpleName();
+    private View root;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         AppManager.getAppManager().addActivity(this);
-        View root = LayoutInflater.from(this).inflate(R.layout.activity_base, null);
+        root = LayoutInflater.from(this).inflate(R.layout.activity_base, null);
         View contentView = LayoutInflater.from(this).inflate(createView(), null);
         setContentView(root);
         Slidr.attach(this);
@@ -52,10 +53,14 @@ public abstract class BaseBindingActivity extends AppCompatActivity {
         mMultipleStatusView = (MultipleStatusView) findViewById(R.id.multipleStatusView);
         mMultipleStatusView.addView(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mMultipleStatusView.setOnRetryClickListener(mRetryClickListener);
-        mLoadDialog = new LoadDialog(this,true,"", R.color.colorPrimary);
+        mLoadDialog = new LoadDialog(this, true, "", R.color.colorPrimary);
 
         initToolBar(createToolBar());
         init();
+    }
+
+    public void setmWidgetBarShow(boolean show) {
+        unbinder.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     public abstract int createView();
@@ -71,27 +76,31 @@ public abstract class BaseBindingActivity extends AppCompatActivity {
         }
     };
     static final int DELAY = 5000;
+
     void loading() {
         mMultipleStatusView.showLoading();
         mMultipleStatusView.postDelayed(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 mMultipleStatusView.showContent();
             }
         }, DELAY);
     }
 
     public void initToolBar(WidgetBar toolBar) {
-        if (toolBar == null) {return;}
+        if (toolBar == null) {
+            return;
+        }
         toolBar
-        .setWidgetBarTitleTextSize(18)
-        .setWidgetBarTitleTextColor(Color.parseColor("#ffffff"))
-        .setWidgetBarNavigation(R.drawable.ic_back_white)
-        .setOnNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+                .setWidgetBarTitleTextSize(18)
+                .setWidgetBarTitleTextColor(Color.parseColor("#ffffff"))
+                .setWidgetBarNavigation(R.drawable.ic_back_white)
+                .setOnNavigationClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
     }
 
     public void jumpToActivityAndClearTask(Class activity) {

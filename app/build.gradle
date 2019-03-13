@@ -95,8 +95,9 @@ dependencies {
     compile('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.6') {
         exclude group: 'com.android.support'
     }
-
     //SmartRefreshLayout
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'
+
+    api 'com.youth.banner:banner:1.4.10'
 }
