@@ -59,9 +59,7 @@ public abstract class BaseBindingActivity extends AppCompatActivity {
         init();
     }
 
-    public void setmWidgetBarShow(boolean show) {
-        unbinder.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
+
 
     public abstract int createView();
 

@@ -1,5 +1,8 @@
 package com.wokun.dset.home;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -54,8 +57,9 @@ import cn.iwgang.countdownview.CountdownView;
 import static com.wokun.dset.utils.MD5.ParameterUtils.removeEmptyData;
 import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
-public class DsyueshopActivity extends BaseBindingActivity {
+public class DsyueshopActivity extends FragmentActivity {
 
+    private static final String TAG = "DsyueshopActivity";
     private SmartRefreshLayout mEasyRefreshLayout;
     private RecyclerView mRecyclerView;
     private BeautyHomeAdapter mAdapter;
@@ -95,16 +99,24 @@ public class DsyueshopActivity extends BaseBindingActivity {
     }
 
     @Override
-    public int createView() {
-        return R.layout.activity_dsytshop;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_dsytshop);
+        init();
     }
 
-    @Override
-    public WidgetBar createToolBar() {
-        return mWidgetBar.setWidgetBarTitle("商城");
-    }
-
-    @Override
+    //
+//    @Override
+//    public int createView() {
+//        return R.layout.activity_dsytshop;
+//    }
+//
+//    @Override
+//    public WidgetBar createToolBar() {
+//        return mWidgetBar.setWidgetBarTitle("商城");
+//    }
+//
+//    @Override
     public void init() {
         mEasyRefreshLayout = (SmartRefreshLayout) findViewById(R.id.easylayout);
         mEasyRefreshLayout.setEnableRefresh(false);
@@ -235,7 +247,7 @@ public class DsyueshopActivity extends BaseBindingActivity {
 
                     @Override
                     public void onError(Response response) {
-                        dismissLP();
+//                        dismissLP();
                         super.onError(response);
                         Log.e("user", response + "!!!!");
                         DsetApp.getInstance().setRefreshShopCart(false);
