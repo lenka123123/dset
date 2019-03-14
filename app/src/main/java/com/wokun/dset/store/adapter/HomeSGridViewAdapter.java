@@ -99,9 +99,7 @@ public class HomeSGridViewAdapter extends BaseAdapter {
 //    }
 
     public void setData(List<DStoreHome.DataBean.JingxuanBean.GoodsBean> dataes) {
-        System.out.println("=TypeBean设置=== " + cateListBeans.size());
         cateListBeans.addAll(dataes);
-
         notifyDataSetChanged();
     }
 

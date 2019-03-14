@@ -135,11 +135,13 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setFocusableInTouchMode(false); //去除焦点即可：
+        mRecyclerView.requestFocus();                 //去除焦点即可：
         mAdapter = new BeautyHomeAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        addHeaderView();
 
         getStoreInfo();
-        addHeaderView();
     }
 
 
@@ -147,6 +149,8 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
         View header = LayoutInflater.from(this).inflate(R.layout.store_home_head_item, null);
         initBear(header);
         mAdapter.addHeaderView(header);
+
+
     }
 
     private void initBear(View header) {
@@ -154,21 +158,26 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
         jingxuan_gridview = header.findViewById(R.id.jingxuan_gridview);
         miaosha_gridview = header.findViewById(R.id.miaosha_gridview);
         top_gridView = header.findViewById(R.id.top_gridView);
+
         countdownView = header.findViewById(R.id.countdownView);
+//        countdownView.start(5 * 60 * 1000L); // Millisecond
+
         mBanner = header.findViewById(R.id.banner);
 
         miaosha_horizontal = header.findViewById(R.id.miaosha_horizontal);
         miaosha_layout = header.findViewById(R.id.miaosha_layout);
 
-//        countdownView.setTag("test1");
-////
-////        countdownView.start(time6);
-
-        long time6 = (long) 2 * 60 * 60 * 1000;
-        countdownView.start(time6);
         setGridView();
+
+
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 
     /**
      * 设置GirdView参数，绑定数据
@@ -186,9 +195,9 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
                 gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
         jingxuan_gridview.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
         jingxuan_gridview.setColumnWidth(itemWidth); // 设置列表项宽
-        jingxuan_gridview.setHorizontalSpacing(3); // 设置列表项水平间距
+        jingxuan_gridview.setHorizontalSpacing(5); // 设置列表项水平间距
         jingxuan_gridview.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
-        jingxuan_gridview.setNumColumns(3); // 设置列数量=列表集合数
+        jingxuan_gridview.setNumColumns(5); // 设置列数量=列表集合数
 
         gridViewAdapter = new HomeSGridViewAdapter(DsyueshopActivity.this);
         jingxuan_gridview.setAdapter(gridViewAdapter);
@@ -275,20 +284,10 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
     }
 
     public void detailData(DStoreHome dStoreHome) {
-
         DStoreHome.DataBean.JingxuanBean.AdBean jinxuanAd = dStoreHome.getData().getJingxuan().getAd();
         if (jinxuanAd != null && jinxuanAd.getPic_url() != null) {
             Glide.with(DsyueshopActivity.this).load(jinxuanAd.getPic_url()).into(jingxuan_ad_img);
         }
-
-
-        if (!mAdapter.getData().isEmpty()) {
-            mAdapter.getData().clear();
-        }
-        mAdapter.getData().addAll(dStoreHome.getData().getTuijian());
-        mAdapter.notifyDataSetChanged();
-        mEasyRefreshLayout.setLoadmoreFinished(true);
-
 
         if (dStoreHome.getData().getJingxuan().getGoods() != null && dStoreHome.getData().getJingxuan().getGoods().size() > 0)
             gridViewAdapter.setData(dStoreHome.getData().getJingxuan().getGoods());
@@ -303,11 +302,12 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
             miaosha_horizontal.setVisibility(View.VISIBLE);
             miaosha_layout.setVisibility(View.VISIBLE);
         } else {
-            miaosha_horizontal.setVisibility(View.GONE);
-            miaosha_layout.setVisibility(View.GONE);
+            miaosha_horizontal.setVisibility(View.VISIBLE);
+            miaosha_layout.setVisibility(View.VISIBLE);
         }
         //倒计时控件
 //        if (dStoreHome.getData().getPromotionInfo().getStart_time() != null && dStoreHome.getData().getPromotionInfo().getEnd_time() != null)
+        countdownView.start(5 * 60 * 1000L); // Millisecond
 
         if (dStoreHome.getData().getAd() != null && dStoreHome.getData().getAd().size() > 0) {
             for (int i = 0; i < dStoreHome.getData().getAd().size(); i++) {
@@ -315,6 +315,14 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
             }
         }
         startBar(mBanner, bannerAgainImageArray);
+
+        if (!mAdapter.getData().isEmpty()) {
+            mAdapter.getData().clear();
+        }
+        mAdapter.getData().addAll(dStoreHome.getData().getTuijian());
+        mEasyRefreshLayout.setLoadmoreFinished(true);
+        mRecyclerView.scrollToPosition(0);
+
     }
 
     public void startBar(Banner banner, ArrayList bannerImageArray) {

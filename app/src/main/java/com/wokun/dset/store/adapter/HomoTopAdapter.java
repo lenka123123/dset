@@ -72,7 +72,6 @@ public class HomoTopAdapter extends BaseAdapter {
     public void setData(List<DStoreHome.DataBean.Top6Bean> dataes) {
 
         cateListBeans.addAll(dataes);
-        System.out.println("=TypeBean设置=== " + cateListBeans.size());
         notifyDataSetChanged();
     }
 

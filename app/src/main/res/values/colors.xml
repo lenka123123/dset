@@ -40,6 +40,9 @@
     <color name="color_FFF">#FFF</color>
     <color name="color_EEE">#EEE</color>
     <color name="color_DDD">#DDD</color>
+    <color name="color_CCC">#CCC</color>
+    <color name="color_BBB">#BBB</color>
+    <color name="color_AAA">#AAA</color>
     <color name="color_153_153_153">#999</color>
     <color name="color_232_109_77">#E86D4D</color>
     <color name="color_164_166_168">#A4A6A8</color>

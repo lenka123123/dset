@@ -17,7 +17,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="14dp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/arrow" />
 
         <TextView
             android:id="@+id/search_textview"
@@ -25,10 +25,12 @@
             android:layout_height="35dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/searchbox"
-            android:drawableLeft="@mipmap/ic_serach"
+            android:drawableLeft="@drawable/search_edit"
             android:drawablePadding="15dp"
-            android:hint="请输入商品名称"
+            android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:text="请输入选择的商品"
+            android:textColor="@color/color_153_153_153"
             android:textSize="15sp" />
     </LinearLayout>
 

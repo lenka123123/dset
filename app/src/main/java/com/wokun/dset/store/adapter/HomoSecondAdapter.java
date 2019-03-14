@@ -82,7 +82,6 @@ public class HomoSecondAdapter extends BaseAdapter {
     public void setData(List<DStoreHome.DataBean.PromotionInfoBean.PromotionGoodsBean> dataes) {
         System.out.println("=TypeBean设置=== " + cateListBeans.size());
         cateListBeans.addAll(dataes);
-
         notifyDataSetChanged();
     }
 

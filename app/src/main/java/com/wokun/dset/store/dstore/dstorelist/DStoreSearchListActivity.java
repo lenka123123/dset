@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
@@ -33,10 +34,14 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
     private ImageView mImg_total_search;
     private ImageView mImg_sales_search;
     private ImageView mImg_search_search;
+    private TextView tv_total_search;
+    private TextView tv_sales_search;
+    private TextView tv_price_search;
+    private TextView tv_search_search;
+    private int array[] = {0, 0, 0, 0};
 
     @Override
     public int setActivityLayout() {
-
         return R.layout.activity_store_list;
     }
 
@@ -47,25 +52,72 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
         mImg_sales_search = findViewById(R.id.img_sales_search);
         mImg_search_search = findViewById(R.id.img_search_search);
 
+        tv_total_search = findViewById(R.id.tv_total_search);
+        tv_sales_search = findViewById(R.id.tv_sales_search);
+        tv_price_search = findViewById(R.id.tv_price_search);
+        tv_search_search = findViewById(R.id.tv_search_search);
+
         findViewById(R.id.linearlayout_total_search).setOnClickListener(this);
         findViewById(R.id.linearlayout_sales_search).setOnClickListener(this);
         findViewById(R.id.linearlayout_price_search).setOnClickListener(this);
         findViewById(R.id.linearlayout_search_search).setOnClickListener(this);
     }
 
+
+
+    private void changeStatus(boolean total, boolean sales, boolean price, boolean search) {
+        tv_total_search.setTextColor(total ? getResources().getColor(R.color.color_05_61_96) : getResources().getColor(R.color.color_3_3_3));
+        tv_sales_search.setTextColor(sales ? getResources().getColor(R.color.color_05_61_96) : getResources().getColor(R.color.color_3_3_3));
+        tv_price_search.setTextColor(price ? getResources().getColor(R.color.color_05_61_96) : getResources().getColor(R.color.color_3_3_3));
+        tv_search_search.setTextColor(search ? getResources().getColor(R.color.color_05_61_96) : getResources().getColor(R.color.color_3_3_3));
+
+        mImg_total_search.setBackgroundResource(total ? R.drawable.single_down_blue : R.drawable.single_down_black);
+        if (array[1] == 1) {
+            if (sales) {
+                mImg_sales_search.setBackgroundResource(change ? R.drawable.double_up_blue : R.drawable.double_down_blue);
+
+            } else {
+                mImg_sales_search.setBackgroundResource(R.drawable.double_black);
+            }
+        }
+
+        if (array[3] == 1)
+            mImg_search_search.setBackgroundResource(search ? R.drawable.search_blue : R.drawable.search_black);
+    }
+
+    private boolean sales = false;
+    private boolean change = false;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linearlayout_total_search:
+                array[0] = 1;
+                sales = false;
+                change = false;
+                changeStatus(true, false, false, false);
                 break;
             case R.id.linearlayout_sales_search:
+                array[1] = 1;
+                change = !change;
+                sales = true;
+                changeStatus(false, true, false, false);
                 break;
             case R.id.linearlayout_price_search:
+                array[2] = 1;
+                sales = false;
+                change = false;
+                changeStatus(false, false, true, false);
                 break;
             case R.id.linearlayout_search_search:
+                array[3] = 1;
+                sales = false;
+                change = false;
+                changeStatus(false, false, false, true);
                 break;
         }
     }
+
 
     @Override
     public void initData() {

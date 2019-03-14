@@ -30,7 +30,6 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
@@ -58,10 +57,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="true"
+               
                 android:gravity="center"
                 android:text="综合"
-                android:textColor="@drawable/rb_text_drawable_selector"
+                android:id="@+id/tv_total_search"
+                android:textColor="@color/color_05_61_96"
                 android:textSize="15sp" />
 
             <ImageView
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"
-                android:src="@drawable/single_down_blue" />
+                android:background="@drawable/single_down_blue" />
         </LinearLayout>
 
 
@@ -85,10 +85,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="true"
+               
                 android:gravity="center"
+                android:id="@+id/tv_sales_search"
                 android:text="销量"
-                android:textColor="@drawable/rb_text_drawable_selector"
+                android:textColor="@color/color_3_3_3"
                 android:textSize="15sp" />
 
             <ImageView
@@ -96,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"
-                android:src="@drawable/double_black" />
+                android:background="@drawable/double_black" />
         </LinearLayout>
 
         <!--  价格 -->
@@ -111,17 +112,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="true"
+               
                 android:gravity="center"
+                android:id="@+id/tv_price_search"
                 android:text="价格"
-                android:textColor="@drawable/rb_text_drawable_selector"
+                android:textColor="@color/color_3_3_3"
                 android:textSize="15sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"
-                android:src="@drawable/double_black"
+                android:background="@drawable/double_black"
                 android:visibility="invisible" />
         </LinearLayout>
 
@@ -138,10 +140,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="true"
+               
                 android:gravity="center"
                 android:text="筛选"
-                android:textColor="@drawable/rb_text_drawable_selector"
+                android:id="@+id/tv_search_search"
+                android:textColor="@color/color_3_3_3"
                 android:textSize="15sp" />
 
             <ImageView
@@ -149,8 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"
-                android:src="@drawable/search_black"
-                android:visibility="visible" />
+                android:background="@drawable/search_black"
+                />
         </LinearLayout>
 
 
