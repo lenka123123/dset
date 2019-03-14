@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y120"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="14dp"
+            android:src="@drawable/arrow" />
+
+        <EditText
+            android:id="@+id/search_textview"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/searchbox"
+            android:drawableLeft="@drawable/search_edit"
+            android:drawablePadding="15dp"
+            android:hint="智能电视机"
+            android:paddingLeft="10dp"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y1"
+        android:layout_below="@+id/search_bar"
+        android:background="@color/color_DDD" />
+
+    <!--  商品选择列表  -->
+    <LinearLayout
+        android:id="@+id/search_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_below="@+id/line"
+        android:orientation="horizontal">
+
+        <!--  综合 -->
+        <LinearLayout
+            android:id="@+id/linearlayout_total_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="综合"
+                android:textColor="@drawable/rb_text_drawable_selector"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/img_total_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:src="@drawable/single_down_blue" />
+        </LinearLayout>
+
+
+        <!--  销量 -->
+        <LinearLayout
+            android:id="@+id/linearlayout_sales_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="销量"
+                android:textColor="@drawable/rb_text_drawable_selector"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/img_sales_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:src="@drawable/double_black" />
+        </LinearLayout>
+
+        <!--  价格 -->
+        <LinearLayout
+            android:id="@+id/linearlayout_price_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="价格"
+                android:textColor="@drawable/rb_text_drawable_selector"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:src="@drawable/double_black"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+
+        <!-- 筛选 -->
+        <LinearLayout
+            android:id="@+id/linearlayout_search_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="筛选"
+                android:textColor="@drawable/rb_text_drawable_selector"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/img_search_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:src="@drawable/search_black"
+                android:visibility="visible" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/below_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y1"
+        android:layout_below="@+id/search_list"
+        android:background="@color/color_DDD" />
+
+
+</RelativeLayout>

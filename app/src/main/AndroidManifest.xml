@@ -99,6 +99,10 @@
 
         <activity android:name=".home.DsyueshopActivity" />
 
+        <!--  达事商城 商品列表 -->
+        <activity android:name=".store.dstore.dstorelist.DStoreSearchListActivity" />
+
+
         <!-- 高德地图定位 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -111,15 +115,15 @@
         <activity android:name=".home.AboutTyslActivity" />
         <activity android:name=".ucenter.AboutWebActivity"></activity>
 
- <!--    <provider
-            android:authorities="com.wokun.dset.fileprovider"
-            android:name="android.support.v4.content.FileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths"/>
-        </provider>-->
+        <!--    <provider
+                   android:authorities="com.wokun.dset.fileprovider"
+                   android:name="android.support.v4.content.FileProvider"
+                   android:grantUriPermissions="true"
+                   android:exported="false">
+                   <meta-data
+                       android:name="android.support.FILE_PROVIDER_PATHS"
+                       android:resource="@xml/filepaths"/>
+               </provider>-->
 
 
     </application>

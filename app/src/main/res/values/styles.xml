@@ -108,8 +108,8 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">20dp</item>
-        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingTop">@dimen/y30</item>
+
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_size_style_two</item>
         <item name="android:textColor">@color/colorTextPrimary</item>
@@ -590,5 +590,19 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:alpha">1</item>
     </style>
+
+    <style name="button_tag_style">
+    <!-- Customize your theme here. -->
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">0dp
+    </item> <!--<item name="android:layout_gravity">center_vertical</item>-->
+    <item name="android:textSize">14sp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:button">@null</item>
+    <item name="android:drawablePadding">4dp</item>
+    <item name="android:textColor">@drawable/rb_text_drawable_selector</item>
+    <item name="android:layout_weight">1</item>
+    </style>
+
 
 </resources>

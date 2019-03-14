@@ -2,37 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y430"
+    android:layout_height="@dimen/y460"
+
+    android:layout_marginTop="@dimen/y10"
     android:background="@color/colorWhite"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
+    <View
+        android:id="@+id/left_linearlayout"
+        android:layout_width="@dimen/x30"
+        android:layout_height="match_parent"
+        android:background="#ddd" />
 
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y280"
-        android:scaleType="fitXY" />
+    <View
+        android:id="@+id/left_linearlayout_item"
+        android:visibility="gone"
+        android:layout_width="@dimen/x10"
+        android:layout_height="match_parent"
+        android:background="#ddd" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x30"
-        android:layout_marginRight="@dimen/x30"
-        android:layout_marginTop="@dimen/y12"
-        android:ellipsize="end"
-        android:textSize="13sp"
-        android:maxLines="2"
-        android:textColor="@color/color_3_3_3" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y460"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/x30"
-        android:layout_marginTop="@dimen/y13"
-        android:textSize="13sp"
-        android:textColor="@color/color_ff_76_08" />
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y280"
+            android:scaleType="fitXY" />
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
+            android:layout_marginTop="@dimen/y12"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/color_3_3_3"
+            android:textSize="13sp" />
 
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginTop="@dimen/y13"
+            android:textColor="@color/color_ff_76_08"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/right_linearlayout"
+        android:layout_width="@dimen/x30"
+        android:layout_height="match_parent"
+        android:background="#ddd" />
 </LinearLayout>

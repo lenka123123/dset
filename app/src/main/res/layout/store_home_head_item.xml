@@ -4,14 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ddd"
-    android:paddingLeft="@dimen/x30"
-    android:paddingRight="@dimen/x30"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
 
     <com.youth.banner.Banner
         android:id="@+id/banner"
-
         android:layout_width="match_parent"
         android:layout_height="@dimen/y328" />
 
@@ -19,14 +15,13 @@
     <!-- 商城头布局第一行 -->
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y20"
         android:background="@color/colorWhite"
         android:orientation="horizontal"
-       >
+        >
 
         <TextView
             android:id="@+id/action_ask_service"
@@ -63,7 +58,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:orientation="horizontal"
-         >
+        android:paddingBottom="@dimen/y30"
+        >
 
         <TextView
             android:id="@+id/action_face_online"
@@ -97,42 +93,55 @@
 
     <!--秒杀活动-->
     <LinearLayout
-
+        android:id="@+id/miaosha_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y100"
-
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
+        android:layout_marginTop="@dimen/y20"
         android:background="@color/colorWhite"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="20dp"
+        android:paddingBottom="@dimen/y20"
+        android:paddingTop="@dimen/y30"
         android:visibility="visible">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/x12"
+            android:src="@drawable/ic_naozhong" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_naozhong"
-            android:drawablePadding="10dp"
-            android:text="秒杀活动"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text=" 秒杀活动"
             android:textColor="#056196"
             android:textSize="15sp" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
-            android:layout_weight="1"
-            android:text="距离活动结束："
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x12"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingTop="@dimen/y4"
+            android:text="距离活动结束 "
             android:textColor="#333"
             android:textSize="12sp" />
 
         <cn.iwgang.countdownview.CountdownView
             android:id="@+id/countdownView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
+            android:gravity="bottom"
             app:isHideTimeBackground="false"
-            app:isShowDay="true"
             app:isShowHour="true"
             app:isShowMillisecond="true"
             app:isShowMinute="true"
@@ -150,11 +159,13 @@
 
     </LinearLayout>
 
-
+    <!-- 水平 -->
     <HorizontalScrollView
+        android:id="@+id/miaosha_horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y300"
-        android:layout_marginTop="@dimen/y10"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
         android:background="@color/white"
         android:scrollbars="none">
 
@@ -163,6 +174,7 @@
             android:layout_height="match_parent">
 
             <com.wokun.dset.store.view.MyGridView
+
                 android:id="@+id/miaosha_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y300"
@@ -177,41 +189,55 @@
         android:id="@+id/top_gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
+        android:layout_marginTop="@dimen/y20"
         android:gravity="center"
-        android:horizontalSpacing="10dp"
+        android:horizontalSpacing="@dimen/x4"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" />
+        android:verticalSpacing="@dimen/y4" />
 
 
     <!-- 品质精选 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
+        android:layout_marginTop="@dimen/y20"
+        android:background="@color/white"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x30"
             android:drawableLeft="@drawable/ic_jinxuan"
             android:drawablePadding="10dp"
-            android:text="品质精选"
+            android:paddingBottom="@dimen/y20"
+            android:paddingTop="@dimen/y20"
+            android:text="品质•精选"
             android:textColor="#333"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/jingxuan_ad_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y230"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
         android:scaleType="fitXY" />
 
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y226"
-        android:layout_marginTop="@dimen/y10"
+        android:layout_height="@dimen/y236"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
         android:background="@color/white"
+        android:paddingTop="@dimen/y10"
         android:scrollbars="none">
 
         <LinearLayout
@@ -232,7 +258,7 @@
     <!-- 为您推荐 -->
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/y60"
+        android:layout_height="@dimen/y100"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal">
@@ -251,7 +277,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="为您推荐"
+            android:text=" 为您推荐"
             android:textColor="@color/color_05_61_96"
             android:textSize="15sp" />
 

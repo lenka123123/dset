@@ -1,5 +1,6 @@
 package com.wokun.dset.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -32,12 +34,14 @@ import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.login.net.MyJsonCallback;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.model.UserBean;
+import com.wokun.dset.pinkongshop.GoodsListActivity;
 import com.wokun.dset.response.BaseResponse;
 import com.wokun.dset.store.adapter.BeautyHomeAdapter;
 import com.wokun.dset.store.adapter.HomeSGridViewAdapter;
 import com.wokun.dset.store.adapter.HomoSecondAdapter;
 import com.wokun.dset.store.adapter.HomoTopAdapter;
 import com.wokun.dset.store.bean.DStoreHome;
+import com.wokun.dset.store.dstore.dstorelist.DStoreSearchListActivity;
 import com.wokun.dset.store.rcycleview.RecyclerItemDecoration;
 import com.wokun.dset.store.view.MyGridView;
 import com.wokun.dset.utils.ImageLoadUtils;
@@ -57,7 +61,7 @@ import cn.iwgang.countdownview.CountdownView;
 import static com.wokun.dset.utils.MD5.ParameterUtils.removeEmptyData;
 import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
-public class DsyueshopActivity extends FragmentActivity {
+public class DsyueshopActivity extends FragmentActivity implements View.OnClickListener {
 
     private static final String TAG = "DsyueshopActivity";
     private SmartRefreshLayout mEasyRefreshLayout;
@@ -73,6 +77,8 @@ public class DsyueshopActivity extends FragmentActivity {
     private CountdownView countdownView;
     private Banner mBanner;
     private ArrayList bannerAgainImageArray = new ArrayList();
+    private HorizontalScrollView miaosha_horizontal;
+    private LinearLayout miaosha_layout;
 
 
     @Override
@@ -105,27 +111,28 @@ public class DsyueshopActivity extends FragmentActivity {
         init();
     }
 
-    //
-//    @Override
-//    public int createView() {
-//        return R.layout.activity_dsytshop;
-//    }
-//
-//    @Override
-//    public WidgetBar createToolBar() {
-//        return mWidgetBar.setWidgetBarTitle("商城");
-//    }
-//
-//    @Override
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                DsyueshopActivity.this.finish();
+                break;
+            case R.id.search_textview:
+                startActivity(new Intent(DsyueshopActivity.this, DStoreSearchListActivity.class));
+                break;
+        }
+    }
+
     public void init() {
+        findViewById(R.id.search_textview).setOnClickListener(this);
+        findViewById(R.id.back).setOnClickListener(this);
         mEasyRefreshLayout = (SmartRefreshLayout) findViewById(R.id.easylayout);
         mEasyRefreshLayout.setEnableRefresh(false);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        mRecyclerView.addItemDecoration(new RecyclerItemDecoration(6, 2));
-        //    GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.addItemDecoration(new RecyclerItemDecoration(0, 0, 0, 0, 0, 0));
 
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new BeautyHomeAdapter(this);
@@ -150,7 +157,15 @@ public class DsyueshopActivity extends FragmentActivity {
         countdownView = header.findViewById(R.id.countdownView);
         mBanner = header.findViewById(R.id.banner);
 
+        miaosha_horizontal = header.findViewById(R.id.miaosha_horizontal);
+        miaosha_layout = header.findViewById(R.id.miaosha_layout);
 
+//        countdownView.setTag("test1");
+////
+////        countdownView.start(time6);
+
+        long time6 = (long) 2 * 60 * 60 * 1000;
+        countdownView.start(time6);
         setGridView();
     }
 
@@ -240,8 +255,10 @@ public class DsyueshopActivity extends FragmentActivity {
                     public void onSuccess(Response<JsonObject> response) {
 //                        User user = gson.fromJson(userJson, User.class);
                         DStoreHome dStoreHome = (DStoreHome) JosnFrom.getInstance().getObj(response.body().toString(), DStoreHome.class);
-                        Log.e("usergetMsg: ", dStoreHome.getMsg());
-                        detailData(dStoreHome);
+                        if (dStoreHome != null && dStoreHome.getStatus().equals("0001")) {
+                            detailData(dStoreHome);
+                        }
+
 
                     }
 
@@ -276,20 +293,21 @@ public class DsyueshopActivity extends FragmentActivity {
         if (dStoreHome.getData().getJingxuan().getGoods() != null && dStoreHome.getData().getJingxuan().getGoods().size() > 0)
             gridViewAdapter.setData(dStoreHome.getData().getJingxuan().getGoods());
 
-        if (dStoreHome.getData().getPromotionInfo().getPromotionGoods() != null && dStoreHome.getData().getPromotionInfo().getPromotionGoods().size() > 0)
-            secondAdapter.setData(dStoreHome.getData().getPromotionInfo().getPromotionGoods());
 
         if (dStoreHome.getData().getTop6() != null && dStoreHome.getData().getTop6().size() > 0)
             topAdapter.setData(dStoreHome.getData().getTop6());
 
-        //倒计时控件
-        if (dStoreHome.getData().getPromotionInfo().getStart_time() != null && dStoreHome.getData().getPromotionInfo().getEnd_time() != null)
-            countdownView.start(5 * 60 * 1000L);
 
-//        1、mCvCountdownView.start(long times);
-//        2、mCvCountdownView.pause();
-//        3、mCvCountdownView.stop();
-//        4、mCvCountdownView.getHour();等等
+        if (dStoreHome.getData().getPromotionInfo().getPromotionGoods() != null && dStoreHome.getData().getPromotionInfo().getPromotionGoods().size() > 0) {
+            secondAdapter.setData(dStoreHome.getData().getPromotionInfo().getPromotionGoods());
+            miaosha_horizontal.setVisibility(View.VISIBLE);
+            miaosha_layout.setVisibility(View.VISIBLE);
+        } else {
+            miaosha_horizontal.setVisibility(View.GONE);
+            miaosha_layout.setVisibility(View.GONE);
+        }
+        //倒计时控件
+//        if (dStoreHome.getData().getPromotionInfo().getStart_time() != null && dStoreHome.getData().getPromotionInfo().getEnd_time() != null)
 
         if (dStoreHome.getData().getAd() != null && dStoreHome.getData().getAd().size() > 0) {
             for (int i = 0; i < dStoreHome.getData().getAd().size(); i++) {
@@ -316,4 +334,6 @@ public class DsyueshopActivity extends FragmentActivity {
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }
+
+
 }
