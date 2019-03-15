@@ -174,10 +174,6 @@ public class GoodsDetailActivity extends BaseBindingActivity {
         buyServiceDialog = new BottomSheetDialog(this, R.style.dialog);
         buyServiceDialog.setContentView(view);
 
-
-
-
-
     }
 
     private void loadData() {

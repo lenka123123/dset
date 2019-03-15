@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/search_bar"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y120"
         android:background="@color/white"
@@ -18,7 +21,7 @@
             android:src="@drawable/arrow" />
 
         <EditText
-            android:id="@+id/search_textview"
+            android:id="@+id/search_ed"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginRight="15dp"
@@ -43,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/y100"
         android:layout_below="@+id/line"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <!--  综合 -->
@@ -55,12 +59,12 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_total_search"
                 android:layout_width="wrap_content"
+
                 android:layout_height="match_parent"
-               
                 android:gravity="center"
                 android:text="综合"
-                android:id="@+id/tv_total_search"
                 android:textColor="@color/color_05_61_96"
                 android:textSize="15sp" />
 
@@ -83,11 +87,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-               
-                android:gravity="center"
                 android:id="@+id/tv_sales_search"
+                android:layout_width="wrap_content"
+
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="销量"
                 android:textColor="@color/color_3_3_3"
                 android:textSize="15sp" />
@@ -110,21 +114,22 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-               
-                android:gravity="center"
                 android:id="@+id/tv_price_search"
+                android:layout_width="wrap_content"
+
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="价格"
                 android:textColor="@color/color_3_3_3"
                 android:textSize="15sp" />
 
             <ImageView
+                android:id="@+id/ing_price_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"
                 android:background="@drawable/double_black"
-                android:visibility="invisible" />
+                android:visibility="visible" />
         </LinearLayout>
 
 
@@ -135,15 +140,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
+                android:id="@+id/tv_search_search"
                 android:layout_width="wrap_content"
+
                 android:layout_height="match_parent"
-               
                 android:gravity="center"
                 android:text="筛选"
-                android:id="@+id/tv_search_search"
                 android:textColor="@color/color_3_3_3"
                 android:textSize="15sp" />
 
@@ -152,8 +158,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10"
-                android:background="@drawable/search_black"
-                />
+                android:background="@drawable/search_black" />
         </LinearLayout>
 
 
@@ -165,6 +170,36 @@
         android:layout_height="@dimen/y1"
         android:layout_below="@+id/search_list"
         android:background="@color/color_DDD" />
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/easylayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/below_line"
+        app:srlAccentColor="#00000000"
+        app:srlEnablePreviewInEditMode="true"
+        app:srlPrimaryColor="#00000000">
+
+
+        <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
+        <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
 </RelativeLayout>

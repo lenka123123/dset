@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y256"
+    android:background="@color/white"
+    android:paddingTop="@dimen/y15">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y226"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/x30"
+        android:paddingRight="@dimen/x30">
+
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/x226"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x17"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y6"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/color_3_3_3"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="￥8999"
+                android:textColor="@color/color_ff_76_08"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/shop_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="品控商城"
+                    android:textColor="@color/color_9_9_9"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:drawablePadding="@dimen/x6"
+                    android:drawableRight="@drawable/inter_arrow"
+                    android:text="进店"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y1"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_DDD" />
+</RelativeLayout>

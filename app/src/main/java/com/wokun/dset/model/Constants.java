@@ -120,7 +120,9 @@ public class Constants {
     public static String BASE_URL = "http://api.dasether.com/";
 
     //public static String BASE_STORE_URL = "http://api.dset.com/";
-    public static String STORE_HOME_URL = "shop/index.html";
+    public static String STORE_HOME_URL = "shop/index.html"; //商城首页
+    public static String STORE_GOODS_LIST = "shop-goods/goods-list.html"; //商城搜索列表
+    public static String STORE_GOODS_DETAIL = "shop-goods/goods-detail.html"; //商城商品详情
 
 
     /**

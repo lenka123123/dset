@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,20 +21,11 @@ import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.shantoo.widget.toast.RxToast;
-import com.shantoo.widget.toolbar.WidgetBar;
 import com.wokun.dset.DsetApp;
-import com.wokun.dset.MainActivity;
 import com.wokun.dset.R;
-import com.wokun.dset.base.BaseBindingActivity;
 import com.wokun.dset.callback.JsonCallback;
-import com.wokun.dset.login.LoginActivity;
 import com.wokun.dset.login.LoginMgr;
-import com.wokun.dset.login.net.MyJsonCallback;
 import com.wokun.dset.model.Constants;
-import com.wokun.dset.model.UserBean;
-import com.wokun.dset.pinkongshop.GoodsListActivity;
-import com.wokun.dset.response.BaseResponse;
 import com.wokun.dset.store.adapter.BeautyHomeAdapter;
 import com.wokun.dset.store.adapter.HomeSGridViewAdapter;
 import com.wokun.dset.store.adapter.HomoSecondAdapter;
@@ -61,9 +51,9 @@ import cn.iwgang.countdownview.CountdownView;
 import static com.wokun.dset.utils.MD5.ParameterUtils.removeEmptyData;
 import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
-public class DsyueshopActivity extends FragmentActivity implements View.OnClickListener {
+public class DShopHomeActivity extends FragmentActivity implements View.OnClickListener {
 
-    private static final String TAG = "DsyueshopActivity";
+    private static final String TAG = "DShopHomeActivity";
     private SmartRefreshLayout mEasyRefreshLayout;
     private RecyclerView mRecyclerView;
     private BeautyHomeAdapter mAdapter;
@@ -79,6 +69,7 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
     private ArrayList bannerAgainImageArray = new ArrayList();
     private HorizontalScrollView miaosha_horizontal;
     private LinearLayout miaosha_layout;
+    private Intent mIntent;
 
 
     @Override
@@ -108,6 +99,7 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dsytshop);
+        mIntent = new Intent(this, DStoreSearchListActivity.class);
         init();
     }
 
@@ -115,11 +107,54 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+            case R.id.action_mp_enter:
+                mIntent.putExtra("category_id", "6");
+                startActivity(mIntent);
+                break;
+
+            case R.id.action_sj_enter:
+                mIntent.putExtra("category_id", "7");
+                startActivity(mIntent);
+                break;
+
+            case R.id.action_cn_enter:
+                mIntent.putExtra("category_id", "8");
+                startActivity(mIntent);
+                break;
+
+            case R.id.action_jy_enter:
+                mIntent.putExtra("category_id", "9");
+                startActivity(mIntent);
+                break;
+
+            case R.id.action_yz_enter:
+                mIntent.putExtra("category_id", "10");
+                startActivity(mIntent);
+                break;
+
+            case R.id.action_my_enter:
+                mIntent.putExtra("category_id", "11");
+                startActivity(mIntent);
+                break;
+
+            case R.id.action_cz_enter:
+                mIntent.putExtra("category_id", "14");
+                startActivity(mIntent);
+                break;
+
+            case R.id.action_zf_enter:
+                mIntent.putExtra("category_id", "15");
+                startActivity(mIntent);
+                break;
+
             case R.id.back:
-                DsyueshopActivity.this.finish();
+                mIntent.putExtra("category_id", "");
+                startActivity(mIntent);
                 break;
             case R.id.search_textview:
-                startActivity(new Intent(DsyueshopActivity.this, DStoreSearchListActivity.class));
+                mIntent.putExtra("category_id", "");
+                startActivity(mIntent);
                 break;
         }
     }
@@ -154,6 +189,16 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
     }
 
     private void initBear(View header) {
+        header.findViewById(R.id.action_mp_enter).setOnClickListener(this);
+        header.findViewById(R.id.action_sj_enter).setOnClickListener(this);
+        header.findViewById(R.id.action_cn_enter).setOnClickListener(this);
+        header.findViewById(R.id.action_jy_enter).setOnClickListener(this);
+
+        header.findViewById(R.id.action_yz_enter).setOnClickListener(this);
+        header.findViewById(R.id.action_my_enter).setOnClickListener(this);
+        header.findViewById(R.id.action_cz_enter).setOnClickListener(this);
+        header.findViewById(R.id.action_zf_enter).setOnClickListener(this);
+
         jingxuan_ad_img = header.findViewById(R.id.jingxuan_ad_img);
         jingxuan_gridview = header.findViewById(R.id.jingxuan_gridview);
         miaosha_gridview = header.findViewById(R.id.miaosha_gridview);
@@ -168,17 +213,12 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
         miaosha_layout = header.findViewById(R.id.miaosha_layout);
 
         setGridView();
-
-
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
-
     }
-
     /**
      * 设置GirdView参数，绑定数据
      */
@@ -199,7 +239,7 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
         jingxuan_gridview.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
         jingxuan_gridview.setNumColumns(5); // 设置列数量=列表集合数
 
-        gridViewAdapter = new HomeSGridViewAdapter(DsyueshopActivity.this);
+        gridViewAdapter = new HomeSGridViewAdapter(DShopHomeActivity.this);
         jingxuan_gridview.setAdapter(gridViewAdapter);
 
         jingxuan_gridview.setOnRadioItemClickListener(new MyGridView.OnRadioItemClickListener() {
@@ -221,7 +261,7 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
         miaosha_gridview.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
         miaosha_gridview.setNumColumns(5); // 设置列数量=列表集合数
 
-        secondAdapter = new HomoSecondAdapter(DsyueshopActivity.this);
+        secondAdapter = new HomoSecondAdapter(DShopHomeActivity.this);
         miaosha_gridview.setAdapter(secondAdapter);
 
         miaosha_gridview.setOnRadioItemClickListener(new MyGridView.OnRadioItemClickListener() {
@@ -235,15 +275,13 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
             }
         });
 
-
-        topAdapter = new HomoTopAdapter(DsyueshopActivity.this);
+        topAdapter = new HomoTopAdapter(DShopHomeActivity.this);
         top_gridView.setAdapter(topAdapter);
     }
 
     private void getStoreInfo() {
-
-        String token = (String) SpCommonUtils.get(DsyueshopActivity.this, Constants.TOKEN, "");
-        String user_id = (String) SpCommonUtils.get(DsyueshopActivity.this, Constants.USERID, "");
+        String token = (String) SpCommonUtils.get(DShopHomeActivity.this, Constants.TOKEN, "");
+        String user_id = (String) SpCommonUtils.get(DShopHomeActivity.this, Constants.USERID, "");
 
         Map params = new HashMap();
         params.put("user_id", user_id);
@@ -267,8 +305,6 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
                         if (dStoreHome != null && dStoreHome.getStatus().equals("0001")) {
                             detailData(dStoreHome);
                         }
-
-
                     }
 
                     @Override
@@ -286,7 +322,7 @@ public class DsyueshopActivity extends FragmentActivity implements View.OnClickL
     public void detailData(DStoreHome dStoreHome) {
         DStoreHome.DataBean.JingxuanBean.AdBean jinxuanAd = dStoreHome.getData().getJingxuan().getAd();
         if (jinxuanAd != null && jinxuanAd.getPic_url() != null) {
-            Glide.with(DsyueshopActivity.this).load(jinxuanAd.getPic_url()).into(jingxuan_ad_img);
+            Glide.with(DShopHomeActivity.this).load(jinxuanAd.getPic_url()).into(jingxuan_ad_img);
         }
 
         if (dStoreHome.getData().getJingxuan().getGoods() != null && dStoreHome.getData().getJingxuan().getGoods().size() > 0)

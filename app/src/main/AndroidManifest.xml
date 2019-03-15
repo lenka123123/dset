@@ -97,10 +97,11 @@
         <activity android:name=".home.FindDsyueActivity" />
         <activity android:name=".ucenter.quanyi.dashishop.GoodsOrderActivity" />
 
-        <activity android:name=".home.DsyueshopActivity" />
+        <activity android:name=".home.DShopHomeActivity" />
 
         <!--  达事商城 商品列表 -->
         <activity android:name=".store.dstore.dstorelist.DStoreSearchListActivity" />
+        <activity android:name=".store.dstore.dstoredetail.DStoreDetailActivity" />
 
 
         <!-- 高德地图定位 -->

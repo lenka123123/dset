@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class ImageUtils {
     //然后View和其内部的子View都具有了实际大小，也就是完成了布局，相当与添加到了界面上。接着就可以创建位图并在上面绘制了：
-    public static void layoutView(View v,int width,int height) {
+    public static void layoutView(View v, int width, int height) {
         // 整个View的大小 参数是左上角 和右下角的坐标
         v.layout(0, 0, width, height);
         int measuredWidth = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
@@ -30,8 +30,8 @@ public class ImageUtils {
 
     }
 
-    public static String viewSaveToImage(View view,String child) {
-        Log.e("ssh","a");
+    public static String viewSaveToImage(View view, String child) {
+        Log.e("ssh", "a");
         /**
          * View组件显示的内容可以通过cache机制保存为bitmap
          * 我们要获取它的cache先要通过setDrawingCacheEnable方法把cache开启，
@@ -59,8 +59,8 @@ public class ImageUtils {
             if (isHasSDCard) {
                 // SD卡根目录
                 File sdRoot = Environment.getExternalStorageDirectory();
-                Log.e("ssh",sdRoot.toString());
-                File file = new File(sdRoot,child+".png");
+                Log.e("ssh", sdRoot.toString());
+                File file = new File(sdRoot, child + ".png");
                 fos = new FileOutputStream(file);
             } else
                 throw new Exception("创建文件失败!");
@@ -74,7 +74,7 @@ public class ImageUtils {
         }
 
         view.destroyDrawingCache();
-        return sharePic(cachebmp,child);
+        return sharePic(cachebmp, child);
     }
 
     private static Bitmap loadBitmapFromView(View v) {
@@ -95,10 +95,9 @@ public class ImageUtils {
     }
 
     //保存在本地并一键分享
-    private static String sharePic(Bitmap cachebmp,String child) {
-        final File qrImage = new File(Environment.getExternalStorageDirectory(), child+".jpg");
-        if(qrImage.exists())
-        {
+    private static String sharePic(Bitmap cachebmp, String child) {
+        final File qrImage = new File(Environment.getExternalStorageDirectory(), child + ".jpg");
+        if (qrImage.exists()) {
             qrImage.delete();
         }
         try {
@@ -112,11 +111,11 @@ public class ImageUtils {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        if(cachebmp == null)
-        {
+        if (cachebmp == null) {
             return "";
         }
-        cachebmp.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+        if (fOut != null)
+            cachebmp.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
         try {
             fOut.flush();
             fOut.close();

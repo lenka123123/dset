@@ -24,28 +24,28 @@
         >
 
         <TextView
-            android:id="@+id/action_ask_service"
+            android:id="@+id/action_mp_enter"
             style="@style/TextView_Home_Navigation"
             android:drawableTop="@drawable/ic_pinpai"
             android:text="名牌驾到"
             android:textColor="@color/colorMenu" />
 
         <TextView
-            android:id="@+id/action_chain_stores"
+            android:id="@+id/action_sj_enter"
             style="@style/TextView_Home_Navigation"
             android:drawableTop="@drawable/ic_shejian"
             android:text="舌尖诱惑"
             android:textColor="@color/colorMenu" />
 
         <TextView
-            android:id="@+id/action_social_assets"
+            android:id="@+id/action_cn_enter"
             style="@style/TextView_Home_Navigation"
             android:drawableTop="@drawable/ic_xie"
             android:text="城纳百穿"
             android:textColor="@color/colorMenu" />
 
         <TextView
-            android:id="@+id/action_service_in"
+            android:id="@+id/action_jy_enter"
             style="@style/TextView_Home_Navigation"
             android:drawableTop="@drawable/ic_jieyou"
             android:text="解忧杂货"
@@ -62,28 +62,28 @@
         >
 
         <TextView
-            android:id="@+id/action_face_online"
+            android:id="@+id/action_yz_enter"
             style="@style/TextView_Home_Navigation"
             android:drawableTop="@drawable/ic_yanzhi"
             android:text="颜值在线"
             android:textColor="@color/colorMenu" />
 
         <TextView
-            android:id="@+id/action_lives_slow"
+            android:id="@+id/action_my_enter"
             style="@style/TextView_Home_Navigation"
             android:drawableTop="@drawable/ic_manyang"
             android:text="慢养生活"
             android:textColor="@color/colorMenu" />
 
         <TextView
-            android:id="@+id/action_super_card"
+            android:id="@+id/action_cz_enter"
             style="@style/TextView_Home_Navigation"
             android:drawableTop="@drawable/ic_chaozhi"
             android:text="超值神券"
             android:textColor="@color/colorMenu" />
 
         <TextView
-            android:id="@+id/action_exchange"
+            android:id="@+id/action_zf_enter"
             style="@style/TextView_Home_Navigation"
             android:drawableTop="@drawable/ic_zhihuan"
             android:text="置换专区"

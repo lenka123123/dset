@@ -3,37 +3,30 @@ package com.wokun.dset.mainfragment;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.itheima.roundedimageview.RoundedImageView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
 import com.shantoo.widget.toast.RxToast;
 import com.sunfusheng.marqueeview.MarqueeView;
 import com.wokun.dset.AppCache;
 import com.wokun.dset.DsetApp;
-import com.wokun.dset.MainActivity;
 import com.wokun.dset.R;
 import com.wokun.dset.base.BaseFragment;
-import com.wokun.dset.base.BaseRefreshAndLoadMoreFragment;
 import com.wokun.dset.callback.JsonCallback;
 import com.wokun.dset.home.AboutTyslActivity;
-import com.wokun.dset.home.DsyueshopActivity;
-import com.wokun.dset.home.FindDsyueActivity;
+import com.wokun.dset.home.DShopHomeActivity;
 import com.wokun.dset.home.HuiyuanlevelActivity;
 import com.wokun.dset.home.NoticeWebActivity;
 import com.wokun.dset.home.SignBean;
@@ -46,7 +39,6 @@ import com.wokun.dset.response.BaseResponse;
 import com.wokun.dset.ucenter.DsytYaoqingActivity;
 import com.wokun.dset.ucenter.SaoyisaoActivity;
 import com.wokun.dset.utils.ImageLoader;
-import com.wokun.dset.utils.MyRatingBar;
 import com.wokun.dset.utils.StringUtil;
 
 import java.util.HashMap;
@@ -336,7 +328,7 @@ public class HomeFragment  extends BaseFragment {
     @OnClick(R.id.dsyt_findyue)
     public void action_dsyt_dsyt_findyue(View v){
         if(R.id.dsyt_findyue == v.getId()){
-            startActivity(DsyueshopActivity.class);
+            startActivity(DShopHomeActivity.class);
         }
     }
     /**会员等级 */
