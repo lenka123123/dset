@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_cate_item"
+    android:layout_width="wrap_content"
+    android:gravity="center"
+    android:singleLine="true"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:background="@drawable/goodsdetail_selector"
+    android:textColor="@drawable/mq_more_cate_tvselector"
+    android:paddingBottom="@dimen/y7"
+    android:layout_margin="@dimen/y13"
+    android:paddingLeft="@dimen/x13"
+    android:paddingRight="@dimen/x13"
+    android:paddingTop="@dimen/y7" />

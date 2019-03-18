@@ -311,6 +311,7 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
     }
 
     private void detailDta(DStoreGoodesList goodesList) {
+        if (mAdapter == null) return;
         int pageNumber = Integer.valueOf(page);
 
         if (goodesList.getData().getGoodsList().size() >= 1) {

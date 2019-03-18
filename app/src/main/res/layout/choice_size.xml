@@ -32,13 +32,7 @@
         android:layout_height="@dimen/y250"
         android:gravity="bottom">
 
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="@dimen/x210"
-            android:layout_height="@dimen/y210"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="@dimen/x47"
-            android:background="#000" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +51,7 @@
                 android:layout_width="@dimen/x210"
                 android:layout_height="@dimen/y210"
                 android:layout_gravity="bottom"
-                android:background="#000" />
+                android:background="#fff" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -69,21 +63,25 @@
                 android:paddingTop="@dimen/y40">
 
                 <TextView
+                    android:id="@+id/pop_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:text="￥3000"
-                    android:textColor="@color/color_F86442"
+
+                    android:textColor="@color/color_05_61_96"
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/pop_store"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="已选 x1 黑色 M"
-                    android:textColor="@color/color_18_18_18"
+                    android:text="库存"
+                    android:textColor="@color/color_9_9_9"
                     android:textSize="14sp" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="该商品可用美宝购买"
@@ -92,6 +90,15 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/pop_img"
+            android:layout_width="@dimen/x210"
+            android:layout_height="@dimen/y210"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/x47"
+            android:background="@drawable/ic_manyang"
+            android:scaleType="fitXY" />
     </RelativeLayout>
 
     <LinearLayout

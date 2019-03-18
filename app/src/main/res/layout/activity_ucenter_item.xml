@@ -16,28 +16,31 @@
 
 
     <RelativeLayout
+        android:id="@+id/power_acc"
         style="@style/RelativeLayout_Default">
+
         <ImageView
             android:id="@+id/uc_zhanghu"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:src="@drawable/ic_quanyi_center"/>
-        <TextView
-            android:layout_marginLeft="10dp"
-
-            android:layout_toRightOf="@+id/uc_zhanghu"
-            style="@style/TextView_Style_Title"
             android:layout_centerVertical="true"
+
+            android:src="@drawable/ic_quanyi_center" />
+
+        <TextView
+            style="@style/TextView_Style_Title"
+
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/uc_zhanghu"
             android:text="权益账户" />
 
         <TextView
             android:id="@+id/uc_zhanghu_num"
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentRight="true"
             style="@style/TextView_Style_Title"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:text="0" />
 
     </RelativeLayout>

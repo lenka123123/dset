@@ -46,6 +46,7 @@ import com.wokun.dset.ucenter.ZhuanzhangActivity;
 import com.wokun.dset.ucenter.addcards.BankTestActivity2;
 import com.wokun.dset.ucenter.addcards.TixianMoneyActivity2;
 import com.wokun.dset.ucenter.bean.MyBean;
+import com.wokun.dset.ucenter.quanyi.PowerAccActivity;
 import com.wokun.dset.ucenter.quanyi.QuanyiActivity;
 import com.wokun.dset.ucenter.renamepassword.RenamepaypwdActvitity;
 import com.wokun.dset.utils.ImageLoader;
@@ -95,6 +96,9 @@ public class MineFragment  extends BaseFragment{
     TextView uc_zhanghu_num;
     @BindView(R.id.my_user_star)
     LinearLayout my_user_star;
+
+    @BindView(R.id.power_acc)
+    RelativeLayout power_acc;
 
   //  private PhotoSelector mPhotoSelector;
     @Override
@@ -420,6 +424,12 @@ public class MineFragment  extends BaseFragment{
     public void action_ucenter_quanyi(View v){
         if(R.id.ucenter_quanyi == v.getId()){
             startActivity(QuanyiActivity.class);
+        }
+    }
+    @OnClick(R.id.power_acc)
+    public void power_acc(View v){
+        if(R.id.power_acc == v.getId()){
+            startActivity(PowerAccActivity.class);
         }
     }
 

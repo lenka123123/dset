@@ -98,6 +98,7 @@
         <activity android:name=".ucenter.quanyi.dashishop.GoodsOrderActivity" />
 
         <activity android:name=".home.DShopHomeActivity" />
+        <activity android:name=".ucenter.quanyi.PowerAccActivity" />
 
         <!--  达事商城 商品列表 -->
         <activity android:name=".store.dstore.dstorelist.DStoreSearchListActivity" />

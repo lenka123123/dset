@@ -105,16 +105,7 @@ public class HomeSGridViewAdapter extends BaseAdapter {
 
     public void setOnClick(int onClick) {
 
-//        if (typeBeanList.size() > 0) {
-//            for (int i = 0; i < typeBeanList.size(); i++) {
-//                if (onClick == i) {
-//                    typeBeanList.get(i).name = "rrr";
-//                } else {
-//                    typeBeanList.get(i).name = "gggg";
-//                }
-//            }
-//        }
-        notifyDataSetChanged();
+
     }
 
     class Holder {

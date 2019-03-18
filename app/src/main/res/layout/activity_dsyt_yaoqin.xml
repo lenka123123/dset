@@ -3,103 +3,108 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/background_all">
+
     <ScrollView
         android:id="@+id/my_yaoqinma"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/my_yaoqinma1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-       <RelativeLayout
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       >
-        <ImageView
-            android:id="@+id/back"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="25dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_back_white"/>
-        <ImageView
-            android:layout_alignParentRight="true"
-            android:id="@+id/yaoqin_share"
-            android:layout_width="22dp"
-            android:visibility="gone"
-            android:layout_height="22dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-         />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/ic_back_white" />
+
+                <ImageView
+                    android:id="@+id/yaoqin_share"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone" />
 
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-<ImageView
-    android:layout_marginTop="20dp"
-    android:layout_gravity="center"
-    android:layout_width="70dp"
-    android:layout_height="70dp"
-    android:src="@drawable/ic_dset_log"/>
-<TextView
-    android:layout_marginTop="11dp"
-    android:layout_gravity="center"
-    android:textSize="19sp"
-    android:textColor="@color/colorWhite"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="达事以太"/>
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_dset_log" />
 
- <TextView
-        android:layout_marginTop="10dp"
-        android:textSize="12sp"
-         android:lines="2"
-     android:lineSpacingExtra="5dp"
-        android:textColor="@color/colorWhite"
-        android:layout_gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="DSET-打造第三职业空间， 让一切交互创造价值！"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="11dp"
+                android:text="达事以太"
+                android:textColor="@color/colorWhite"
+                android:textSize="19sp" />
 
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/ic_bg_yaoqin"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:layout_marginTop="18dp">
-    <TextView
-        android:id="@+id/dsyt_yaoqin_txt"
-        android:textSize="36sp"
-        android:textColor="#b3fdfdfd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text=""/>
-</RelativeLayout>
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="5dp"
+                android:lines="2"
+                android:text="DSET-打造第三职业空间， 让一切交互创造价值！"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp" />
 
-          <ImageView
-            android:id="@+id/dsyt_yaoqin_img"
-            android:layout_gravity="center"
-            android:layout_width="97dp"
-            android:layout_height="97dp"
-            android:layout_marginTop="15dp"
-              android:background="@drawable/ic_yaoqinlog"
-            />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/ic_bg_yaoqin"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/dsyt_yaoqin_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="3333"
+                    android:textColor="#b3fdfdfd"
+                    android:textSize="36sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/dsyt_yaoqin_img"
+                android:layout_width="@dimen/x200"
+                android:layout_height="@dimen/y200"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+
+                android:scaleType="fitXY" />
 
 
-<TextView
-    android:layout_marginBottom="15dp"
-    android:gravity="center"
-    android:layout_gravity="center"
-    android:layout_marginTop="10dp"
-    android:textColor="@color/colorWhite"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="扫码下载达事以太APP"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="扫码下载达事以太APP"
+                android:textColor="@color/colorWhite" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

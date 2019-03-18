@@ -67,7 +67,7 @@ public class DsytYaoqingActivity extends BaseBindingActivity {
     @BindView(R.id.my_yaoqinma1)
     LinearLayout yaoqin_share;
     String picPath;
- //   private DsytyaoqinBean dsytyaoqinBean;
+    //   private DsytyaoqinBean dsytyaoqinBean;
     private MediaActionSound mCameraSound;
     private Bitmap saveBitmap;
     private ImageView mDsytYaoqinImg;
@@ -93,7 +93,7 @@ public class DsytYaoqingActivity extends BaseBindingActivity {
     @Override
     public void init() {
 
-         loadData();
+        loadData();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,35 +115,36 @@ public class DsytYaoqingActivity extends BaseBindingActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-      loadData();
+        loadData();
     }
 
-    public void SharePhoto(String photoUri,final Activity activity) {
+    public void SharePhoto(String photoUri, final Activity activity) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         File file = new File(photoUri);
         shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
         shareIntent.setType("image/*");
         startActivity(Intent.createChooser(shareIntent, activity.getTitle()));
     }
+
     private void loadData() {
 
         Map params = new HashMap();
         params.put("timestamp", StringUtil.getCurrentTime());
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
 
         OkGo.<BaseResponse<ShareCodeBean>>post(Constants.BASE_URL + Constants.SHARE_CODE)
                 .tag(this)
-                .params("sign",sign)
-                .params("timestamp",StringUtil.getCurrentTime())
+                .params("sign", sign)
+                .params("timestamp", StringUtil.getCurrentTime())
                 .execute(new JsonCallback<BaseResponse<ShareCodeBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<ShareCodeBean>> response) {
                         BaseResponse body = response.body();
-                        if(body == null)return;
+                        if (body == null) return;
                         RxToast.showShort(body.getMessage());
-                        if(body.getStatus().equals("0001")){
+                        if (body.getStatus().equals("0001")) {
 
                             RxToast.showShort(body.getMessage());
 
@@ -151,19 +152,20 @@ public class DsytYaoqingActivity extends BaseBindingActivity {
                             if (data == null) {
                                 return;
                             }
-
-                      //  Glide.with(DsytYaoqingActivity.this).load(data.getShare_qrcode()).into(mDsytYaoqinImg1);
+                            Bitmap mBitmap11 = QRCodeUtil.createQRCodeBitmap(data.getShare_qrcode(), 97, 97);
+                            Glide.with(DsytYaoqingActivity.this).load(mBitmap11).into(mDsytYaoqinImg1);
                             mDsytYaoqinTxt1.setText(data.getMycode());
+
                             Log.e("userInfo.getUserType()", "" + data.getShare_qrcode());
                             View v = LayoutInflater.from(DsytYaoqingActivity.this).inflate(R.layout.activity_dsyt_yaoqin, null, false);
                             mDsytYaoqinTxt = (TextView) v.findViewById(R.id.dsyt_yaoqin_txt);
-                           mDsytYaoqinImg = (ImageView) v.findViewById(R.id.dsyt_yaoqin_img);
+                            mDsytYaoqinImg = (ImageView) v.findViewById(R.id.dsyt_yaoqin_img);
                             Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(data.getShare_qrcode(), 97, 97);
                             mDsytYaoqinImg.setImageBitmap(mBitmap);
 
                             mDsytYaoqinTxt.setText(data.getMycode());
                             //   Glide.with(DsytYaoqingActivity.this).load("http://api.tyitop.com/images/app_download.png").into(mDsytYaoqinImg);
-                          //  ImageLoader.loadImage( data.getShare_qrcode(), mDsytYaoqinImg);
+                            //  ImageLoader.loadImage( data.getShare_qrcode(), mDsytYaoqinImg);
 //                         mDsytYaoqinImg.post(new Runnable() {
 //                            @Override
 //                            public void run() {

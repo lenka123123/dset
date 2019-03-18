@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x47"
+        android:layout_marginTop="@dimen/y18"
+        android:text="颜色"
+        android:textColor="@color/color_18_18_18"
+        android:textSize="16sp" />
+
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/y26"
+        android:paddingLeft="@dimen/x47"
+        android:paddingRight="@dimen/x47"
+        android:paddingTop="@dimen/y26"
+        zhy:max_select="1" />
+
+</LinearLayout>

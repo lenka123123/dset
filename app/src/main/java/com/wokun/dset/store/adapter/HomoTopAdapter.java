@@ -2,6 +2,7 @@ package com.wokun.dset.store.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.view.LayoutInflater;
@@ -9,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wokun.dset.R;
+import com.wokun.dset.model.Constants;
 import com.wokun.dset.store.bean.DStoreHome;
+import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,19 +56,18 @@ public class HomoTopAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-      DStoreHome.DataBean.Top6Bean bean = cateListBeans.get(position);
+        final DStoreHome.DataBean.Top6Bean bean = cateListBeans.get(position);
         Holder holder;
         if (convertView == null) {
             holder = new Holder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_miaosha_info, null);
 
             holder.img = (ImageView) convertView.findViewById(R.id.img);
-           Glide.with(context).load(bean.getPic_url()).into(holder.img);
+            Glide.with(context).load(bean.getPic_url()).into(holder.img);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
-
         return convertView;
     }
 
@@ -75,18 +78,13 @@ public class HomoTopAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setOnClick(int onClick) {
 
-//        if (typeBeanList.size() > 0) {
-//            for (int i = 0; i < typeBeanList.size(); i++) {
-//                if (onClick == i) {
-//                    typeBeanList.get(i).name = "rrr";
-//                } else {
-//                    typeBeanList.get(i).name = "gggg";
-//                }
-//            }
-//        }
-        notifyDataSetChanged();
+    public void setOnClick(int position) {
+        if (cateListBeans.get(position) == null) return;
+        Intent intent = new Intent();
+        intent.putExtra(Constants.GOODS_ID, cateListBeans.get(position).getGoods_id());
+        intent.setClass(context, DStoreDetailActivity.class);
+        context.startActivity(intent);
     }
 
     class Holder {

@@ -123,6 +123,8 @@ public class Constants {
     public static String STORE_HOME_URL = "shop/index.html"; //商城首页
     public static String STORE_GOODS_LIST = "shop-goods/goods-list.html"; //商城搜索列表
     public static String STORE_GOODS_DETAIL = "shop-goods/goods-detail.html"; //商城商品详情
+    public static String JOIN_CAR = "shop-goods/add-cart.html"; //加入购物车
+    public static String APPLY_RELEASE = "user/apply-release.html"; //申请释放
 
 
     /**

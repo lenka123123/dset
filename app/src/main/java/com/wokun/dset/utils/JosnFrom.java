@@ -1,6 +1,10 @@
 package com.wokun.dset.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.wokun.dset.store.bean.GoodsSKUList;
+
+import java.util.List;
 
 public class JosnFrom {
 
@@ -23,10 +27,20 @@ public class JosnFrom {
     }
 
 
+
+
     public Object getObj(String json, Class t) {
         //  User user = gson.fromJson(userJson, User.class);
 
         return gson.fromJson(json, t);
+
+    }
+
+
+    public List<GoodsSKUList> getObjList(String json) {
+        //  User user = gson.fromJson(userJson, User.class);
+//  List<Person> ps = gson.fromJson(str, new TypeToken<List<Person>>(){}.getType());
+        return gson.fromJson(json, new TypeToken<List<GoodsSKUList>>(){}.getType());
 
     }
 

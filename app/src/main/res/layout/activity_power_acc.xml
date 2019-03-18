@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background_all"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/y60"
+    android:paddingLeft="@dimen/x30"
+    android:paddingRight="@dimen/x30">
+
+    <RelativeLayout
+        android:id="@+id/root_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_all_top"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/ic_back_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="权益账号"
+            android:textColor="#fff" />
+
+        <RelativeLayout
+            android:id="@+id/rl_more1"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/rl_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_more"
+                android:visibility="gone"
+
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_below="@+id/root_view"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/drawable_btn_bg_color_white2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/y40"
+            android:layout_marginTop="@dimen/y40"
+            android:drawableLeft="@drawable/release_left"
+            android:drawableRight="@drawable/release_right"
+            android:gravity="center"
+            android:text="  释放规则  "
+            android:textColor="@color/color_05_61_96"
+            android:textSize="16sp" />
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
+            android:layout_weight="1">
+
+        </WebView>
+
+        <EditText
+            android:id="@+id/apply_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y300"
+            android:layout_marginBottom="@dimen/y58"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
+            android:layout_marginTop="@dimen/y36"
+            android:background="@drawable/edit_bg"
+            android:textColorHint="@color/color_DDD"
+            android:gravity="left"
+            android:hint="请输入您要释放的姓名、手机号、金额     例：张三+13913956289+10000金票"
+            android:includeFontPadding="false"
+            android:padding="@dimen/x20"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/apply_selease"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y80"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/y66"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
+            android:background="@drawable/drawable_btn_bg_color_blue2"
+            android:gravity="center"
+            android:text="申请释放"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

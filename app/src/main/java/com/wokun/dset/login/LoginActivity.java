@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.annotations.NonNull;
@@ -46,6 +47,9 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
  * 登录
  */
 public class LoginActivity extends BaseBindingActivity {
+
+    @BindView(R.id.action_login)
+    Button action_login;
 
     @BindView(R.id.et_mobile)
     EditText etUserUsername;
@@ -223,7 +227,7 @@ public class LoginActivity extends BaseBindingActivity {
     @OnClick(R.id.action_login)
     public void action_dset_login_lin(View v) {
         if (R.id.action_login == v.getId()) {
-            Log.e("user", "1进来了!!!!");
+
             etUserPwd.setText("123456");
             mylogin();
         }
@@ -253,6 +257,9 @@ public class LoginActivity extends BaseBindingActivity {
             return;
         }
 
+        action_login.setEnabled(false);
+        action_login.setClickable(false);
+        action_login.setFocusable(false);
         Map params = new HashMap();
         params.put("username", mobile);
         params.put("password", pwd);
@@ -271,6 +278,9 @@ public class LoginActivity extends BaseBindingActivity {
                 .execute(new JsonCallback<BaseResponse<UserBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<UserBean>> response) {
+                        action_login.setEnabled(true);
+                        action_login.setClickable(true);
+                        action_login.setFocusable(true);
                         BaseResponse body = response.body();
                         if (body == null) return;
                         Log.e("user", "进来了2!!!!");
@@ -293,6 +303,9 @@ public class LoginActivity extends BaseBindingActivity {
 
                     @Override
                     public void onError(Response response) {
+                        action_login.setEnabled(true);
+                        action_login.setClickable(true);
+                        action_login.setFocusable(true);
                         dismissLP();
                         super.onError(response);
                         Log.e("user", response + "!!!!");

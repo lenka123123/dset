@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -177,7 +178,9 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         addHeaderView();
 
         getStoreInfo();
+
     }
+
 
 
     private void addHeaderView() {
@@ -213,6 +216,17 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         miaosha_layout = header.findViewById(R.id.miaosha_layout);
 
         setGridView();
+
+        topAdapter = new HomoTopAdapter(DShopHomeActivity.this);
+        top_gridView.setAdapter(topAdapter);
+
+        top_gridView.setOnRadioItemClickListener(new MyGridView.OnRadioItemClickListener() {
+            @Override
+            public void onItemClick(int gridViewId, int position) {
+                topAdapter.setOnClick(position);
+
+            }
+        });
     }
 
     @Override
@@ -275,8 +289,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
             }
         });
 
-        topAdapter = new HomoTopAdapter(DShopHomeActivity.this);
-        top_gridView.setAdapter(topAdapter);
+
     }
 
     private void getStoreInfo() {
