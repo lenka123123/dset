@@ -7,7 +7,7 @@ public class DStoreGoodsDetail {
 
 
     /**
-     * data : {"description_url":"http://api.dasether.com/shop-goods/goods-content.html?goods_id=35","evaluates":"0","give_point":"0","goods_id":"35","goods_name":"三九纤体酵素原液  排毒瘦身佳品","goods_picture_id":"296","goods_sku":[{"attr_value_items":"","attr_value_items_format":"","price":"168.00","promote_price":"168.00","sku_id":"36","sku_name":"","stock":"50"}],"goods_spec_format":"[]","img_id_array":"296","market_price":"0.00","price":"168.00","promote_id":"0","promotion":{},"promotion_price":"168.00","promotion_type":"0","sales":"0","shipping_fee":"0.00","shop":{"shop_deliverycredit":"1","shop_desccredit":"1","shop_id":"0","shop_logo":"http://api.dasether.com/upload/common/1536918022.jpg","shop_name":"官方旗舰店","shop_servicecredit":"1"},"shop_id":"0","show_img":["http://dsytcdn.chinafjjdkj.cn/upload/goods/20190122/e85b5be8fe92e87a8beef8372df308bf1.jpg"],"sort":"1","spec_list":[],"star":"0","stock":"50"}
+     * data : {"description_url":"http://api.dasether.com/shop-goods/goods-content.html?goods_id=15","evaluates":"0","freight":"0.00","give_point":"0","goods_id":"15","goods_name":"神经酸 脑动力胶囊 美国进口 FDA认证","goods_picture_id":"78","goods_sku":[{"attr_value_items":"","attr_value_items_format":"","price":"668.00","promote_price":"668.00","sku_id":"16","sku_name":"","stock":"20"}],"goods_spec_format":"[]","img_id_array":"78,92","market_price":"0.00","price":"668.00","promote_id":"0","promotion":{},"promotion_price":"668.00","promotion_type":"0","sales":"0","shipping_fee":"0.00","shop":{"shop_deliverycredit":"1","shop_desccredit":"1","shop_id":"0","shop_logo":"http://api.dasether.com/upload/common/1536918022.jpg","shop_name":"官方旗舰店","shop_servicecredit":"1"},"shop_id":"0","show_img":["http://dsytcdn.chinafjjdkj.cn/upload/goods/20190121/382ee1fb68117eb3c56246c3bed014c01.jpg","http://dsytcdn.chinafjjdkj.cn/upload/goods/20190121/15f2bbc11cd02ee91f8f96bdb99744e71.jpg"],"sort":"0","spec_list":[],"star":"0","stock":"20"}
      * msg : 成功
      * status : 0001
      */
@@ -42,34 +42,36 @@ public class DStoreGoodsDetail {
 
     public static class DataBean {
         /**
-         * description_url : http://api.dasether.com/shop-goods/goods-content.html?goods_id=35
+         * description_url : http://api.dasether.com/shop-goods/goods-content.html?goods_id=15
          * evaluates : 0
+         * freight : 0.00
          * give_point : 0
-         * goods_id : 35
-         * goods_name : 三九纤体酵素原液  排毒瘦身佳品
-         * goods_picture_id : 296
-         * goods_sku : [{"attr_value_items":"","attr_value_items_format":"","price":"168.00","promote_price":"168.00","sku_id":"36","sku_name":"","stock":"50"}]
+         * goods_id : 15
+         * goods_name : 神经酸 脑动力胶囊 美国进口 FDA认证
+         * goods_picture_id : 78
+         * goods_sku : [{"attr_value_items":"","attr_value_items_format":"","price":"668.00","promote_price":"668.00","sku_id":"16","sku_name":"","stock":"20"}]
          * goods_spec_format : []
-         * img_id_array : 296
+         * img_id_array : 78,92
          * market_price : 0.00
-         * price : 168.00
+         * price : 668.00
          * promote_id : 0
          * promotion : {}
-         * promotion_price : 168.00
+         * promotion_price : 668.00
          * promotion_type : 0
          * sales : 0
          * shipping_fee : 0.00
          * shop : {"shop_deliverycredit":"1","shop_desccredit":"1","shop_id":"0","shop_logo":"http://api.dasether.com/upload/common/1536918022.jpg","shop_name":"官方旗舰店","shop_servicecredit":"1"}
          * shop_id : 0
-         * show_img : ["http://dsytcdn.chinafjjdkj.cn/upload/goods/20190122/e85b5be8fe92e87a8beef8372df308bf1.jpg"]
-         * sort : 1
+         * show_img : ["http://dsytcdn.chinafjjdkj.cn/upload/goods/20190121/382ee1fb68117eb3c56246c3bed014c01.jpg","http://dsytcdn.chinafjjdkj.cn/upload/goods/20190121/15f2bbc11cd02ee91f8f96bdb99744e71.jpg"]
+         * sort : 0
          * spec_list : []
          * star : 0
-         * stock : 50
+         * stock : 20
          */
 
         private String description_url;
         private String evaluates;
+        private String freight;
         private String give_point;
         private String goods_id;
         private String goods_name;
@@ -107,6 +109,14 @@ public class DStoreGoodsDetail {
 
         public void setEvaluates(String evaluates) {
             this.evaluates = evaluates;
+        }
+
+        public String getFreight() {
+            return freight;
+        }
+
+        public void setFreight(String freight) {
+            this.freight = freight;
         }
 
         public String getGive_point() {
@@ -358,11 +368,11 @@ public class DStoreGoodsDetail {
             /**
              * attr_value_items :
              * attr_value_items_format :
-             * price : 168.00
-             * promote_price : 168.00
-             * sku_id : 36
+             * price : 668.00
+             * promote_price : 668.00
+             * sku_id : 16
              * sku_name :
-             * stock : 50
+             * stock : 20
              */
 
             private String attr_value_items;

@@ -91,7 +91,7 @@ public class HuiyuansayActivity extends BaseBindingActivity {
                         if(body == null)return;
                         Log.e("user","进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                             LvealBean data = (LvealBean) body.getData();
                           //  bridge_web_view.loadUrl(data.getContent());
 

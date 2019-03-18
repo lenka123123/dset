@@ -61,7 +61,7 @@ public class AddressMgr {
                         if (body == null) return;
                         Log.e("地址加载", "进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                             AddressListBean data = (AddressListBean) body.getData();
                             adapter.setNewData(data.getMyaddress());
 
@@ -135,7 +135,7 @@ public class AddressMgr {
                         Log.e("设置默认地址", "进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
                             loadAddressList(adapter);
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                         } else if (body.getStatus().equals("0002")) {
                             RxToast.showShort(body.getMessage());
 
@@ -177,7 +177,7 @@ public class AddressMgr {
                        if (body == null) return;
                        Log.e("删除地址", "进来了2!!!!");
                        if (body.getStatus().equals("0001")) {
-                           RxToast.showShort(body.getMessage());
+//                           RxToast.showShort(body.getMessage());
                            loadAddressList(adapter);
                        } else if (body.getStatus().equals("0002")) {
                            RxToast.showShort(body.getMessage());

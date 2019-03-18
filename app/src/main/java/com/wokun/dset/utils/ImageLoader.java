@@ -18,18 +18,18 @@ public class ImageLoader {
     }
 
     public static void loadImageWithPlaceholder(String imgUrl, ImageView imageView) {
-        Glide.with(DsetApp.getContext())
-                .load(imgUrl)
-                .fitCenter()
-                .placeholder(R.drawable.ic_back)
-                .into(imageView);
+//        Glide.with(DsetApp.getContext())
+//                .load(imgUrl)
+////                .fitCenter()
+//                .placeholder(R.drawable.ic_back)
+//                .into(imageView);
     }
 
     public static void loadImageWP(String imgUrl, ImageView imageView) {
-        Glide.with(DsetApp.getContext())
-                .load(imgUrl)
-                .placeholder(R.drawable.ic_back)
-                .into(imageView);
+//        Glide.with(DsetApp.getContext())
+//                .load(imgUrl)
+//                .placeholder(R.drawable.ic_back)
+//                .into(imageView);
     }
 
     public static void loadImage(String imgUrl, ImageView imageView) {

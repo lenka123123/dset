@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y800"
+    android:background="#00000000">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/y139"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/choice_size_cancel"
+            android:layout_width="@dimen/x139"
+            android:layout_height="@dimen/y139"
+            android:layout_alignParentRight="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/default_img" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/goods_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y250"
+        android:gravity="bottom">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/x210"
+            android:layout_height="@dimen/y210"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/x47"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y156"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/y54"
+
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/x47"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <View
+                android:layout_width="@dimen/x210"
+                android:layout_height="@dimen/y210"
+                android:layout_gravity="bottom"
+                android:background="#000" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/x30"
+                android:paddingTop="@dimen/y40">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="￥3000"
+                    android:textColor="@color/color_F86442"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已选 x1 黑色 M"
+                    android:textColor="@color/color_18_18_18"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="该商品可用美宝购买"
+                    android:textColor="@color/color_153_153_153"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/goods_info"
+        android:layout_marginBottom="@dimen/y100"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y20"
+            android:layout_marginLeft="@dimen/x47"
+            android:background="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y1"
+            android:layout_marginLeft="@dimen/x47"
+            android:background="@color/color_248_248_248" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/choice_size_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_alignParentBottom="true"
+        android:background="#fc623f"
+        android:gravity="center"
+        android:text="确认加入"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</RelativeLayout>

@@ -74,7 +74,7 @@ public class HistoryMymessagefragment extends SimpleRefreshAndLoadMoreFragment<A
                 if(body == null)return;
                 Log.e("进来了22231","进来了2!!!!");
                 if (body.getStatus().equals("0001")) {
-                    RxToast.showShort(body.getMessage());
+//                    RxToast.showShort(body.getMessage());
                   List<AdviceRecordBean>  data1 =body.getData();
                     if(data1 == null){return;}
                     setData(true,data1);

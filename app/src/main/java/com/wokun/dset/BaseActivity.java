@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.wokun.dset.store.LowMemory;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
 
@@ -16,6 +18,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(setActivityLayout());
 //        StatusBarCompat.setStatusBarColor(this, Color.WHITE, true);
         context = this;
+       registerComponentCallbacks(new LowMemory());
         initView();
         initData();
     }

@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'me.tatarka:gradle-retrolambda:3.2.0'
 
@@ -23,13 +23,13 @@ allprojects {
     }*/
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
-
-        maven {
-            url 'http://dl.bintray.com/dev-fingerlinks/maven'
-        }
         mavenCentral()
         google()
+
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.google.com" }
+        maven {   url 'http://dl.bintray.com/dev-fingerlinks/maven'  }
+
     }
 
 }

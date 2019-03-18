@@ -108,7 +108,7 @@ public class HuiyuanlevelActivity extends BaseBindingActivity {
                         if(body == null)return;
                         Log.e("user","进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                             user = (LevelBean) body.getData();
                             Log.e("user",user+"!!!!");
                             if(user == null){return;}
@@ -265,7 +265,7 @@ public class HuiyuanlevelActivity extends BaseBindingActivity {
                         if(body == null)return;
                         Log.e("user","进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                             lodaMessage();
                         }
                     }

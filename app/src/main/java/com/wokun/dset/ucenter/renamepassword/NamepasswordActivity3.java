@@ -126,7 +126,7 @@ public class NamepasswordActivity3 extends BaseBindingActivity {
                         if (body == null) return;
                         Log.e("修改密码信息", "进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                             showpayDialog();
                         } else if (body.getStatus().equals("0002")) {
                             RxToast.showShort(body.getMessage());

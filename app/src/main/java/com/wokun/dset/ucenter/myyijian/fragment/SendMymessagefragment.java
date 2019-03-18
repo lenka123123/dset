@@ -101,7 +101,7 @@ public class SendMymessagefragment extends BaseFragment {
                         public void onSuccess(Response<BaseResponse<PostPictureBean>> response) {
                             BaseResponse body = response.body();
                             if(body == null)return;
-                            RxToast.showShort(body.getMessage());
+//                          /  RxToast.showShort(body.getMessage());
                             if(body.getStatus().equals("0001")){
                                 PostPictureBean    postpic = (PostPictureBean) body.getData();
                                 Log.e("图片上传","图片上传了"+body.getMessage());
@@ -172,7 +172,7 @@ public class SendMymessagefragment extends BaseFragment {
                         if(body == null)return;
                         RxToast.showShort(body.getMessage());
                         if(body.getStatus().equals("0001")){
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                             startActivity(MyyijianActivity.class);
                               //  onFinish();
                         }

@@ -73,7 +73,7 @@ public class NoticeWebActivity  extends BaseBindingActivity{
                         if(body == null)return;
                         Log.e("user","进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                             NoticeDetailBean    user = (NoticeDetailBean) body.getData();
                             Log.e("user",user+"!!!!");
                             if(user == null){return;}

@@ -183,7 +183,7 @@ public class RegisterActivity extends BaseBindingActivity {
                         if(body == null)return;
                         Log.e("user1","进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                          //   finish();
                             startActivity(LoginActivity.class);
                         }

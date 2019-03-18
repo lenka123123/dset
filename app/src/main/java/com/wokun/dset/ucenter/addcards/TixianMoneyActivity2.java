@@ -164,7 +164,7 @@ public class TixianMoneyActivity2 extends BaseBindingActivity {
                         BaseResponse body = response.body();
                         if(body == null)return;
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                             loadDataListCard();
                         }
                     }
@@ -226,7 +226,7 @@ public class TixianMoneyActivity2 extends BaseBindingActivity {
                         BaseResponse2 body = response.body();
                         if(body == null)return;
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+//                            RxToast.showShort(body.getMessage());
                            cardlist= (List<BankCardBean>) body.getData();
                             mCardListadapter.setData(cardlist);
                             Log.e("进来来dsa22","进来来dsa22");
