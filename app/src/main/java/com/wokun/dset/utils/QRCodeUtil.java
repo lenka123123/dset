@@ -32,7 +32,7 @@ public class QRCodeUtil {
      */
     @Nullable
     public static Bitmap createQRCodeBitmap(String content, int width, int height){
-        return createQRCodeBitmap(content, width, height, "UTF-8", "H", "2", Color.BLACK, Color.WHITE);
+        return createQRCodeBitmap(content, width, height, "UTF-8", "H", "0", Color.BLACK, Color.WHITE);
     }
 
     /**
@@ -75,7 +75,7 @@ public class QRCodeUtil {
             }
 
             if(!TextUtils.isEmpty(margin)){
-                hints.put(EncodeHintType.MARGIN, margin); // 空白边距设置
+             hints.put(EncodeHintType.MARGIN, margin); // 空白边距设置
             }
             BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
 

@@ -1,6 +1,7 @@
 package com.wokun.dset.store.dstore.dstoredetail;
 
 import android.content.Intent;
+import android.os.IInterface;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.shantoo.widget.toast.RxToast;
 import com.wokun.dset.BaseActivity;
 import com.wokun.dset.DsetApp;
 import com.wokun.dset.R;
@@ -31,7 +33,9 @@ import com.wokun.dset.model.Constants;
 import com.wokun.dset.response.BaseResponse;
 import com.wokun.dset.store.adapter.SelectGoogsParamAdapter;
 import com.wokun.dset.store.bean.DStoreGoodsDetail;
+import com.wokun.dset.store.bean.DStoreImmediatelyPay;
 import com.wokun.dset.store.bean.GoodsSKUList;
+import com.wokun.dset.store.dstore.immediatelypay.DStoreImmediatelyPayActivity;
 import com.wokun.dset.utils.ImageLoadUtils;
 import com.wokun.dset.utils.ImageLoader;
 import com.wokun.dset.utils.ImageLoaderUtils;
@@ -39,6 +43,7 @@ import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
 import com.wokun.dset.utils.TextViewUtil;
+import com.wokun.dset.utils.ToastUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -75,6 +80,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     private String sku_id = "";
     private TextView pop_price;
     private TextView pop_store;
+    private String promote_price = "";
 
 
     @Override
@@ -140,8 +146,9 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         Intent intent = getIntent();
 
         // 测试数据 51
-//        goods_id = intent.getStringExtra("goods_id");
-        goods_id = "51";
+        goods_id = intent.getStringExtra("goods_id");
+        if (Constants.isdebug)
+            goods_id = "51";
     }
 
 
@@ -208,12 +215,12 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     private void getStoreInfo() {
         String token = (String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.USERID, "");
-
+        String timestamp = StringUtil.getCurrentTime();
         Map params = new HashMap();
         params.put("goods_id", goods_id);
         params.put("user_id", user_id);
         params.put("token", token);
-        params.put("timestamp", StringUtil.getCurrentTime());
+        params.put("timestamp", timestamp);
         final Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
         String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
@@ -221,16 +228,16 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         OkGo.<JsonObject>post(Constants.BASE_URL + Constants.STORE_GOODS_DETAIL)
                 .tag(this)
                 .params("sign", sign)
-                .params("timestamp", StringUtil.getCurrentTime())
+                .params("timestamp", timestamp)
                 .params("user_id", user_id)
                 .params("token", token)
                 .params("goods_id", goods_id)
                 .execute(new JsonCallback<JsonObject>() {
                     @Override
                     public void onSuccess(Response<JsonObject> response) {
-                        BaseResponse goodesDetail = (BaseResponse) JosnFrom.getInstance().getObj(response.body().toString(), BaseResponse.class);
+                        DStoreGoodsDetail goodesDetail = (DStoreGoodsDetail) JosnFrom.getInstance().getObj(response.body().toString(), DStoreGoodsDetail.class);
                         if (goodesDetail != null && goodesDetail.getStatus().equals("0001")) {
-
+                            detailData(goodesDetail);
                         }
                     }
 
@@ -331,12 +338,15 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    public void setArray(int spec_id, int spec_value_id) {
+    public void setArray( int spec_id, int spec_value_id) {
         boolean isShow = true;
-        skuMap.put(spec_id,spec_value_id);
+
+
+        skuMap.put(spec_id, spec_value_id);
 
         for (int val : skuMap.values()) {
             if (val == -1) {
+                RxToast.showShort("请选择规格");
                 isShow = false;
             }
 
@@ -349,16 +359,21 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                 attr.append(":");
                 attr.append(skuMap.get(key));
                 attr.append(";");
-                System.out.println("key= " + key + " and value= " + skuMap.get(key));
             }
 
-            for (int i = 0; i < dataBean.getGoods_sku().size(); i++) {
-                System.out.println(i + "原始数据 " + attr.toString());
-                System.out.println(i + "后台数据 " + dataBean.getGoods_sku().get(i).getAttr_value_items());
+            Log.i("规格选择完成之后", attr.toString());
 
+
+            for (int i = 0; i < dataBean.getGoods_sku().size(); i++) {
+                Log.i("规格选择完成之后=== ", dataBean.getGoods_sku().get(i).getAttr_value_items());
                 if ((attr.toString()).startsWith(dataBean.getGoods_sku().get(i).getAttr_value_items())) {
                     sku_id = dataBean.getGoods_sku().get(i).getSku_id();
-                    System.out.println("99sku_id " + sku_id);
+                    if (dataBean.getPromotion_type().equals("0")) { //无促销
+                        promote_price = dataBean.getGoods_sku().get(i).getPrice();
+                    } else {
+                        promote_price = dataBean.getGoods_sku().get(i).getPromote_price();
+                    }
+
                     pop_price.setText("￥" + dataBean.getGoods_sku().get(i).getPromote_price());
                     pop_store.setText("库存：" + dataBean.getGoods_sku().get(i).getStock() + "件");
                 }
@@ -369,11 +384,19 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.choice_size_cancel:
+                if (null != popupWindow) {
+                    popupWindow.dismiss();
+                }
+                break;
             case R.id.action_join_shopping_cart:
                 showChoiceSizePop();
                 break;
             case R.id.choice_size_confirm: //确定加入
                 join();
+                break;
+            case R.id.action_buy_service: //立即付款
+                immediatelyPay();
                 break;
         }
 
@@ -383,14 +406,14 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     private void join() {
         String token = (String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.USERID, "");
-
+        String timestamp = StringUtil.getCurrentTime();
         Map params = new HashMap();
         params.put("goods_id", goods_id);
         params.put("sku_id", sku_id);
         params.put("nums", "1");
         params.put("user_id", user_id);
         params.put("token", token);
-        params.put("timestamp", StringUtil.getCurrentTime());
+        params.put("timestamp", timestamp);
         final Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
         String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
@@ -398,7 +421,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         OkGo.<JsonObject>post(Constants.BASE_URL + Constants.JOIN_CAR)
                 .tag(this)
                 .params("sign", sign)
-                .params("timestamp", StringUtil.getCurrentTime())
+                .params("timestamp", timestamp)
                 .params("user_id", user_id)
                 .params("token", token)
                 .params("goods_id", goods_id)
@@ -407,10 +430,62 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                 .execute(new JsonCallback<JsonObject>() {
                     @Override
                     public void onSuccess(Response<JsonObject> response) {
-//                        DStoreGoodsDetail goodesDetail = (DStoreGoodsDetail) JosnFrom.getInstance().getObj(response.body().toString(), DStoreGoodsDetail.class);
-//                        if (goodesDetail != null && goodesDetail.getStatus().equals("0001")) {
-//                            detailData(goodesDetail);
-//                        }
+                        BaseResponse goodesDetail = (BaseResponse) JosnFrom.getInstance().getObj(response.body().toString(), BaseResponse.class);
+                        if (goodesDetail != null && goodesDetail.getStatus().equals("0001")) {
+                            RxToast.showShort("添加成功");
+                            if (null != popupWindow) {
+                                popupWindow.dismiss();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response response) {
+//                        dismissLP();
+                        super.onError(response);
+                        Log.e("user", response + "!!!!");
+                        DsetApp.getInstance().setRefreshShopCart(false);
+                    }
+                });
+    }
+
+    //立即支付
+    private void immediatelyPay() {
+        String token = (String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.TOKEN, "");
+        String user_id = (String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.USERID, "");
+        String timestamp = StringUtil.getCurrentTime();
+        Map params = new HashMap();
+        params.put("goods_id", goods_id);
+        params.put("sku_id", sku_id);
+
+        params.put("user_id", user_id);
+        params.put("token", token);
+        params.put("timestamp", timestamp);
+        final Map<String, String> removeMap = removeEmptyData(params);
+        Map<String, String> resultMap = sortMapByKey(removeMap);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
+
+        OkGo.<JsonObject>post(Constants.BASE_URL + Constants.NOW_PAY)
+                .tag(this)
+                .params("sign", sign)
+                .params("timestamp", timestamp)
+                .params("user_id", user_id)
+                .params("token", token)
+                .params("goods_id", goods_id)
+                .params("sku_id", sku_id)
+                .execute(new JsonCallback<JsonObject>() {
+                    @Override
+                    public void onSuccess(Response<JsonObject> response) {
+                        DStoreImmediatelyPay goodesDetail = (DStoreImmediatelyPay) JosnFrom.getInstance().getObj(response.body().toString(), DStoreImmediatelyPay.class);
+                        if (goodesDetail != null && goodesDetail.getStatus().equals("0001")) {
+                            Intent intent = new Intent(DStoreDetailActivity.this, DStoreImmediatelyPayActivity.class);
+                            intent.putExtra("goods_id", goods_id);
+                            intent.putExtra("sku_id", sku_id);
+                            intent.putExtra("cart_id_str", goodesDetail.getData().getCart_id_str());
+                            intent.putExtra("promote_price", promote_price);
+                            DStoreDetailActivity.this.startActivity(intent);
+                            DStoreDetailActivity.this.finish();
+                        }
                     }
 
                     @Override

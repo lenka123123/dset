@@ -40,6 +40,7 @@ import com.wokun.dset.ucenter.DsytYaoqingActivity;
 import com.wokun.dset.ucenter.SaoyisaoActivity;
 import com.wokun.dset.utils.ImageLoader;
 import com.wokun.dset.utils.StringUtil;
+import com.wokun.dset.utils.ToastUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,22 +56,26 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
  * Created by Administrator on 2019\1\14 0014
  */
 
-public class HomeFragment  extends BaseFragment {
-    @BindView(R.id.ivLD_matchTip)ImageView ivLDMatchTip;
-    @BindView(R.id.saoyisao)ImageView saoyisao;
-    @BindView(R.id.swipeRefreshLayout)SwipeRefreshLayout swipeRefreshLayout;
+public class HomeFragment extends BaseFragment {
+    @BindView(R.id.ivLD_matchTip)
+    ImageView ivLDMatchTip;
+    @BindView(R.id.saoyisao)
+    ImageView saoyisao;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.marqueeView)
     MarqueeView marqueeView;
-    private  UserBean user;
+    private UserBean user;
     @BindView(R.id.user_head_img)
     RoundedImageView userHeadImg;
     @BindView(R.id.shouye_user_name)
     TextView shouye_user_name;
- /*   @BindView(R.id.evalution_score1)
-    MyRatingBar xinxin;*/
+    /*   @BindView(R.id.evalution_score1)
+       MyRatingBar xinxin;*/
     @BindView(R.id.star)
     LinearLayout star;
-  private     UserBean.ChecksignBean checksign;
+    private UserBean.ChecksignBean checksign;
+
     @Override
     public int createView() {
         return R.layout.activity_home;
@@ -78,12 +83,12 @@ public class HomeFragment  extends BaseFragment {
 
     @Override
     public void initViews() {
-        Animation rotate = AnimationUtils.loadAnimation(getContext(),R.anim.ld_rotate);
+        Animation rotate = AnimationUtils.loadAnimation(getContext(), R.anim.ld_rotate);
         ivLDMatchTip.startAnimation(rotate);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-            //    RxToast.showShort("我刷新了");
+                //    RxToast.showShort("我刷新了");
                 loadDataMessage();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -101,7 +106,7 @@ public class HomeFragment  extends BaseFragment {
         params.put("timestamp", StringUtil.getCurrentTime());
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
         OkGo.<BaseResponse<UserBean>>post(Constants.BASE_URL + Constants.GET_MAIN)
                 .tag(this)
                 .params("sign", sign)
@@ -110,18 +115,18 @@ public class HomeFragment  extends BaseFragment {
                     @Override
                     public void onSuccess(Response<BaseResponse<UserBean>> response) {
                         BaseResponse body = response.body();
-                        if(body == null)return;
-                        Log.e("首页2232","进来了2!!!!"+body.getStatus());
+                        if (body == null) return;
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
+                            //   RxToast.showShort(body.getMessage());
                             user = (UserBean) body.getData();
-                            Log.e("首页2",user+"!!!!");
-                            if(user == null){return;}
-                            if(body.getMessage().equals("未登录")){
+                            if (user == null) {
+                                return;
+                            }
+                            if (body.getMessage().equals("未登录")) {
                                 startActivity(LoginActivity.class);
                             }
-                          //  DsetApp.getInstance().setUser(user);
-                              checksign = user.getChecksign();
+                            //  DsetApp.getInstance().setUser(user);
+                            checksign = user.getChecksign();
                             //公告
                             List<UserBean.NoticBean> noticeBeanList = user.getNotic();
                             if (noticeBeanList != null) {
@@ -132,46 +137,43 @@ public class HomeFragment  extends BaseFragment {
                                 public void onItemClick(int position, TextView textView) {
                                     String id = user.getNotic().get(position).getId();
                                     Intent intent = new Intent(getContext(), NoticeWebActivity.class);
-                                    intent.putExtra("id",id);
+                                    intent.putExtra("id", id);
                                     startActivity(intent);
                                 }
                             });
                             marqueeView.startWithList(AppCache.getNotice());
                             //用户头像
-                            Log.e("头像",user.getUser().getUser_img()+"");
-                            if(TextUtils.isEmpty(user.getUser().getUser_img()))
-                            {
+                            Log.e("头像", user.getUser().getUser_img() + "");
+                            if (TextUtils.isEmpty(user.getUser().getUser_img())) {
                                 ImageLoader.loadImage("", userHeadImg);
-                            }else {
-                                ImageLoader.loadImage(user.getUser().getUser_img(), userHeadImg);}
-                             //用户数据
-                            shouye_user_name.setText("UID:"+user.getUser().getUserid());
+                            } else {
+                                ImageLoader.loadImage(user.getUser().getUser_img(), userHeadImg);
+                            }
+                            //用户数据
+                            shouye_user_name.setText("UID:" + user.getUser().getUserid());
                             setuser();
                             if (checksign.getSignin_status() != null && !"0".equals(checksign.getSignin_status())) {
                                 showHongbao();
                             }
-                        }
-                        else    if(body.getStatus().equals("0002")){
-                        RxToast.showShort(body.getMessage());
-                        startActivity(LoginActivity.class);
-                    }
-                        else   if(body.getStatus().equals("0003")){
+                        } else if (body.getStatus().equals("0002")) {
                             RxToast.showShort(body.getMessage());
                             startActivity(LoginActivity.class);
-                        }
-                        else {
+                        } else if (body.getStatus().equals("0003")) {
+                            RxToast.showShort(body.getMessage());
+                            startActivity(LoginActivity.class);
+                        } else {
                             startActivity(LoginActivity.class);
                         }
 
                     }
+
                     @Override
                     public void onError(Response response) {
                         super.onError(response);
-                        Log.e("首页3",response+"!!!!");
+                        Log.e("首页3", response + "!!!!");
                         DsetApp.getInstance().setRefreshShopCart(false);
                     }
                 });
-
 
 
     }
@@ -201,7 +203,7 @@ public class HomeFragment  extends BaseFragment {
                 params.put("timestamp", StringUtil.getCurrentTime());
                 Map<String, String> removeMap = removeEmptyData(params);
                 Map<String, String> resultMap = sortMapByKey(removeMap);
-                String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+                String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
                 //  String sign = StringUtil.Md5Str(params, Constants.KEY);
                 OkGo.<BaseResponse<SignBean>>post(Constants.BASE_URL + Constants.SIGN)
                         .tag(this)
@@ -211,14 +213,14 @@ public class HomeFragment  extends BaseFragment {
                             @Override
                             public void onSuccess(Response<BaseResponse<SignBean>> response) {
                                 BaseResponse body = response.body();
-                                if(body == null)return;
-                                Log.e("user","进来了2!!!!");
+                                if (body == null) return;
+                                Log.e("user", "进来了2!!!!");
                                 if (body.getStatus().equals("0001")) {
-                                    RxToast.showShort(body.getMessage());
+                                    //   RxToast.showShort(body.getMessage());
                                     alertDialog.dismiss();
                                     SignBean data = (SignBean) body.getData();
                                     double amount = data.getAmount();
-                                    String amounts =(int) data.getAmount()+"";
+                                    String amounts = (int) data.getAmount() + "";
                                     openhongbao(amounts);
 
                            /*         btnDialogSignOpen.setVisibility(View.GONE);
@@ -227,10 +229,11 @@ public class HomeFragment  extends BaseFragment {
 
                                 }
                             }
+
                             @Override
                             public void onError(Response response) {
                                 super.onError(response);
-                                Log.e("user",response+"!!!!");
+                                Log.e("user", response + "!!!!");
                                 DsetApp.getInstance().setRefreshShopCart(false);
                             }
                         });
@@ -259,24 +262,24 @@ public class HomeFragment  extends BaseFragment {
     }
 
     private void setuser() {
-      //  star.refreshDrawableState();
+        //  star.refreshDrawableState();
         star.removeAllViews();
-        if (user.getUser().getStart() == 1){
+        if (user.getUser().getStart() == 1) {
             TextView textView = new TextView(getActivity());
             textView.setTextColor(getResources().getColor(R.color.yellow));
             textView.setTextSize(12);
             textView.setText("普通");
             star.addView(textView);
-        }else if (user.getUser().getStart()>1){
-            for (int j = 0;j<(user.getUser().getStart()-1)/5;j++){
-                ViewGroup.LayoutParams layoutParams =  new ViewGroup.LayoutParams(32,32);
+        } else if (user.getUser().getStart() > 1) {
+            for (int j = 0; j < (user.getUser().getStart() - 1) / 5; j++) {
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(32, 32);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.shouye_huangguan);
                 star.addView(imageView);
             }
-            for (int i =0;i<(user.getUser().getStart()-1)%5;i++){
-                ViewGroup.LayoutParams layoutParams =  new ViewGroup.LayoutParams(32,32);
+            for (int i = 0; i < (user.getUser().getStart() - 1) % 5; i++) {
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(32, 32);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.shouye_xinxin);
@@ -285,24 +288,31 @@ public class HomeFragment  extends BaseFragment {
         }
     }
 
-    /**互动商户 */
+    /**
+     * 互动商户
+     */
 
     @OnClick(R.id.dsyt_zengzhi)
-    public void action_dsyt_zengzhi(View v){
-        if(R.id.dsyt_zengzhi == v.getId()){
+    public void action_dsyt_zengzhi(View v) {
+        if (R.id.dsyt_zengzhi == v.getId()) {
             startActivity(changeshopActivity.class);
         }
     }
 
-    /**发现余额 */
+    /**
+     * 发现余额
+     */
 
     @OnClick(R.id.dsyt_change_center)
-    public void action_dsyt_change_centeri(View v){
-        if(R.id.dsyt_change_center == v.getId()){
+    public void action_dsyt_change_centeri(View v) {
+        if (R.id.dsyt_change_center == v.getId()) {
             startActivity(DsytYaoqingActivity.class);
         }
     }
-    /**扫一扫*/
+
+    /**
+     * 扫一扫
+     */
     @OnClick(R.id.saoyisao)
     public void action_saoyisao(View v) {
         if (R.id.saoyisao == v.getId()) {
@@ -312,31 +322,40 @@ public class HomeFragment  extends BaseFragment {
         }
     }
 
-    /**太宜食聊
-     *
+    /**
+     * 太宜食聊
+     * <p>
      * http://www.appchina.com/app/com.wokun.tysl
-     * */
+     */
 
     @OnClick(R.id.home_tysl)
-    public void action_home_tysl(View v){
-        if(R.id.home_tysl == v.getId()){
-        startActivity(AboutTyslActivity.class);
+    public void action_home_tysl(View v) {
+        if (R.id.home_tysl == v.getId()) {
+            startActivity(AboutTyslActivity.class);
         }
     }
-    /**达事商城 */
+
+    /**
+     * 达事商城
+     */
 
     @OnClick(R.id.dsyt_findyue)
-    public void action_dsyt_dsyt_findyue(View v){
-        if(R.id.dsyt_findyue == v.getId()){
-            startActivity(DShopHomeActivity.class);
+    public void action_dsyt_dsyt_findyue(View v) {
+        if (R.id.dsyt_findyue == v.getId()) {
+            RxToast.showShort("敬请期待");
+
+          startActivity(DShopHomeActivity.class);
         }
     }
-    /**会员等级 */
+
+    /**
+     * 会员等级
+     */
     @OnClick(R.id.shouye_user_huiyuan)
-    public void action_homehuiyuan(View v){
-        if(R.id.shouye_user_huiyuan == v.getId()){
+    public void action_homehuiyuan(View v) {
+        if (R.id.shouye_user_huiyuan == v.getId()) {
             Intent intent = new Intent(getContext(), HuiyuanlevelActivity.class);
-            intent.putExtra("touxiang",user.getUser().getUser_img());
+            intent.putExtra("touxiang", user.getUser().getUser_img());
             startActivity(intent);
         }
     }

@@ -13,7 +13,9 @@ import com.wokun.dset.utils.JosnFrom;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class SelectGoogsParamAdapter extends BaseQuickAdapter<DStoreGoodsDetail.DataBean.SpecListBean, BaseViewHolder> {
@@ -41,10 +43,24 @@ public class SelectGoogsParamAdapter extends BaseQuickAdapter<DStoreGoodsDetail.
         tagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-                context.setArray(item.getSpec_id(), item.getValue().get(position).getSpec_value_id());
+
+//                context.setArray(position, item.getSpec_id(), item.getValue().get(position).getSpec_value_id());
                 return false;
             }
         });
+        tagFlowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+                List<Integer> list = new ArrayList<>(selectPosSet);
+                if (list.get(0) == null) {
+                    context.setArray(item.getSpec_id(), -1);
+                } else {
+                    context.setArray(item.getSpec_id(), item.getValue().get(list.get(list.get(0))).getSpec_value_id());
+                }
+
+            }
+        });
+
 
 //        popColor.setAdapter(colorAdapter);
 

@@ -2,6 +2,10 @@ package com.wokun.dset.model;
 
 public class Constants {
 
+
+    public static final boolean isdebug = true;
+
+
     public static final String ACC = "account";
     public static final String PWD = "pwd";
     public static final String USERID = "userid";
@@ -125,6 +129,9 @@ public class Constants {
     public static String STORE_GOODS_DETAIL = "shop-goods/goods-detail.html"; //商城商品详情
     public static String JOIN_CAR = "shop-goods/add-cart.html"; //加入购物车
     public static String APPLY_RELEASE = "user/apply-release.html"; //申请释放
+    public static String NOW_PAY = "shop-goods/buy-now.html"; //立即购买接口  获取购物车ID
+    public static String DEFAULT_ADRESS = "shop/default-address.html"; //获取默认地址
+    public static String PAY_FOR_IMMEDIATELY = "shop/submit-order.html"; //支付
 
 
     /**

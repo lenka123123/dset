@@ -1,48 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/show_address"
         style="@style/RelativeLayout_Default"
-         android:visibility="gone"
-      >
-
-        <ImageView
-            android:id="@+id/iv1"
-            android:src="@drawable/ic_dietician_detail_position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true" />
+        android:visibility="visible">
 
         <TextView
-
             android:id="@+id/tv_contacts"
             style="@style/TextView_Style_Content"
-            android:textColor="@color/color22"
+            android:layout_width="wrap_content"
             android:layout_marginLeft="@dimen/margin_default"
-            android:layout_toRightOf="@+id/iv1"
-            android:text="未開" />
+            android:text="姓名"
+            android:textColor="@color/color22" />
 
         <TextView
             android:id="@+id/tv_order_placer_tel"
             style="@style/TextView_Style_Content"
             android:layout_marginLeft="@dimen/margin_default"
             android:layout_toRightOf="@+id/tv_contacts"
-            android:text="35345345"
+            android:text="电话号码"
             android:textColor="@color/color22" />
 
         <TextView
             android:id="@+id/tv_order_placer_address"
+            android:drawablePadding="@dimen/x12"
             style="@style/TextView_Style_Content"
             android:layout_below="@+id/tv_contacts"
             android:layout_marginLeft="@dimen/margin_default"
             android:layout_marginTop="6dp"
+            android:drawableLeft="@drawable/ic_dietician_detail_position"
             android:gravity="start"
-            android:layout_toRightOf="@+id/iv1"
             android:text="江蘇省南京市" />
 
         <ImageView
@@ -53,29 +44,25 @@
     <RelativeLayout
         android:id="@+id/select_address"
         style="@style/RelativeLayout_Default"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/iv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_dietician_detail_position" />
+        android:visibility="visible">
 
         <TextView
-            style="@style/TextView_Style_Content"
-            android:textColor="@color/color22"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_default"
-            android:layout_toRightOf="@+id/iv2"
-            android:text="请选择收货地址" />
+            android:id="@+id/goto_select"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y80"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/x100"
+            android:layout_marginRight="@dimen/x100"
+            android:background="@drawable/drawable_btn_bg_color_blue2"
+            android:gravity="center"
+            android:text="请选择您的收货地址"
+            android:textColor="#fff"
+            android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/iv_go2"
-            style="@style/ImageView_Go_Right" />
     </RelativeLayout>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_caihong"/>
+        android:src="@drawable/ic_caihong" />
 </LinearLayout>

@@ -34,6 +34,7 @@ public class DsetApp extends Application {
     private boolean isRefreshUCenter = false; //是否刷新个人中心数据,默认不刷新
     private boolean isRefreshShopCart = false; //是否刷新购物车列表数据,默认不刷新
     private boolean login = false;
+    private static boolean isdebug = true;
 
     @Override
     public void onCreate() {

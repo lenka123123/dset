@@ -152,7 +152,7 @@ public class DsytYaoqingActivity extends BaseBindingActivity {
                             if (data == null) {
                                 return;
                             }
-                            Bitmap mBitmap11 = QRCodeUtil.createQRCodeBitmap(data.getShare_qrcode(), 97, 97);
+                            Bitmap mBitmap11 = QRCodeUtil.createQRCodeBitmap(data.getShare_qrcode(), 200, 200);
                             Glide.with(DsytYaoqingActivity.this).load(mBitmap11).into(mDsytYaoqinImg1);
                             mDsytYaoqinTxt1.setText(data.getMycode());
 
@@ -160,7 +160,7 @@ public class DsytYaoqingActivity extends BaseBindingActivity {
                             View v = LayoutInflater.from(DsytYaoqingActivity.this).inflate(R.layout.activity_dsyt_yaoqin, null, false);
                             mDsytYaoqinTxt = (TextView) v.findViewById(R.id.dsyt_yaoqin_txt);
                             mDsytYaoqinImg = (ImageView) v.findViewById(R.id.dsyt_yaoqin_img);
-                            Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(data.getShare_qrcode(), 97, 97);
+                            Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(data.getShare_qrcode(), 200, 200);
                             mDsytYaoqinImg.setImageBitmap(mBitmap);
 
                             mDsytYaoqinTxt.setText(data.getMycode());

@@ -103,6 +103,8 @@
         <!--  达事商城 商品列表 -->
         <activity android:name=".store.dstore.dstorelist.DStoreSearchListActivity" />
         <activity android:name=".store.dstore.dstoredetail.DStoreDetailActivity" />
+        <!-- 立即支付-->
+        <activity android:name=".store.dstore.immediatelypay.DStoreImmediatelyPayActivity"></activity>
 
 
         <!-- 高德地图定位 -->
@@ -116,6 +118,7 @@
         <activity android:name=".login.RegisterAboutActivity" />
         <activity android:name=".home.AboutTyslActivity" />
         <activity android:name=".ucenter.AboutWebActivity"></activity>
+
 
         <!--    <provider
                    android:authorities="com.wokun.dset.fileprovider"

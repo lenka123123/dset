@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.annotations.NonNull;
+import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shantoo.widget.imageview.SelectorImageView;
@@ -31,6 +32,9 @@ import com.wokun.dset.login.runtimepermissions.PermissionsResultAction;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.model.UserBean;
 import com.wokun.dset.response.BaseResponse;
+import com.wokun.dset.store.bean.DefaultAddress;
+import com.wokun.dset.store.dstore.immediatelypay.DStoreImmediatelyPayActivity;
+import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
 
@@ -85,7 +89,7 @@ public class LoginActivity extends BaseBindingActivity {
         //记住密码
         remberPhone();
 
-
+        versionupdate();
       /*  Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -227,8 +231,8 @@ public class LoginActivity extends BaseBindingActivity {
     @OnClick(R.id.action_login)
     public void action_dset_login_lin(View v) {
         if (R.id.action_login == v.getId()) {
-
-            etUserPwd.setText("123456");
+            if (Constants.isdebug)
+                etUserPwd.setText("123456");
             mylogin();
         }
     }
@@ -257,13 +261,15 @@ public class LoginActivity extends BaseBindingActivity {
             return;
         }
 
-        action_login.setEnabled(false);
-        action_login.setClickable(false);
-        action_login.setFocusable(false);
+//        action_login.setEnabled(false);
+//        action_login.setClickable(false);
+//        action_login.setFocusable(false);
+
+        String timestamp = StringUtil.getCurrentTime();
         Map params = new HashMap();
         params.put("username", mobile);
         params.put("password", pwd);
-        params.put("timestamp", StringUtil.getCurrentTime());
+        params.put("timestamp", timestamp);
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
         String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
@@ -272,7 +278,7 @@ public class LoginActivity extends BaseBindingActivity {
         OkGo.<BaseResponse<UserBean>>post(Constants.BASE_URL + Constants.LOGIN)
                 .tag(this)
                 .params("sign", sign)
-                .params("timestamp", StringUtil.getCurrentTime())
+                .params("timestamp", timestamp)
                 .params("username", mobile)
                 .params("password", pwd)
                 .execute(new JsonCallback<BaseResponse<UserBean>>() {
@@ -367,6 +373,50 @@ public class LoginActivity extends BaseBindingActivity {
         if (R.id.forget_password == v.getId()) {
             startActivity(AlterPwdActivity.class);
         }
+    }
+
+
+    //调用支付
+    private void versionupdate() {
+        String token = (String) SpCommonUtils.get(LoginActivity.this, Constants.TOKEN, "");
+        String user_id = (String) SpCommonUtils.get(LoginActivity.this, Constants.USERID, "");
+        String timestamp = StringUtil.getCurrentTime();
+        Map params = new HashMap();
+
+        params.put("user_id", user_id);
+        params.put("token", token);
+        params.put("timestamp", timestamp);
+        params.put("type", "1");
+
+        final Map<String, String> removeMap = removeEmptyData(params);
+        Map<String, String> resultMap = sortMapByKey(removeMap);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
+        OkGo.<JsonObject>post(Constants.BASE_URL + Constants.VENSION)
+                .tag(this)
+                .params("sign", sign)
+                .params("timestamp", timestamp)
+                .params("user_id", user_id)
+                .params("token", token)
+                .params("type", "1")
+                .execute(new JsonCallback<JsonObject>() {
+                    @Override
+                    public void onSuccess(Response<JsonObject> response) {
+//                        DefaultAddress defaultAddress = (DefaultAddress) JosnFrom.getInstance().getObj(response.body().toString(), DefaultAddress.class);
+//                        if (defaultAddress != null && defaultAddress.getStatus().equals("0001")) {
+//
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Response response) {
+//                        dismissLP();
+                        super.onError(response);
+                        Log.e("user", response + "!!!!");
+                        DsetApp.getInstance().setRefreshShopCart(false);
+                    }
+                });
+
+
     }
 
 
