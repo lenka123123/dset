@@ -132,6 +132,9 @@ public class Constants {
     public static String NOW_PAY = "shop-goods/buy-now.html"; //立即购买接口  获取购物车ID
     public static String DEFAULT_ADRESS = "shop/default-address.html"; //获取默认地址
     public static String PAY_FOR_IMMEDIATELY = "shop/submit-order.html"; //支付
+    public static String GOODS_CART_LIST = "shop-goods/cart-info.html"; //购物车列表
+    public static String UPDATA_GOODS_NUM = "shop-goods/alter-cart.html"; //修改购物车商品数量
+    public static String TELATE_GOODS = "shop-goods/del-cart-goods.html"; //修改购物车商品数量
 
 
     /**

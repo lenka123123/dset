@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -26,14 +27,6 @@ import com.classic.common.MultipleStatusView;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.r0adkll.slidr.Slidr;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
-import com.shantoo.common.utils.AppManager;
-import com.shantoo.common.utils.UIUtil;
-import com.shantoo.widget.dialog.loaddialog.LoadDialog;
-import com.shantoo.widget.imageview.SelectorImageView;
 import com.shantoo.widget.recyclerview.MItemDecoration;
 import com.shantoo.widget.toast.RxToast;
 import com.shantoo.widget.toolbar.WidgetBar;
@@ -48,9 +41,14 @@ import com.wokun.dset.model.Constants;
 import com.wokun.dset.pinkongshop.ZhihuiSuccessfulActivity;
 import com.wokun.dset.response.BaseResponse;
 import com.wokun.dset.store.adapter.DStoreGoodsListAdapter;
+import com.wokun.dset.store.adapter.ShopCartAdapter;
+import com.wokun.dset.store.adapter.ShopCartForPayAdapter;
+import com.wokun.dset.store.bean.CartList;
+import com.wokun.dset.store.bean.CartList.DataBean.CartListInfoBean.GoodsItemBean;
 import com.wokun.dset.store.bean.DStoreGoodesList;
 import com.wokun.dset.store.bean.DStoreImmediatelyPay;
 import com.wokun.dset.store.bean.DefaultAddress;
+import com.wokun.dset.store.bean.PayBean;
 import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
 import com.wokun.dset.store.dstore.dstorelist.DStoreSearchListActivity;
 import com.wokun.dset.utils.JosnFrom;
@@ -63,6 +61,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindColor;
@@ -76,8 +75,7 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
 public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
 
-    private String goods_id;
-    private String sku_id;
+
     private String cart_id_str;
 
     @BindView(R.id.show_address)
@@ -98,12 +96,25 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
     @BindView(R.id.goto_select)
     TextView goto_select;
 
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
+    @BindView(R.id.store_name)
+    TextView store_name;
+
+    @BindView(R.id.zhihui_goods_price)
+    TextView zhihui_goods_price;
 
     private DefaultAddress.DataBean.DefaultBean showSefaultAddress;
-    private String link_man;
-    private String phone;
-    private String address;
+    private String link_man="";
+    private String phone="";
+    private String address="";
     private String promote_price;
+    private static final int SDK_PAY_FLAG = 1;
+    private List<GoodsItemBean> mAllOrderList;
+    private Double price;
+    private ShopCartForPayAdapter adapter;
+
 
     @Override
     public int createView() {
@@ -121,10 +132,19 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
     public void init() {
 
         Intent intent = getIntent();
-        goods_id = intent.getStringExtra("goods_id");
-        sku_id = intent.getStringExtra("sku_id");
-        cart_id_str = intent.getStringExtra("cart_id_str");
-        promote_price = intent.getStringExtra("promote_price");
+
+        mAllOrderList = (List<GoodsItemBean>) intent.getSerializableExtra("list");
+        price = intent.getDoubleExtra("doubleprice", 0);
+
+
+        zhihui_goods_price.setText(phone);
+        recyclerView.setLayoutManager(new LinearLayoutManager(DStoreImmediatelyPayActivity.this));
+        recyclerView.addItemDecoration(new MItemDecoration(DStoreImmediatelyPayActivity.this, DividerItemDecoration.VERTICAL));
+        adapter = new ShopCartForPayAdapter(R.layout.item_shop_cart_pay, mAllOrderList);
+        recyclerView.setAdapter(adapter);
+
+//        cart_id_str = intent.getStringExtra("cart_id_str");
+//        promote_price = intent.getStringExtra("promote_price");
         defaultAddress();
 
     }
@@ -289,26 +309,46 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
     }
 
     protected void alipay(final String body) {
-        new Thread(new Runnable() {
+
+        Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
                 PayTask alipay = new PayTask(DStoreImmediatelyPayActivity.this);
                 Map<String, String> result = alipay.payV2(body, true);
-                Log.e("进来了5", "进来了5");
-                // Log.i("msp", result.toString());
-//                Message msg = new Message();
-//                msg.what = SDK_PAY_FLAG;
-//                msg.obj = result;
-//                mHandler.sendMessage(msg);
+
+                alipayManage(result);
             }
-        }).start();
+        };
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
     }
 
-    protected Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
+
+    private void alipayManage(Map<String, String> result) {
+        if (result.containsKey("resultStatus")) {
+            Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
+            if (result.get("resultStatus").equals("9000")) {
+                Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
+
+            }
+
+            if (result.get("resultStatus").equals("4000")) {
+                // centerDialog.showDialog("支付失败，请重试！", R.drawable.payes_fail);
+            }
+
+            if (result.get("resultStatus").equals("6001")) {
+                //  centerDialog.showDialog("取消支付", R.drawable.payes_fail);
+            }
+        }
+
+    }
+
+//
+//    protected Handler mHandler = new Handler() {
+//        public void handleMessage(Message msg) {
 //            switch (msg.what) {
 //                case SDK_PAY_FLAG: {
-            Log.e("进来了6", "进来了6" + msg.obj);
+//            Log.e("进来了6", "进来了6" + msg.obj);
 //                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
 //                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
 //                    String resultStatus = payResult.getResultStatus();
@@ -330,8 +370,8 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
 //                    }
 //                    break;
 //                }
-        }
-    };
+//        }
+//    };
 
     //获取默认地址
     private void defaultAddress() {
@@ -369,7 +409,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                                 showSefaultAddress = defaultAddress.getData().getDefaultX();
 
 
-                                showAddress(showSefaultAddress.getName(), showSefaultAddress.getPhone(),
+          showAddress(showSefaultAddress.getName(), showSefaultAddress.getPhone(),
                                         showSefaultAddress.getProvice() + showSefaultAddress.getCity() + showSefaultAddress.getArea() + showSefaultAddress.getAddress());
                             }
 
@@ -389,6 +429,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
 
 
     }
+
 
     //调用支付
     private void pay() {
@@ -430,10 +471,12 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                 .execute(new JsonCallback<JsonObject>() {
                     @Override
                     public void onSuccess(Response<JsonObject> response) {
-//                        DefaultAddress defaultAddress = (DefaultAddress) JosnFrom.getInstance().getObj(response.body().toString(), DefaultAddress.class);
-//                        if (defaultAddress != null && defaultAddress.getStatus().equals("0001")) {
-//
-//                        }
+                        PayBean payBean = (PayBean) JosnFrom.getInstance().getObj(response.body().toString(), PayBean.class);
+                        if (payBean != null && payBean.getStatus().equals("0001")) {
+                            alipay(payBean.getStatus());
+                        } else {
+                            RxToast.showShort(payBean.getMsg());
+                        }
                     }
 
                     @Override

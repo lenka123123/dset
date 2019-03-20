@@ -51,11 +51,12 @@ public class SelectGoogsParamAdapter extends BaseQuickAdapter<DStoreGoodsDetail.
         tagFlowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
             @Override
             public void onSelected(Set<Integer> selectPosSet) {
+                Log.i("selectPosSet  === ", selectPosSet.toString());
                 List<Integer> list = new ArrayList<>(selectPosSet);
-                if (list.get(0) == null) {
+                if (list.size() == 0) {
                     context.setArray(item.getSpec_id(), -1);
                 } else {
-                    context.setArray(item.getSpec_id(), item.getValue().get(list.get(list.get(0))).getSpec_value_id());
+                    context.setArray(item.getSpec_id(), item.getValue().get(list.get(0)).getSpec_value_id());
                 }
 
             }

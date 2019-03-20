@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wokun.dset.R;
 import com.wokun.dset.store.bean.DStoreHome;
+import com.wokun.dset.utils.ImageLoaderUtils;
 
 
 /**
@@ -36,7 +37,8 @@ public class BeautyHomeAdapter extends BaseQuickAdapter<DStoreHome.DataBean.Tuij
     protected void convert(final BaseViewHolder helper, final DStoreHome.DataBean.TuijianBean item) {
 
         ImageView imageView = helper.getView(R.id.img);
-        Glide.with(context).load(item.getPic_cover_big()).into(imageView);
+//        Glide.with(context).load(item.getPic_cover_big()).into(imageView);
+        ImageLoaderUtils.load(context, imageView,  item.getPic_cover_big(),0);
 
         helper.setText(R.id.title, item.getGoods_name());
         helper.setText(R.id.price, item.getPrice());

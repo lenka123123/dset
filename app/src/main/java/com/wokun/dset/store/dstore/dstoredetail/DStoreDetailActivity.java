@@ -1,6 +1,7 @@
 package com.wokun.dset.store.dstore.dstoredetail;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.IInterface;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -26,12 +27,14 @@ import com.lzy.okgo.model.Response;
 import com.shantoo.widget.toast.RxToast;
 import com.wokun.dset.BaseActivity;
 import com.wokun.dset.DsetApp;
+import com.wokun.dset.MainActivity;
 import com.wokun.dset.R;
 import com.wokun.dset.callback.JsonCallback;
 import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.response.BaseResponse;
 import com.wokun.dset.store.adapter.SelectGoogsParamAdapter;
+import com.wokun.dset.store.bean.CartList;
 import com.wokun.dset.store.bean.DStoreGoodsDetail;
 import com.wokun.dset.store.bean.DStoreImmediatelyPay;
 import com.wokun.dset.store.bean.GoodsSKUList;
@@ -48,7 +51,9 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +86,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView pop_price;
     private TextView pop_store;
     private String promote_price = "";
+    private boolean immediatelyPay = false;
 
 
     @Override
@@ -142,13 +148,18 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         store_attitude_point = findViewById(R.id.store_attitude_point);
         store_send_point = findViewById(R.id.store_send_point);
         webView = findViewById(R.id.webview);
+
+        findViewById(R.id.action_service).setOnClickListener(this);
+        findViewById(R.id.action_shopping_cart).setOnClickListener(this);
+
+
         webView.getSettings().setJavaScriptEnabled(true);
         Intent intent = getIntent();
 
         // 测试数据 51
         goods_id = intent.getStringExtra("goods_id");
-        if (Constants.isdebug)
-            goods_id = "51";
+//        if (Constants.isdebug)
+//            goods_id = "51";
     }
 
 
@@ -159,9 +170,20 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
         goodsSKUList = JosnFrom.getInstance().getObjList(goodsDetail.getData().getGoods_spec_format());
         initSku();
+        if (goodsSKUList.size() == 0 && dataBean.getGoods_sku().get(0) != null) {
+            sku_id = dataBean.getGoods_sku().get(0).getSku_id();  //没有规格的时候的sku
+            search_goods_size.setText(dataBean.getGoods_sku().get(0).getSku_name());
+            if (dataBean.getPromotion_type().equals("0")) { //无促销
+                promote_price = dataBean.getGoods_sku().get(0).getPrice();
+            } else {
+                promote_price = dataBean.getGoods_sku().get(0).getPromote_price();
+            }
+
+        }
+
 
         search_textview.setText(goodsDetail.getData().getGoods_name());
-        price.setText(goodsDetail.getData().getPrice());
+        price.setText("￥" + goodsDetail.getData().getPrice());
         free_send.setText("运费：" + goodsDetail.getData().getFreight());
 
         if (goodsDetail.getData().getShop_id().equals("0")) {
@@ -289,11 +311,14 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         pop_store = contentView.findViewById(R.id.pop_store);
 
         ImageLoaderUtils.load(context, pop_img, dataBean.getShow_img().get(0), 0);
-        pop_price.setText(dataBean.getPrice());
-        pop_store.setText(dataBean.getStock());
+        pop_price.setText("￥" + dataBean.getPrice());
+        pop_store.setText("库存：" + dataBean.getStock());
 
         popCancel = contentView.findViewById(R.id.choice_size_cancel); //退出
         popConfirm = contentView.findViewById(R.id.choice_size_confirm); //确认加入
+        if (immediatelyPay) {
+            popConfirm.setText("立即购买");
+        }
         RecyclerView recyclerView = contentView.findViewById(R.id.recyclerView); //确认加入
 //      popBuyNum = contentView.findViewById(R.id.choice_size_num);
 
@@ -338,18 +363,16 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    public void setArray( int spec_id, int spec_value_id) {
+    public void setArray(int spec_id, int spec_value_id) {
         boolean isShow = true;
-
-
+        Log.i("规格选择完成之前", spec_id + "====" + spec_value_id);
         skuMap.put(spec_id, spec_value_id);
 
         for (int val : skuMap.values()) {
             if (val == -1) {
-                RxToast.showShort("请选择规格");
+//                RxToast.showShort("请选择规格");
                 isShow = false;
             }
-
         }
         if (isShow) {  //7:9;9:14
             StringBuilder attr = new StringBuilder();
@@ -366,7 +389,11 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
             for (int i = 0; i < dataBean.getGoods_sku().size(); i++) {
                 Log.i("规格选择完成之后=== ", dataBean.getGoods_sku().get(i).getAttr_value_items());
-                if ((attr.toString()).startsWith(dataBean.getGoods_sku().get(i).getAttr_value_items())) {
+//                if ((attr.toString()).startsWith(dataBean.getGoods_sku().get(i).getAttr_value_items())) {
+                if (isInclude(attr.toString(), dataBean.getGoods_sku().get(i).getAttr_value_items())) {
+
+                    search_goods_size.setText(dataBean.getGoods_sku().get(i).getSku_name());
+
                     sku_id = dataBean.getGoods_sku().get(i).getSku_id();
                     if (dataBean.getPromotion_type().equals("0")) { //无促销
                         promote_price = dataBean.getGoods_sku().get(i).getPrice();
@@ -376,9 +403,22 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
                     pop_price.setText("￥" + dataBean.getGoods_sku().get(i).getPromote_price());
                     pop_store.setText("库存：" + dataBean.getGoods_sku().get(i).getStock() + "件");
+                    break;
                 }
             }
         }
+    }
+
+    private boolean isInclude(String data, String attr_value_items) {
+        // 9:14;7:10;    7:10;9:14
+        String[] arr = data.split(";");
+        String[] item = attr_value_items.split(";");
+        Arrays.sort(arr);
+        Arrays.sort(item);
+        Log.i("相比arll", Arrays.toString(arr));
+        Log.i("相比item", Arrays.toString(item));
+        Log.i("相比item", "相比item " + Arrays.equals(item, arr));
+        return Arrays.equals(item, arr);
     }
 
     @Override
@@ -390,13 +430,42 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.action_join_shopping_cart:
-                showChoiceSizePop();
+                immediatelyPay = false;
+                if (goodsSKUList != null && goodsSKUList.size() > 0) {
+                    showChoiceSizePop(); //选规格
+                } else {
+                    join(); //商品没有规格可选
+                }
+
                 break;
             case R.id.choice_size_confirm: //确定加入
-                join();
+                if (immediatelyPay) {
+                    immediatelyPay();
+                } else {
+                    join();
+                }
                 break;
             case R.id.action_buy_service: //立即付款
-                immediatelyPay();
+                immediatelyPay = true;
+                if (sku_id.equals("")) {
+                    showChoiceSizePop();
+                } else {
+                    immediatelyPay();
+                }
+
+
+                break;
+            case R.id.action_service: //打电话
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + "400-025-2116");
+                intent.setData(data);
+                startActivity(intent);
+                break;
+            case R.id.action_shopping_cart: //跳到首页
+                Intent mina = new Intent(DStoreDetailActivity.this, MainActivity.class);
+                mina.putExtra("main", "joincart");
+                DStoreDetailActivity.this.startActivity(mina);
+                DStoreDetailActivity.this.finish();
                 break;
         }
 
@@ -404,6 +473,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
 
     private void join() {
+        Log.i("", "join: " + sku_id);
         String token = (String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.USERID, "");
         String timestamp = StringUtil.getCurrentTime();
@@ -436,6 +506,8 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                             if (null != popupWindow) {
                                 popupWindow.dismiss();
                             }
+                        } else {
+                            RxToast.showShort(goodesDetail.getMessage());
                         }
                     }
 
@@ -479,10 +551,19 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                         DStoreImmediatelyPay goodesDetail = (DStoreImmediatelyPay) JosnFrom.getInstance().getObj(response.body().toString(), DStoreImmediatelyPay.class);
                         if (goodesDetail != null && goodesDetail.getStatus().equals("0001")) {
                             Intent intent = new Intent(DStoreDetailActivity.this, DStoreImmediatelyPayActivity.class);
-                            intent.putExtra("goods_id", goods_id);
-                            intent.putExtra("sku_id", sku_id);
-                            intent.putExtra("cart_id_str", goodesDetail.getData().getCart_id_str());
-                            intent.putExtra("promote_price", promote_price);
+                            List<CartList.DataBean.CartListInfoBean.GoodsItemBean> mGoPayList = new ArrayList<>();
+                            CartList.DataBean.CartListInfoBean.GoodsItemBean bean = new CartList.DataBean.CartListInfoBean.GoodsItemBean();
+                            bean.setGoods_picture(dataBean.getShow_img().get(0));
+                            bean.setGoods_name(dataBean.getGoods_name());
+                            bean.setSku_name(search_goods_size.getText().toString());
+                            bean.setPrice(promote_price);
+                            bean.setNum("1");
+                            bean.setCart_id(goodesDetail.getData().getCart_id_str());
+
+                            mGoPayList.add(bean);
+
+                            intent.putExtra("list", (Serializable) mGoPayList);
+                            intent.putExtra("doubleprice", promote_price);
                             DStoreDetailActivity.this.startActivity(intent);
                             DStoreDetailActivity.this.finish();
                         }

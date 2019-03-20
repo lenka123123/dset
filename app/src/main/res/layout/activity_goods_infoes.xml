@@ -177,8 +177,8 @@
                     <ImageView
                         android:id="@+id/cash_deposit"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/salable_goods" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/salable_goods" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -274,7 +274,7 @@
     <!-- 客服到支付 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y98"
+        android:layout_height="@dimen/y123"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="horizontal">
@@ -292,7 +292,7 @@
                 style="@style/TextView_Style_Three"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:drawablePadding="@dimen/drawable_padding_6"
+                android:drawablePadding="@dimen/y8"
                 android:drawableTop="@drawable/ic_kefu"
                 android:gravity="center"
                 android:text="客服"
@@ -348,7 +348,7 @@
                 style="@style/TextView_Style_Three"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:drawablePadding="@dimen/drawable_padding_6"
+                android:drawablePadding="@dimen/y8"
                 android:drawableTop="@drawable/ic_shop_car"
                 android:gravity="center"
                 android:text="购物车"
@@ -364,6 +364,7 @@
             android:background="@color/colorShopping"
             android:gravity="center"
             android:text="加入购物车"
+            android:textSize="15sp"
             android:textColor="@color/colorWhite" />
 
 
@@ -376,6 +377,7 @@
             android:background="#056196"
             android:gravity="center"
             android:text="立即购买"
+            android:textSize="15sp"
             android:textColor="@color/colorWhite" />
 
 

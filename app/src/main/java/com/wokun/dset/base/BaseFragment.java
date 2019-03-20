@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.classic.common.MultipleStatusView;
 import com.shantoo.widget.dialog.loaddialog.LoadDialog;
 import com.wokun.dset.DsetApp;
 import com.wokun.dset.login.LoginActivity;
@@ -18,6 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener {
+
+
 
     protected String TAG = this.getClass().getSimpleName();
     protected Unbinder unbinder;

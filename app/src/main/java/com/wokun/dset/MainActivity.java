@@ -37,8 +37,8 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity  implements
-        ViewPager.OnPageChangeListener, View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements
+        ViewPager.OnPageChangeListener, View.OnClickListener {
     private String TAG = MainActivity.class.getSimpleName();
 
 /* @BindColor(R.color.color77)int colorUnSelect;
@@ -56,12 +56,13 @@ public class MainActivity extends AppCompatActivity  implements
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
-    @BindView(R.id.main_tab)LinearLayout mainTab;
+    @BindView(R.id.main_tab)
+    LinearLayout mainTab;
 
     // 定义一个变量，来标识是否退出
     private static boolean isExit = false;
 
-    private List<Fragment> mFragment = new ArrayList<>() ;
+    private List<Fragment> mFragment = new ArrayList<>();
 
     private static Handler mHandler = new Handler() {
         @Override
@@ -70,11 +71,12 @@ public class MainActivity extends AppCompatActivity  implements
             isExit = false;
         }
     };
+    private String joinAct;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View root = LayoutInflater.from(this).inflate(R.layout.activity_main,null);
+        View root = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
         setContentView(root);
         ButterKnife.bind(this);
         //StatusBarUtil.setColor(this, colorSelect);
@@ -84,24 +86,32 @@ public class MainActivity extends AppCompatActivity  implements
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 if (bottom - oldBottom < -1) {
                     //软键盘弹上去了,动态设置高度为0
-                    mainTab.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,0));
-                }else if (bottom - oldBottom > 1) {
-                    mainTab.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                    mainTab.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
+                } else if (bottom - oldBottom > 1) {
+                    mainTab.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 }
             }
         });
         initMainViewPager();
+
+        Intent intent = getIntent();
+        //      mina.putExtra("main", "joincart");
+        joinAct = intent.getStringExtra("main");
+        if (joinAct != null && joinAct.equals("joincart")) {
+            if (mViewPager != null)
+                mViewPager.setCurrentItem(2, false);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        if(R.id.main_home == v.getId()){
+        if (R.id.main_home == v.getId()) {
             mViewPager.setCurrentItem(Constants.TAB_POSITION_HOME, false);
-        }else if(R.id.main_zb == v.getId()){
+        } else if (R.id.main_zb == v.getId()) {
             mViewPager.setCurrentItem(Constants.TAB_POSITION_ZB, false);
-        }else if(R.id.main_shop_cart == v.getId()){
+        } else if (R.id.main_shop_cart == v.getId()) {
             mViewPager.setCurrentItem(Constants.TAB_POSITION_SHOP_CART, false);
-        }else if(R.id.main_ucenter == v.getId()){
+        } else if (R.id.main_ucenter == v.getId()) {
             mViewPager.setCurrentItem(Constants.TAB_POSITION_UCENTER, false);
         }
     }
@@ -111,13 +121,13 @@ public class MainActivity extends AppCompatActivity  implements
     protected void onResume() {
         super.onResume();
         //    Logger.e(TAG,Constants.TAB_POSITION + AppCache.getTabPosition());
-        if(DsetApp.getInstance().isRefreshShopCart()) {
+        if (DsetApp.getInstance().isRefreshShopCart()) {
             changeTextViewColor();
             changeSelectedTabState(DsetApp.getInstance().getTabPosition());
             mViewPager.setCurrentItem(DsetApp.getInstance().getTabPosition(), false);
-        }else if(-1!=AppCache.getTabPosition()){
+        } else if (-1 != AppCache.getTabPosition()) {
             changeTextViewColor();
-            changeSelectedTabState(AppCache.getTabPosition  ());
+            changeSelectedTabState(AppCache.getTabPosition());
             mViewPager.setCurrentItem(AppCache.getTabPosition(), false);
         }
     }
@@ -138,8 +148,8 @@ public class MainActivity extends AppCompatActivity  implements
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.addOnPageChangeListener(this);
         changeTextViewColor();
-        changeSelectedTabState(getIntent().getIntExtra(Constants.TAB_POSITION,0));
-        mViewPager.setCurrentItem(getIntent().getIntExtra(Constants.TAB_POSITION,0), false);
+        changeSelectedTabState(getIntent().getIntExtra(Constants.TAB_POSITION, 0));
+        mViewPager.setCurrentItem(getIntent().getIntExtra(Constants.TAB_POSITION, 0), false);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -181,7 +191,6 @@ public class MainActivity extends AppCompatActivity  implements
         });
 
 
-
     }
 
     @Override
@@ -193,8 +202,8 @@ public class MainActivity extends AppCompatActivity  implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Constants.LOGIN_RESULT_CODE){
-        //    initUserInfo();
+        if (resultCode == Constants.LOGIN_RESULT_CODE) {
+            //    initUserInfo();
         }
     }
 
@@ -245,7 +254,7 @@ public class MainActivity extends AppCompatActivity  implements
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-   if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             exit();
             return false;
         }
@@ -262,7 +271,7 @@ public class MainActivity extends AppCompatActivity  implements
             mHandler.sendEmptyMessageDelayed(0, 2000);
         } else {
 
-         finish();
+            finish();
         }
     }
 
@@ -300,16 +309,16 @@ public class MainActivity extends AppCompatActivity  implements
     }
 
     private void changeSelectedTabState(int position) {
-        if(position == 0){
+        if (position == 0) {
             mTextViews[0].setTextColor(Color.parseColor("#ffffff"));
             mImageViews[0].setBackgroundResource(R.drawable.select_mian_first);
-        }else if(position == 1){
+        } else if (position == 1) {
             mTextViews[1].setTextColor(Color.parseColor("#ffffff"));
             mImageViews[1].setBackgroundResource(R.drawable.select_mian_linshou);
-        }else if(position == 2){
+        } else if (position == 2) {
             mTextViews[2].setTextColor(Color.parseColor("#ffffff"));
             mImageViews[2].setBackgroundResource(R.drawable.select_mian_shop);
-        }else if(position == 3){
+        } else if (position == 3) {
             mTextViews[3].setTextColor(Color.parseColor("#ffffff"));
             mImageViews[3].setBackgroundResource(R.drawable.select_mian_my);
         }
