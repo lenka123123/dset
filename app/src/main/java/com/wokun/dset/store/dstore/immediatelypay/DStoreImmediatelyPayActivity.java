@@ -1,36 +1,28 @@
 package com.wokun.dset.store.dstore.immediatelypay;
 
+import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
-import com.classic.common.MultipleStatusView;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.shantoo.widget.imageview.SelectorImageView;
 import com.shantoo.widget.recyclerview.MItemDecoration;
 import com.shantoo.widget.toast.RxToast;
 import com.shantoo.widget.toolbar.WidgetBar;
-import com.wokun.dset.BaseActivity;
 import com.wokun.dset.DsetApp;
 import com.wokun.dset.R;
 import com.wokun.dset.address.ui.AddressListActivity;
@@ -40,43 +32,29 @@ import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.pinkongshop.ZhihuiSuccessfulActivity;
 import com.wokun.dset.response.BaseResponse;
-import com.wokun.dset.store.adapter.DStoreGoodsListAdapter;
-import com.wokun.dset.store.adapter.ShopCartAdapter;
 import com.wokun.dset.store.adapter.ShopCartForPayAdapter;
-import com.wokun.dset.store.bean.CartList;
+import com.wokun.dset.store.bean.BaseResPonse;
 import com.wokun.dset.store.bean.CartList.DataBean.CartListInfoBean.GoodsItemBean;
-import com.wokun.dset.store.bean.DStoreGoodesList;
-import com.wokun.dset.store.bean.DStoreImmediatelyPay;
 import com.wokun.dset.store.bean.DefaultAddress;
-import com.wokun.dset.store.bean.PayBean;
-import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
-import com.wokun.dset.store.dstore.dstorelist.DStoreSearchListActivity;
+import com.wokun.dset.store.bean.AilPayBean;
+import com.wokun.dset.store.bean.MoneyBean;
+import com.wokun.dset.ucenter.zhifudiaolog.VerificationCodeView;
 import com.wokun.dset.utils.JosnFrom;
+import com.wokun.dset.utils.ScreenUtils;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindColor;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static com.wokun.dset.utils.MD5.ParameterUtils.removeEmptyData;
 import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
 public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
-
-
-    private String cart_id_str;
 
     @BindView(R.id.show_address)
     RelativeLayout show_address;
@@ -105,15 +83,33 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
     @BindView(R.id.zhihui_goods_price)
     TextView zhihui_goods_price;
 
+
+    @BindView(R.id.action_money_layout)
+    RelativeLayout action_money_layout;
+
+    @BindView(R.id.money_selector_select)
+    SelectorImageView money_selector_select;
+
+    @BindView(R.id.action_alipey_layout)
+    RelativeLayout action_alipey_layout;
+
+    @BindView(R.id.alipay_selector_select)
+    SelectorImageView alipay_selector_select;
+
+    @BindView(R.id.true_price)
+    TextView true_price;
+
     private DefaultAddress.DataBean.DefaultBean showSefaultAddress;
-    private String link_man="";
-    private String phone="";
-    private String address="";
+    private String link_man = "";
+    private String phone = "";
+    private String address = "";
     private String promote_price;
     private static final int SDK_PAY_FLAG = 1;
     private List<GoodsItemBean> mAllOrderList;
-    private Double price;
+
     private ShopCartForPayAdapter adapter;
+    private String cart_id_str;
+    private String inputContent;
 
 
     @Override
@@ -121,60 +117,69 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
         return R.layout.activity_immediately_pay;
     }
 
-
     @Override
     public WidgetBar createToolBar() {
-        return mWidgetBar.setWidgetBarTitle("确认订单");
+        mWidgetBar.setVisibility(View.GONE);
+        return mWidgetBar.setWidgetBarTitle("确认付款");
     }
-
 
     @Override
     public void init() {
-
+        mWidgetBar.setBackgroundColor(getResources().getColor(R.color.white));
         Intent intent = getIntent();
 
         mAllOrderList = (List<GoodsItemBean>) intent.getSerializableExtra("list");
-        price = intent.getDoubleExtra("doubleprice", 0);
+        promote_price = intent.getStringExtra("doubleprice");
+        cart_id_str = intent.getStringExtra("cart_id_str");
 
-
-        zhihui_goods_price.setText(phone);
+        zhihui_goods_price.setText("￥" + promote_price);
+        true_price.setText("￥" + promote_price);
         recyclerView.setLayoutManager(new LinearLayoutManager(DStoreImmediatelyPayActivity.this));
         recyclerView.addItemDecoration(new MItemDecoration(DStoreImmediatelyPayActivity.this, DividerItemDecoration.VERTICAL));
         adapter = new ShopCartForPayAdapter(R.layout.item_shop_cart_pay, mAllOrderList);
         recyclerView.setAdapter(adapter);
 
-//        cart_id_str = intent.getStringExtra("cart_id_str");
-//        promote_price = intent.getStringExtra("promote_price");
         defaultAddress();
 
     }
 
+    // 支付类型 1微信 2支付宝 5余额
+    private String pay_type = "";
+
     // R.id.action_wxpay, R.id.action_pay, R.id.select_address, R.id.show_address, R.id.zitidian, R.id.iv_go1})
-    @OnClick(R.id.goto_select)
+    @OnClick({R.id.goto_select, R.id.action_money_layout, R.id.action_alipey_layout, R.id.action_pay, R.id.back})
     public void action(View v) {
         switch (v.getId()) {
-//            case R.id.action_alipay: //支付宝支付
-//                alipaySelectorImageView.toggle(true);
-//                weixingSelectorImageView.toggle(false);
-//                pay_type = ALIPAY;
-//                break;
-//            case R.id.action_wxpay: //微信支付
-//                alipaySelectorImageView.toggle(false);
-//                weixingSelectorImageView.toggle(true);
-//                pay_type = WXPAY;
-//                break;
-//            case R.id.action_pay: //确认支付
-//                if (ALIPAY.equals(pay_type)) {
-//                    pay(pay_type);
-//                } else if (WXPAY.equals(pay_type)) {
-//                    pay(pay_type);
-//                }
-//                break;
+            case R.id.action_money_layout: //金票支付
+                money_selector_select.toggle(true);
+                alipay_selector_select.toggle(false);
+                pay_type = "5";
+                break;
+            case R.id.action_alipey_layout: //2支付宝
+                money_selector_select.toggle(false);
+                alipay_selector_select.toggle(true);
+                pay_type = "2";
+                break;
+            case R.id.action_pay: //确认支付
+                if (pay_type.equals("")) {
+                    RxToast.showShort("请选择支付类型");
+                    return;
+                } else if (pay_type.equals("2")) { //支付宝
+                    payForOrder_id(pay_type);
+
+                } else if (pay_type.equals("5")) {
+                    payForOrder_id(pay_type);
+                }
+
+                break;
             case R.id.goto_select:
                 Intent intent = new Intent();
                 intent.setClass(this, AddressListActivity.class);
                 startActivityForResult(intent, 99);
                 Log.e("点击了1", "点击了1");
+                break;
+            case R.id.back:
+                DStoreImmediatelyPayActivity.this.finish();
                 break;
         }
 
@@ -197,181 +202,6 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
             showAddress(name, mobile, sAddress);
         }
     }
-
-
-    //支付
-    private void pay(String pay_type) {
-//        Log.e("支付商品列表", "pay_type:" + pay_type + "/gid:" + totalgid + " /self_lifting:" +
-//                self_lifting + "/addressId:" + address_id + "/store_name:" +
-//                selfLifting.getStore_name() + "/mobile:" + selfLifting.getMobile() + "/addressDetail:" + sAddress
-//                + "/store_code" + store_code + "/totalPrice:" + shoppingTotalPrice + "/goodsData:" + goodsjson);
-//
-//        if (!TyslApp.getInstance().isLogin()) {
-//            Toast.makeText(this, "亲，您还未登录", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-
-//        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(mobile) || TextUtils.isEmpty(sAddress)) {
-//            Toast.makeText(this, "请选择收货地址", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        if (ALIPAY.equals(pay_type)) {
-//            doAlipay();
-//        } else if (WXPAY.equals(pay_type)) {
-//            doWxpay();
-//        }
-    }
-
-    //支付宝支付
-    private void doAlipay() {
-
-//        Log.e("支付商品列表", "pay_type:" + pay_type + "/gid:" + totalgid + "/self_lifting:" +
-//                self_lifting + "/addressId:" + address_id + "/store_name:" +
-//                selfLifting.getStore_name() + "/mobile:" + selfLifting.getMobile() + "/addressDetail:" + sAddress
-//                + "/store_code" + store_code + "/totalPrice:" + shoppingTotalPrice + "/goodsData:" + goodsjson);
-//
-//        OkGo.<BaseResponse<Alipay2>>post(Constants.BASE_URL + Constants.RETAILPAYORDER)
-//                .params("pay_type", pay_type)
-//                .params("gid", totalgid)
-//                .params("self_lifting", self_lifting)
-//                .params("addressId", address_id)
-//                .params("store_name", selfLifting.getStore_name())
-//                .params("mobile", selfLifting.getMobile())
-//                .params("addressDetail", sAddress)
-//                .params("store_code", store_code)
-//                .params("totalPrice", shoppingTotalPrice)
-//                .params("goodsData", goodsjson)
-//                .execute(new JsonCallback<BaseResponse<Alipay2>>(Constants.WITH_TOKEN, Constants.RETAILPAYORDER) {
-//                    @Override
-//                    public void onSuccess(Response<BaseResponse<Alipay2>> response) {
-//                        BaseResponse body = response.body();
-//                        if (body == null) return;
-//                        if (body.isState()) {
-//                            Alipay2 data = (Alipay2) body.getData();
-//                            if (data == null || data.getOrderString() == null) {
-//                                return;
-//                            }
-//                            finish();
-//                            alipay(data.getOrderString());
-//                            buy_gid = data.getBuy_gid();
-//                            order_id = data.getOrder_id();
-//                            Log.e("进来了4", "进来了4" + buy_gid);
-//
-//                        } else {
-//                            RxToast.showShort(body.getMsg());
-//                        }
-//                    }
-//                });
-    }
-
-    //微信支付
-    private void doWxpay() {
-//        OkGo.<BaseResponse<WXPayResult>>post(Constants.BASE_URL + Constants.RETAILPAYORDER)
-//                .params("pay_type", pay_type)
-//                .params("gid", totalgid)
-//                .params("self_lifting", self_lifting)
-//                .params("addressId", address_id)
-//                .params("store_name", selfLifting.getStore_name())
-//                .params("mobile", selfLifting.getMobile())
-//                .params("addressDetail", sAddress)
-//                .params("store_code", store_code)
-//                .params("totalPrice", shoppingTotalPrice)
-//                .params("goodsData", goodsjson)
-//                .execute(new JsonCallback<BaseResponse<WXPayResult>>(Constants.WITH_TOKEN, Constants.RETAILPAYORDER) {
-//                    @Override
-//                    public void onSuccess(Response<BaseResponse<WXPayResult>> response) {
-//                        BaseResponse body = response.body();
-//                        if (body == null) return;
-//                        if (body.isState()) {
-//                            finish();
-//                            WXPayResult data = (WXPayResult) body.getData();
-//                            //在服务端签名
-//
-//                            WXPayUtils.WXPayBuilder builder = new WXPayUtils.WXPayBuilder();
-//                            //  new WXPay.Builder()
-//                            builder.setAppId(data.getAppid())
-//                                    .setPartnerId(data.getPartnerid())
-//                                    .setPrepayId(data.getPrepayid())
-//                                    .setPackageValue(data.getPackageX())
-//                                    .setNonceStr(data.getNoncestr())
-//                                    .setTimeStamp(data.getTimestamp() + "")
-//                                    .setSign(data.getSign())
-//                                    .build()
-//                                    .toWXPayNotSign(SmartRetailOrderListActivity.this);
-//                            //.pay(TyslApp.getContext(), data.getAppid());
-//
-//
-//                        } else {
-//                            Toast.makeText(TyslApp.getContext(), body.getMsg(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-    }
-
-    protected void alipay(final String body) {
-
-        Runnable payRunnable = new Runnable() {
-            @Override
-            public void run() {
-                PayTask alipay = new PayTask(DStoreImmediatelyPayActivity.this);
-                Map<String, String> result = alipay.payV2(body, true);
-
-                alipayManage(result);
-            }
-        };
-        Thread payThread = new Thread(payRunnable);
-        payThread.start();
-    }
-
-
-    private void alipayManage(Map<String, String> result) {
-        if (result.containsKey("resultStatus")) {
-            Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
-            if (result.get("resultStatus").equals("9000")) {
-                Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
-
-            }
-
-            if (result.get("resultStatus").equals("4000")) {
-                // centerDialog.showDialog("支付失败，请重试！", R.drawable.payes_fail);
-            }
-
-            if (result.get("resultStatus").equals("6001")) {
-                //  centerDialog.showDialog("取消支付", R.drawable.payes_fail);
-            }
-        }
-
-    }
-
-//
-//    protected Handler mHandler = new Handler() {
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case SDK_PAY_FLAG: {
-//            Log.e("进来了6", "进来了6" + msg.obj);
-//                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-//                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-//                    String resultStatus = payResult.getResultStatus();
-//                    // 判断resultStatus 为9000则代表支付成功
-//                    if (TextUtils.equals(resultStatus, "9000")) {
-//                        Log.e("进来了7", "进来了7");
-//                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-//                        Toast.makeText(TyslApp.getContext(), "支付成功!", Toast.LENGTH_SHORT).show();
-//                        setResult(1);
-//                        finish();
-//                        Intent intent = new Intent(SmartRetailOrderListActivity.this, ZhihuiSuccessfulActivity.class);
-//                        intent.putExtra("order_id", order_id);
-//                        intent.putExtra("buy_gid", buy_gid);
-//                        startActivity(intent);
-//                    } else {
-//                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-//                        Toast.makeText(TyslApp.getContext(), "支付失败!", Toast.LENGTH_SHORT).show();
-//                        finish();
-//                    }
-//                    break;
-//                }
-//        }
-//    };
 
     //获取默认地址
     private void defaultAddress() {
@@ -409,7 +239,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                                 showSefaultAddress = defaultAddress.getData().getDefaultX();
 
 
-          showAddress(showSefaultAddress.getName(), showSefaultAddress.getPhone(),
+                                showAddress(showSefaultAddress.getName(), showSefaultAddress.getPhone(),
                                         showSefaultAddress.getProvice() + showSefaultAddress.getCity() + showSefaultAddress.getArea() + showSefaultAddress.getAddress());
                             }
 
@@ -426,19 +256,20 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                         DsetApp.getInstance().setRefreshShopCart(false);
                     }
                 });
-
-
     }
 
-
     //调用支付
-    private void pay() {
-        Log.i(TAG, "promote_price: " + promote_price);
+    private void payForOrder_id(final String payType) {
+        Log.i(TAG, "promote_price:1 " + cart_id_str);
+        Log.i(TAG, "promote_price:2 " + link_man);
+        Log.i(TAG, "promote_price:3 " + phone);
+        Log.i(TAG, "promote_price:4 " + address);
+        Log.i(TAG, "promote_price:5 " + String.valueOf(promote_price));
 
         String token = (String) SpCommonUtils.get(DStoreImmediatelyPayActivity.this, Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(DStoreImmediatelyPayActivity.this, Constants.USERID, "");
         String timestamp = StringUtil.getCurrentTime();
-        Map params = new HashMap();
+        final Map params = new HashMap();
 
         params.put("user_id", user_id);
         params.put("token", token);
@@ -448,8 +279,8 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
         params.put("link_man", link_man);
         params.put("phone", phone);
         params.put("address", address);
-        params.put("pay_type", "2");
-        params.put("order_amount", promote_price);
+        params.put("pay_type", payType);
+        params.put("order_amount", String.valueOf(promote_price));
         final Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
         String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
@@ -464,18 +295,28 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                 .params("link_man", link_man)
                 .params("phone", phone)
                 .params("address", address)
-                .params("pay_type", "2")
-                .params("order_amount", promote_price)
-
-
+                .params("pay_type", payType)
+                .params("order_amount", String.valueOf(promote_price))
                 .execute(new JsonCallback<JsonObject>() {
                     @Override
                     public void onSuccess(Response<JsonObject> response) {
-                        PayBean payBean = (PayBean) JosnFrom.getInstance().getObj(response.body().toString(), PayBean.class);
-                        if (payBean != null && payBean.getStatus().equals("0001")) {
-                            alipay(payBean.getStatus());
-                        } else {
-                            RxToast.showShort(payBean.getMsg());
+//  余额支付返回的数据如下（返回的参数是余额支付输入密码点击确认调用的接口的参数）
+// "data": { "out_trade_no": "201903151424502268", "order_id": 53 }
+//  支付宝支付返回的data里面数据如下 "data":{"orderString":"**"}
+                        if (payType.equals("2")) {
+                            AilPayBean payBean = (AilPayBean) JosnFrom.getInstance().getObj(response.body().toString(), AilPayBean.class);
+                            if (payBean != null && payBean.getStatus().equals("0001")) {
+                                realPay(payBean.getData().getOrderString());
+                            } else {
+                                RxToast.showShort(payBean.getMsg());
+                            }
+                        } else if (payType.equals("5")) { //金额支付
+                            MoneyBean moneyBean = (MoneyBean) JosnFrom.getInstance().getObj(response.body().toString(), MoneyBean.class);
+                            if (moneyBean != null && moneyBean.getStatus().equals("0001")) {
+                                getCenterCancelDialog(moneyBean.getData());
+                            } else {
+                                RxToast.showShort(moneyBean.getMsg());
+                            }
                         }
                     }
 
@@ -491,6 +332,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
 
     }
 
+
     private void showAddress(String name, String num, String add) {
         selectAddressName.setText(name);
         selectAddressPhone.setText(num);
@@ -500,8 +342,151 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
         phone = num;
         address = add;
 
-        pay();
+        // TODO: 2019/3/21 0021    payForOrder_id();
 
+    }
+
+
+    protected void realPay(final String body) {
+
+        Runnable payRunnable = new Runnable() {
+            @Override
+            public void run() {
+                PayTask alipay = new PayTask(DStoreImmediatelyPayActivity.this);
+                Map<String, String> result = alipay.payV2(body, true);
+
+                alipayManage(result);
+            }
+        };
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+
+    private void alipayManage(Map<String, String> result) {
+        for (String aa : result.values()) {
+            Log.i(TAG, "alipayManage" + aa);
+        }
+        Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
+        if (result.containsKey("resultStatus")) {
+            Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
+            if (result.get("resultStatus").equals("9000")) {
+                Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
+            }
+
+            if (result.get("resultStatus").equals("4000")) {
+                // centerDialog.showDialog("支付失败，请重试！", R.drawable.payes_fail);
+            }
+
+            if (result.get("resultStatus").equals("6001")) {
+                //  centerDialog.showDialog("取消支付", R.drawable.payes_fail);
+            }
+        }
+    }
+
+    private Dialog dialog;
+
+    public void getCenterCancelDialog(final MoneyBean.DataBean data) {
+        dialog = new Dialog(DStoreImmediatelyPayActivity.this, R.style.diydialog);
+        dialog.setContentView(R.layout.activity_pay_namepassword);
+        Window window = dialog.getWindow();
+        //设置窗口的位置
+        window.setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        DisplayMetrics displayMetrics = DStoreImmediatelyPayActivity.this.getResources().getDisplayMetrics();//获取屏幕的宽和高用
+//        layoutParams.width = (int) (displayMetrics.widthPixels * 0.6);
+//        layoutParams.y = (int) (displayMetrics.heightPixels * 0.5);
+        final VerificationCodeView verificationCodeView = window.findViewById(R.id.icv);
+        final TextView txt_next = window.findViewById(R.id.txt_next);
+        final TextView pop_zhihui_shanchu = window.findViewById(R.id.pop_zhihui_shanchu);
+        txt_next.setText("提交");
+        pop_zhihui_shanchu.setText("请输入支付密码");
+        txt_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (inputContent.length() == 6) {
+                    moneyPay(data, inputContent);
+                } else {
+                    RxToast.showShort("请输入完整支付密码");
+                }
+            }
+        });
+        verificationCodeView.setInputCompleteListener(new VerificationCodeView.InputCompleteListener() {
+            @Override
+            public void inputComplete() {
+                inputContent = verificationCodeView.getInputContent();
+                Log.i("icv_input", verificationCodeView.getInputContent());
+            }
+
+            @Override
+            public void deleteContent() {
+                Log.i("icv_delete", verificationCodeView.getInputContent());
+            }
+        });
+        //x 位置设置
+//        layoutParams.y = show_dialog_add.getHeight() * 2;//y 位置设置
+        layoutParams.alpha = 1f; // 透明度
+
+        window.setAttributes(layoutParams);
+
+        dialog.show();
+    }
+
+
+    //密码支付
+    private void moneyPay(MoneyBean.DataBean data, String password) {
+        String token = (String) SpCommonUtils.get(DStoreImmediatelyPayActivity.this, Constants.TOKEN, "");
+        String user_id = (String) SpCommonUtils.get(DStoreImmediatelyPayActivity.this, Constants.USERID, "");
+        String timestamp = StringUtil.getCurrentTime();
+        Map params = new HashMap();
+
+        params.put("user_id", user_id);
+        params.put("token", token);
+        params.put("timestamp", timestamp);
+
+        params.put("order_id", data.getOrder_id());
+        params.put("out_trade_no", data.getOut_trade_no());
+        params.put("password", password);
+
+        final Map<String, String> removeMap = removeEmptyData(params);
+        Map<String, String> resultMap = sortMapByKey(removeMap);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
+
+        OkGo.<JsonObject>post(Constants.BASE_URL + Constants.MONEY_PAY)
+                .tag(this)
+                .params("sign", sign)
+                .params("timestamp", timestamp)
+                .params("user_id", user_id)
+                .params("token", token)
+
+                .params("order_id", data.getOrder_id())
+                .params("out_trade_no", data.getOut_trade_no())
+                .params("password", password)
+                .execute(new JsonCallback<JsonObject>() {
+                    @Override
+                    public void onSuccess(Response<JsonObject> response) {
+                        BaseResPonse baseResponse = (BaseResPonse) JosnFrom.getInstance().getObj(response.body().toString(), BaseResPonse.class);
+                        RxToast.showShort(baseResponse.getMsg());
+                        if (dialog != null)
+                            dialog.dismiss();
+                        if (baseResponse != null && baseResponse.getStatus().equals("0001")) {
+                            Intent intent = new Intent(DStoreImmediatelyPayActivity.this, ZhihuiSuccessfulActivity.class);
+                            intent.putExtra("doubleprice", promote_price);
+                            intent.putExtra("name", link_man);
+                            intent.putExtra("phone", phone);
+                            intent.putExtra("address", address);
+                            DStoreImmediatelyPayActivity.this.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response response) {
+//                        dismissLP();
+                        super.onError(response);
+                        Log.e("user", response + "!!!!");
+                        DsetApp.getInstance().setRefreshShopCart(false);
+                    }
+                });
     }
 
 

@@ -1,7 +1,7 @@
 package com.wokun.dset.store.bean;
 
 
-public class PayBean {
+public class AilPayBean {
 
     /**
      * status : 0001

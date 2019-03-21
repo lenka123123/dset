@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ddd"
+    android:background="@color/color_mini"
     android:orientation="vertical">
 
     <com.youth.banner.Banner
@@ -20,8 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y20"
         android:background="@color/colorWhite"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/action_mp_enter"
@@ -58,8 +57,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/y30"
-        >
+        android:paddingBottom="@dimen/y30">
 
         <TextView
             android:id="@+id/action_yz_enter"
@@ -142,6 +140,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="bottom"
             app:isHideTimeBackground="false"
+            app:isShowDay="true"
             app:isShowHour="true"
             app:isShowMillisecond="true"
             app:isShowMinute="true"
@@ -174,14 +173,16 @@
             android:layout_height="match_parent">
 
             <com.wokun.dset.store.view.MyGridView
-
                 android:id="@+id/miaosha_gridview"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y300"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/x10"
                 android:gravity="center"
                 android:listSelector="#00000000"
-                android:numColumns="3"
-                android:scrollbars="none" />
+                android:numColumns="auto_fit"
+                android:paddingLeft="@dimen/x10"
+                android:scrollbars="none"
+                android:stretchMode="spacingWidthUniform" />
         </LinearLayout>
     </HorizontalScrollView>
     <!-- top6  -->

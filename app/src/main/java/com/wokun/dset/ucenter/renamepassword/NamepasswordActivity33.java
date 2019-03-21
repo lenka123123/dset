@@ -33,15 +33,16 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
 /**
  * 重置支付密码
- * */
+ */
 public class NamepasswordActivity33 extends BaseBindingActivity {
-    private    String   mobilecode ;
-    private  String  inputContent;
-    private  String phoneNum;
-    private  String  newpwd;
-    private  String  newpwdagain;
+    private String mobilecode;
+    private String inputContent;
+    private String phoneNum;
+    private String newpwd;
+    private String newpwdagain;
     @BindView(R.id.icv)
     VerificationCodeView icv;
+
     @Override
     public int createView() {
         return R.layout.activity_namepassword3;
@@ -50,14 +51,14 @@ public class NamepasswordActivity33 extends BaseBindingActivity {
     @Override
     public WidgetBar createToolBar() {
         return mWidgetBar.setWidgetBarTitle("重置支付密码")
-                .setMenu("完成",null)
+                .setMenu("完成", null)
                 .setMenuTextColor(Color.parseColor("#ffffff"))
                 .setOnMenuClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                      startActivity(RenamepaypwdActvitity.class);
+                        startActivity(RenamepaypwdActvitity.class);
                     }
-                },null);
+                }, null);
     }
 
     @Override
@@ -84,15 +85,17 @@ public class NamepasswordActivity33 extends BaseBindingActivity {
         });
     }
 
-    /** 重置*/
-    @OnClick(R.id. txt_next3)
-    public void action_txt_next3(View v){
-        if(R.id. txt_next3 == v.getId()){
-            if(newpwdagain.equals(newpwd)){
+    /**
+     * 重置
+     */
+    @OnClick(R.id.txt_next3)
+    public void action_txt_next3(View v) {
+        if (R.id.txt_next3 == v.getId()) {
+            if (newpwdagain.equals(newpwd)) {
                 commit();
              /*   Intent intent=new Intent(NamepasswordActivity3.this, ChangpwdsuccessActivity.class);
                 startActivity(intent);*/
-            }else {
+            } else {
                 RxToast.showShort("原密码与新密码不同");
             }
         }
@@ -109,7 +112,7 @@ public class NamepasswordActivity33 extends BaseBindingActivity {
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
         String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
-        Log.e("修改忘记密码信息","修改密码信息："+phoneNum+mobilecode+newpwdagain);
+        Log.e("修改忘记密码信息", "修改密码信息：" + phoneNum + mobilecode + newpwdagain);
         OkGo.<BaseResponse<Object>>post(Constants.BASE_URL + Constants.FORGET_PAY_PWD)
                 .tag(this)
                 .params("sign", sign)
@@ -139,16 +142,10 @@ public class NamepasswordActivity33 extends BaseBindingActivity {
                     @Override
                     public void onError(Response response) {
                         super.onError(response);
-                        Log.e("首页3",response+"!!!!");
-                       // DsetApp.getInstance().setRefreshShopCart(false);
+                        Log.e("首页3", response + "!!!!");
+                        // DsetApp.getInstance().setRefreshShopCart(false);
                     }
                 });
-
-
-
-
-
-
 
 
     }
@@ -160,8 +157,8 @@ public class NamepasswordActivity33 extends BaseBindingActivity {
                 .inflate(R.layout.activity_changpwdsuccess, null);
         customizeDialog.setView(dialogView);
         customizeDialog.setCancelable(true).create();
-     final AlertDialog myDialog = customizeDialog.show();
-           myDialog.dismiss();
+        final AlertDialog myDialog = customizeDialog.show();
+        myDialog.dismiss();
 
     }
 

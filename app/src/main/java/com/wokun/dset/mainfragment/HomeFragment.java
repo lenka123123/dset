@@ -342,8 +342,6 @@ public class HomeFragment extends BaseFragment {
     @OnClick(R.id.dsyt_findyue)
     public void action_dsyt_dsyt_findyue(View v) {
         if (R.id.dsyt_findyue == v.getId()) {
-            RxToast.showShort("敬请期待");
-
           startActivity(DShopHomeActivity.class);
         }
     }

@@ -558,12 +558,15 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                             bean.setSku_name(search_goods_size.getText().toString());
                             bean.setPrice(promote_price);
                             bean.setNum("1");
-                            bean.setCart_id(goodesDetail.getData().getCart_id_str());
+                            bean.setStore_name(dataBean.getShop().getShop_name() );
+//                            bean.setCart_id(dataBean.g);/
 
                             mGoPayList.add(bean);
 
                             intent.putExtra("list", (Serializable) mGoPayList);
                             intent.putExtra("doubleprice", promote_price);
+                            intent.putExtra("cart_id_str", goodesDetail.getData().getCart_id_str()  );
+
                             DStoreDetailActivity.this.startActivity(intent);
                             DStoreDetailActivity.this.finish();
                         }

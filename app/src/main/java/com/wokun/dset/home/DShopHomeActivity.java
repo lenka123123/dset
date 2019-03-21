@@ -32,6 +32,7 @@ import com.wokun.dset.store.adapter.HomeSGridViewAdapter;
 import com.wokun.dset.store.adapter.HomoSecondAdapter;
 import com.wokun.dset.store.adapter.HomoTopAdapter;
 import com.wokun.dset.store.bean.DStoreHome;
+import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
 import com.wokun.dset.store.dstore.dstorelist.DStoreSearchListActivity;
 import com.wokun.dset.store.rcycleview.RecyclerItemDecoration;
 import com.wokun.dset.store.view.MyGridView;
@@ -42,9 +43,11 @@ import com.wokun.dset.utils.StringUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.iwgang.countdownview.CountdownView;
@@ -71,6 +74,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
     private HorizontalScrollView miaosha_horizontal;
     private LinearLayout miaosha_layout;
     private Intent mIntent;
+    private long endTime;
 
 
     @Override
@@ -150,8 +154,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
                 break;
 
             case R.id.back:
-                mIntent.putExtra("category_id", "");
-                startActivity(mIntent);
+                DShopHomeActivity.this.finish();
                 break;
             case R.id.search_textview:
                 mIntent.putExtra("category_id", "");
@@ -180,7 +183,6 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         getStoreInfo();
 
     }
-
 
 
     private void addHeaderView() {
@@ -233,6 +235,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
     protected void onResume() {
         super.onResume();
     }
+
     /**
      * 设置GirdView参数，绑定数据
      */
@@ -251,7 +254,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         jingxuan_gridview.setColumnWidth(itemWidth); // 设置列表项宽
         jingxuan_gridview.setHorizontalSpacing(5); // 设置列表项水平间距
         jingxuan_gridview.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
-        jingxuan_gridview.setNumColumns(5); // 设置列数量=列表集合数
+        jingxuan_gridview.setNumColumns(3); // 设置列数量=列表集合数
 
         gridViewAdapter = new HomeSGridViewAdapter(DShopHomeActivity.this);
         jingxuan_gridview.setAdapter(gridViewAdapter);
@@ -271,9 +274,9 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
                 gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
         miaosha_gridview.setLayoutParams(miaoshaParams); // 设置GirdView布局参数,横向布局的关键
         miaosha_gridview.setColumnWidth(itemWidth); // 设置列表项宽
-        miaosha_gridview.setHorizontalSpacing(5); // 设置列表项水平间距
-        miaosha_gridview.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
-        miaosha_gridview.setNumColumns(5); // 设置列数量=列表集合数
+        miaosha_gridview.setHorizontalSpacing(20); // 设置列表项水平间距
+        miaosha_gridview.setStretchMode(GridView.NO_STRETCH);
+//        miaosha_gridview.setNumColumns(3); // 设置列数量=列表集合数
 
         secondAdapter = new HomoSecondAdapter(DShopHomeActivity.this);
         miaosha_gridview.setAdapter(secondAdapter);
@@ -295,11 +298,11 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
     private void getStoreInfo() {
         String token = (String) SpCommonUtils.get(DShopHomeActivity.this, Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(DShopHomeActivity.this, Constants.USERID, "");
-
+        String currentTime = StringUtil.getCurrentTime();
         Map params = new HashMap();
         params.put("user_id", user_id);
         params.put("token", token);
-        params.put("timestamp", StringUtil.getCurrentTime());
+        params.put("timestamp", currentTime);
         final Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
         String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
@@ -307,7 +310,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         OkGo.<JsonObject>post(Constants.BASE_URL + Constants.STORE_HOME_URL)
                 .tag(this)
                 .params("sign", sign)
-                .params("timestamp", StringUtil.getCurrentTime())
+                .params("timestamp", currentTime)
                 .params("user_id", user_id)
                 .params("token", token)
                 .execute(new JsonCallback<JsonObject>() {
@@ -345,9 +348,11 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         if (dStoreHome.getData().getTop6() != null && dStoreHome.getData().getTop6().size() > 0)
             topAdapter.setData(dStoreHome.getData().getTop6());
 
-
         if (dStoreHome.getData().getPromotionInfo().getPromotionGoods() != null && dStoreHome.getData().getPromotionInfo().getPromotionGoods().size() > 0) {
+
+            miaosha_gridview.setNumColumns(dStoreHome.getData().getPromotionInfo().getPromotionGoods().size());
             secondAdapter.setData(dStoreHome.getData().getPromotionInfo().getPromotionGoods());
+
             miaosha_horizontal.setVisibility(View.VISIBLE);
             miaosha_layout.setVisibility(View.VISIBLE);
         } else {
@@ -355,15 +360,20 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
             miaosha_layout.setVisibility(View.VISIBLE);
         }
         //倒计时控件
-//        if (dStoreHome.getData().getPromotionInfo().getStart_time() != null && dStoreHome.getData().getPromotionInfo().getEnd_time() != null)
-        countdownView.start(5 * 60 * 1000L); // Millisecond
+        if (dStoreHome.getData().getPromotionInfo().getEnd_time() != null) {
+            endTime = Long.valueOf(dStoreHome.getData().getPromotionInfo().getEnd_time());
+            showTime();
+
+
+        }
+
 
         if (dStoreHome.getData().getAd() != null && dStoreHome.getData().getAd().size() > 0) {
             for (int i = 0; i < dStoreHome.getData().getAd().size(); i++) {
                 bannerAgainImageArray.add(i, dStoreHome.getData().getAd().get(i).getPic_url());
             }
         }
-        startBar(mBanner, bannerAgainImageArray);
+        startBar(mBanner, bannerAgainImageArray, dStoreHome.getData().getAd());
 
         if (!mAdapter.getData().isEmpty()) {
             mAdapter.getData().clear();
@@ -374,7 +384,23 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
 
     }
 
-    public void startBar(Banner banner, ArrayList bannerImageArray) {
+    public void showTime() {
+        long timeStamp = System.currentTimeMillis() / 1000;
+        Log.i(TAG, "showTime:qq  " + timeStamp);
+        if (endTime > timeStamp)
+            countdownView.start((endTime - timeStamp) * 1000); // Millisecond
+    }
+
+    public void startBar(Banner banner, ArrayList bannerImageArray, final List<DStoreHome.DataBean.AdBeanX> ad) {
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent = new Intent();
+                intent.putExtra(Constants.GOODS_ID, ad.get(position).getGoods_id());
+                intent.setClass(DShopHomeActivity.this, DStoreDetailActivity.class);
+                DShopHomeActivity.this.startActivity(intent);
+            }
+        });
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new ImageLoadUtils());

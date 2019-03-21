@@ -44,7 +44,7 @@
     <RelativeLayout
         android:id="@+id/select_address"
         style="@style/RelativeLayout_Default"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/goto_select"

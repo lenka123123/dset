@@ -98,8 +98,9 @@ public class MainActivity extends AppCompatActivity implements
         //      mina.putExtra("main", "joincart");
         joinAct = intent.getStringExtra("main");
         if (joinAct != null && joinAct.equals("joincart")) {
-            if (mViewPager != null)
-                mViewPager.setCurrentItem(2, false);
+            mViewPager.setCurrentItem(Constants.TAB_POSITION_SHOP_CART, false);
+        } else {
+            mViewPager.setCurrentItem(Constants.TAB_POSITION_HOME, false);
         }
     }
 
@@ -121,15 +122,15 @@ public class MainActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         //    Logger.e(TAG,Constants.TAB_POSITION + AppCache.getTabPosition());
-        if (DsetApp.getInstance().isRefreshShopCart()) {
-            changeTextViewColor();
-            changeSelectedTabState(DsetApp.getInstance().getTabPosition());
-            mViewPager.setCurrentItem(DsetApp.getInstance().getTabPosition(), false);
-        } else if (-1 != AppCache.getTabPosition()) {
-            changeTextViewColor();
-            changeSelectedTabState(AppCache.getTabPosition());
-            mViewPager.setCurrentItem(AppCache.getTabPosition(), false);
-        }
+//        if (DsetApp.getInstance().isRefreshShopCart()) {
+//            changeTextViewColor();
+//            changeSelectedTabState(DsetApp.getInstance().getTabPosition());
+//            mViewPager.setCurrentItem(DsetApp.getInstance().getTabPosition(), false);
+//        } else if (-1 != AppCache.getTabPosition()) {
+//            changeTextViewColor();
+//            changeSelectedTabState(AppCache.getTabPosition());
+//            mViewPager.setCurrentItem(AppCache.getTabPosition(), false);
+//        }
     }
 
 
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements
         mViewPager.addOnPageChangeListener(this);
         changeTextViewColor();
         changeSelectedTabState(getIntent().getIntExtra(Constants.TAB_POSITION, 0));
-        mViewPager.setCurrentItem(getIntent().getIntExtra(Constants.TAB_POSITION, 0), false);
+//        mViewPager.setCurrentItem(getIntent().getIntExtra(Constants.TAB_POSITION, 0), false);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

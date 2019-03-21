@@ -66,9 +66,9 @@ public class HomoSecondAdapter extends BaseAdapter {
 
             //设置标题
             holder.title.setText(bean.getGoods_name());
-            holder.price.setText(bean.getPrice());
-            holder.title.setText(bean.getPromotion_price());
-            holder.title.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+            holder.price.setText("￥" + bean.getPromotion_price());
+            holder.oldprice.setText("￥" + bean.getPrice());
+            holder.oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
             Glide.with(context).load(bean.getPic_cover_small()).into(holder.img);
             convertView.setTag(holder);
         } else {

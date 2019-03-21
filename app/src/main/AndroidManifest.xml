@@ -52,59 +52,178 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".login.LoginActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".WelcomeAty" />
-        <activity android:name=".login.RegisterActivity" />
-        <activity android:name=".login.AlterPwdActivity" />
-        <activity android:name=".hudongshop.changeshopActivity" />
-        <activity android:name=".hudongshop.ShopDetailsActivity" />
-        <activity android:name=".hudongshop.ServiceZhihiuiActivity" />
-        <activity android:name=".address.ui.AddressAddActivity" />
-        <activity android:name=".address.ui.AddressListActivity" />
-        <activity android:name=".address.ui.AddressEditActivity" />
-        <activity android:name=".ucenter.JifenchangeActivity" />
-        <activity android:name=".ucenter.FutouDetailsActivity" />
-        <activity android:name=".ucenter.JifenDetailsActivity" />
+        <activity
+            android:name=".login.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".login.AlterPwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".hudongshop.changeshopActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".hudongshop.ShopDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".hudongshop.ServiceZhihiuiActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".address.ui.AddressAddActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".address.ui.AddressListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".address.ui.AddressEditActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.JifenchangeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.FutouDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.JifenDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ucenter.YueDetailsActvitity" />
-        <activity android:name=".ucenter.DuihuanDetailsActivity" />
-        <activity android:name=".ucenter.ZhuanzhangActivity" />
-        <activity android:name=".ucenter.ZhuanzhangDetailsActivity" />
+        <activity
+            android:name=".ucenter.DuihuanDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.ZhuanzhangActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.ZhuanzhangDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ucenter.ShouMoneyActivtity" />
         <activity android:name=".ucenter.renamepassword.RenamepaypwdActvitity" />
-        <activity android:name=".ucenter.renamepassword.NamepasswordActivity" />
+        <activity
+            android:name=".ucenter.renamepassword.NamepasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ucenter.renamepassword.NamepasswordActivity2" />
         <activity android:name=".ucenter.renamepassword.NamepasswordActivity22" />
         <activity android:name=".ucenter.renamepassword.NamepasswordActivity33" />
         <activity android:name=".ucenter.renamepassword.NamepasswordActivity3" />
-        <activity android:name=".ucenter.renamepassword.ChangpwdsuccessActivity" />
-        <activity android:name=".ucenter.renamepassword.ForgetpwdActivity" />
-        <activity android:name=".ucenter.DsytYaoqingActivity" />
-        <activity android:name=".ucenter.EditPwdActivity" />
+        <activity
+            android:name=".ucenter.renamepassword.ChangpwdsuccessActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.renamepassword.ForgetpwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.DsytYaoqingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.EditPwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ucenter.addcards.BankTestActivity2" />
         <activity android:name=".ucenter.addcards.TixianMoneyActivity2" />
-        <activity android:name=".ucenter.SettingsActivity" />
-        <activity android:name=".home.HuiyuanlevelActivity" />
-        <activity android:name=".home.HuiyuansayActivity" />
-        <activity android:name=".ucenter.PersonalInfoActivity" />
-        <activity android:name=".ucenter.quanyi.QuanyiActivity" />
-        <activity android:name=".ucenter.quanyi.BaijiaDetailsActivity" />
-        <activity android:name=".ucenter.quanyi.dashishop.PaydetailsActivity" />
-        <activity android:name=".ucenter.myyijian.ui.MyyijianActivity" />
-        <activity android:name=".ucenter.SaoyisaoActivity" />
+        <activity
+            android:name=".ucenter.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".home.HuiyuanlevelActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".home.HuiyuansayActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.PersonalInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.quanyi.QuanyiActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.quanyi.BaijiaDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.quanyi.dashishop.PaydetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.myyijian.ui.MyyijianActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.SaoyisaoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ucenter.XiaoxiDetailsActvitity" />
-        <activity android:name=".home.NoticeWebActivity" />
-        <activity android:name=".home.FindDsyueActivity" />
-        <activity android:name=".ucenter.quanyi.dashishop.GoodsOrderActivity" />
+        <activity
+            android:name=".home.NoticeWebActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".home.FindDsyueActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.quanyi.dashishop.GoodsOrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".home.DShopHomeActivity" />
-        <activity android:name=".ucenter.quanyi.PowerAccActivity" />
+        <activity
+            android:name=".home.DShopHomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.quanyi.PowerAccActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--  达事商城 商品列表 -->
-        <activity android:name=".store.dstore.dstorelist.DStoreSearchListActivity" />
-        <activity android:name=".store.dstore.dstoredetail.DStoreDetailActivity" />
+        <activity
+            android:name=".store.dstore.dstorelist.DStoreSearchListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".store.dstore.dstoredetail.DStoreDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <!-- 立即支付-->
-        <activity android:name=".store.dstore.immediatelypay.DStoreImmediatelyPayActivity"></activity>
+        <activity
+            android:name=".store.dstore.immediatelypay.DStoreImmediatelyPayActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".pinkongshop.ZhihuiSuccessfulActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
 
         <!-- 高德地图定位 -->
@@ -114,10 +233,22 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".ucenter.AboutUsActivity" />
-        <activity android:name=".login.RegisterAboutActivity" />
-        <activity android:name=".home.AboutTyslActivity" />
-        <activity android:name=".ucenter.AboutWebActivity"></activity>
+        <activity
+            android:name=".ucenter.AboutUsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".login.RegisterAboutActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".home.AboutTyslActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ucenter.AboutWebActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
 
         <!--    <provider
