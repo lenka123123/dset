@@ -11,6 +11,7 @@ public class Constants {
     public static final String USERID = "userid";
     public static final String TOKEN = "token";
     public static final String LANGUAGE = "lang";
+    public static final String ENDTIME = "ENDTIME";
     public static final String AREA_CODE_KEY = "area_code_key";
 
     public static double LONGITUDE = 0;//经度

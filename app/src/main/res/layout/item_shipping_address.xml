@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/RelativeLayout_Default"
+    android:id="@+id/action_set_root_click"
     android:background="@drawable/drawable_btn_bg_color_white">
 
     <TextView

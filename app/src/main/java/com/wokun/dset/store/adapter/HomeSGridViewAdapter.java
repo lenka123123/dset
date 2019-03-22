@@ -2,6 +2,7 @@ package com.wokun.dset.store.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Picture;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wokun.dset.R;
+import com.wokun.dset.model.Constants;
 import com.wokun.dset.store.bean.DStoreHome;
+import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,9 +106,12 @@ public class HomeSGridViewAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setOnClick(int onClick) {
+    public void setOnClick(int position) {
 
-
+        Intent intent = new Intent();
+        intent.putExtra(Constants.GOODS_ID, cateListBeans.get(position).getGoods_id());
+        intent.setClass(context, DStoreDetailActivity.class);
+        context.startActivity(intent);
     }
 
     class Holder {

@@ -32,6 +32,7 @@ public class AddressAdapter extends BaseQuickAdapter<AddressListBean.AddressBean
         .setText(R.id.user_address,item.getProvice()+item.getCity()+item.getArea()+item.getAddress())
         .addOnClickListener(R.id.action_set_normal_address)
         .addOnClickListener(R.id.action_edit_address)
+        .addOnClickListener(R.id.action_set_root_click)
         .addOnClickListener(R.id.action_delete_address);
     }
 }

@@ -3,23 +3,22 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="@dimen/y460"
-
     android:layout_marginTop="@dimen/y10"
-    android:background="@color/colorWhite"
+    android:background="@color/white"
     android:orientation="horizontal">
 
     <View
         android:id="@+id/left_linearlayout"
         android:layout_width="@dimen/x30"
         android:layout_height="match_parent"
-        android:background="#ddd" />
+        android:background="@color/color_mini" />
 
     <View
         android:id="@+id/left_linearlayout_item"
         android:visibility="gone"
         android:layout_width="@dimen/x10"
         android:layout_height="match_parent"
-        android:background="#ddd" />
+        android:background="@color/color_mini" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -60,5 +59,5 @@
         android:id="@+id/right_linearlayout"
         android:layout_width="@dimen/x30"
         android:layout_height="match_parent"
-        android:background="#ddd" />
+        android:background="@color/color_mini" />
 </LinearLayout>

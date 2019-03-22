@@ -265,15 +265,15 @@
                 android:id="@+id/true_price"
                 android:layout_width="@dimen/x354"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:textColor="@color/colorShopping"
                 android:textSize="15sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/action_pay"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/x354"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@color/color_05_61_96"
             android:gravity="center"
             android:text="立即付款"

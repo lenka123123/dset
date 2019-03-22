@@ -26,7 +26,8 @@ import butterknife.OnClick;
 //收货地址
 public class AddressListActivity extends BaseBindingActivity {
 
-    @BindString(R.string.tysl_user_address) String title;
+    @BindString(R.string.tysl_user_address)
+    String title;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -57,7 +58,7 @@ public class AddressListActivity extends BaseBindingActivity {
         mRecyclerView.addItemDecoration(new MItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         mAdapter = new AddressAdapter(R.layout.item_shipping_address, null);
-        mAdapter.setEmptyView(R.layout.layout_no_address_view,(ViewGroup) mRecyclerView.getParent());
+        mAdapter.setEmptyView(R.layout.layout_no_address_view, (ViewGroup) mRecyclerView.getParent());
 
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -65,12 +66,24 @@ public class AddressListActivity extends BaseBindingActivity {
 
                 AddressListBean.AddressBean data = (AddressListBean.AddressBean) adapter.getData().get(position);
 
-                if(R.id.action_set_normal_address == view.getId()){
+                if (R.id.action_set_normal_address == view.getId()) {
                     onSetNormalAddress(data);
-                }else if(R.id.action_edit_address == view.getId()){
+                } else if (R.id.action_edit_address == view.getId()) {
                     onEditAddress(data);
-                }else if(R.id.action_delete_address == view.getId()){
+                } else if (R.id.action_delete_address == view.getId()) {
                     onDeleteAddress(data);
+                } else if (R.id.action_set_root_click == view.getId()) {
+                    //数据是使用Intent返回
+                    Intent intent = new Intent();
+                    //把返回数据存入Intent
+                    intent.putExtra(Constants.CONTACTS, data.getName());
+                    intent.putExtra(Constants.TEL, data.getPhone());
+
+                    intent.putExtra(Constants.ADDRESS, data.getProvice() + data.getCity() + data.getArea() + data.getAddress());
+
+                    AddressListActivity.this.setResult(RESULT_OK, intent);
+                    //关闭Activity
+                    AddressListActivity.this.finish();
                 }
             }
         });
@@ -78,14 +91,14 @@ public class AddressListActivity extends BaseBindingActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-               String requestCode = getIntent().getStringExtra(Constants.REQUEST_CODE);
-                if(!TextUtils.isEmpty(requestCode)){
+                String requestCode = getIntent().getStringExtra(Constants.REQUEST_CODE);
+                if (!TextUtils.isEmpty(requestCode)) {
                     Intent data = new Intent();
                     AddressListBean.AddressBean address = (AddressListBean.AddressBean) adapter.getData().get(position);
                     data.putExtra(Constants.CONTACTS, address.getName());
                     data.putExtra(Constants.TEL, address.getPhone());
                     data.putExtra(Constants.PROVINCE_ID, address.getProvice());
-                    data.putExtra(Constants.ADDRESS, address.getProvice() + address.getCity() + address.getArea()+ address.getAddress());
+                    data.putExtra(Constants.ADDRESS, address.getProvice() + address.getCity() + address.getArea() + address.getAddress());
                     setResult(20, data);
                     finish();
                 }
@@ -100,16 +113,16 @@ public class AddressListActivity extends BaseBindingActivity {
     }
 
     //添加地址
-    private void onAddAddress(){
+    private void onAddAddress() {
         Intent intent = new Intent();
         intent.setClass(this, AddressAddActivity.class);
         startActivityForResult(intent, REQUEST_ADD_ADDRESS);
-      startActivityForResult(intent, REQUEST_ADD_ADDRESS);
+        startActivityForResult(intent, REQUEST_ADD_ADDRESS);
     }
 
     //设置默认地址
     private void onSetNormalAddress(AddressListBean.AddressBean bean) {
-        AddressMgr.getInstance().setDefaultAddress(mAdapter,  bean.getId());
+        AddressMgr.getInstance().setDefaultAddress(mAdapter, bean.getId());
     }
 
     //删除地址
@@ -119,7 +132,7 @@ public class AddressListActivity extends BaseBindingActivity {
 
     //编辑地址
     private void onEditAddress(AddressListBean.AddressBean bean) {
-       Intent intent = new Intent();
+        Intent intent = new Intent();
         intent.putExtra(Constants.ADDRESS_ID, bean.getId());
         intent.putExtra(Constants.CONTACTS, bean.getName());
         intent.putExtra(Constants.TEL, bean.getPhone());
@@ -129,7 +142,7 @@ public class AddressListActivity extends BaseBindingActivity {
         intent.putExtra(Constants.DISTRICT_ID, bean.getArea());
         intent.putExtra(Constants.ADDRESS, bean.getAddress());
         intent.setClass(this, AddressEditActivity.class);
-        startActivityForResult(intent, REQUEST_EDIT_ADDRESS, !DsetApp.getInstance().isLogin());
+        startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
     }
 
     @Override

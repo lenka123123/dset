@@ -61,12 +61,12 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
         deleteList.add(actionDelete);
         actionMinus = helper.getView(R.id.action_minus);
         actionAdd = helper.getView(R.id.action_add);
-        Log.i(TAG, position + "外面  " + mData.get(position).getGoods_id());
+        Log.i(TAG, position + "外面  " + mData.get(position).getStore_id());
         if (position > 0) {
-            Log.i(TAG, position + "convert=====  " + mData.get(position).getGoods_id());
-            Log.i(TAG, position + "convconvert=====ert: " + mData.get(position - 1).getGoods_id());
+            Log.i(TAG, position + "convert=====  " + mData.get(position).getStore_id());
+            Log.i(TAG, position + "convconvert=====ert: " + mData.get(position - 1).getStore_id());
 
-            if (mData.get(position).getGoods_id().equals(mData.get(position - 1).getGoods_id())) {
+            if (mData.get(position).getStore_id().equals(mData.get(position - 1).getStore_id())) {
                 shopCartHeaderRoot.setVisibility(View.GONE);
             } else {
                 shopCartHeaderRoot.setVisibility(View.VISIBLE);
@@ -221,7 +221,7 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
                 if (mData.get(position).getIsFirst() == 1) {
                     mData.get(position).setShopSelect(!mData.get(position).isShopSelect());
                     for (int i = 0; i < mData.size(); i++) {
-                        if (mData.get(i).getGoods_id().equals(mData.get(position).getGoods_id())) {
+                        if (mData.get(i).getStore_id().equals(mData.get(position).getStore_id())) {
                             mData.get(i).setSelect(mData.get(position).isShopSelect());
                         }
                     }

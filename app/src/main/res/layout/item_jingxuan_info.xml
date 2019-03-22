@@ -13,8 +13,6 @@
         android:gravity="center"
         android:singleLine="true"
         android:text="测试数据"
-        android:layout_marginLeft="@dimen/x30"
-        android:layout_marginRight="@dimen/x30"
         android:textColor="@color/color_3_3_3"
         android:textSize="11sp" />
 
@@ -36,7 +34,7 @@
         android:layout_height="@dimen/y120"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/y6"
-        android:background="@drawable/ic"
+        android:background="@drawable/default_img"
         android:scaleType="fitXY" />
 
     <View

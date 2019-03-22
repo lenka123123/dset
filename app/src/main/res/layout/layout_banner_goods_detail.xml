@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.itheima.loopviewpager.LoopViewPager
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.itheima.loopviewpager.LoopViewPager xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/lvp_pager"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:visibility="gone"
     app:animTime="1000"
     app:loopTime="3000">
 
     <RelativeLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:gravity="center"
         android:orientation="horizontal">
+
         <com.itheima.loopviewpager.LoopDotsView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,85 +24,96 @@
             app:dotShape="oval"
             app:dotSize="6dp" />
 
-    <!--秒杀-->
+        <!--秒杀-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:orientation="vertical"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorBackground" />
+            android:layout_alignParentStart="true"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBackground" />
 
-        <LinearLayout
-            android:background="@drawable/ic_bluebg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/drawable_padding_6"
-            android:paddingTop="@dimen/drawable_padding_6">
 
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:textColor="#fff"
-                android:text="￥123"
-                android:textSize="19sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:textSize="14sp"
-                    android:text="限时秒抢"
-                    android:textColor="#fff"
-                    android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/ic_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginLeft="9dp"
-                    android:textColor="#fff"
-                    android:textSize="14sp"
-                    android:text="快捷更方便"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
+                android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/aaa"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_bluebg"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/drawable_padding_6"
+                    android:paddingTop="@dimen/drawable_padding_6">
+
+                    <TextView
+                        android:id="@+id/promotion_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="￥123"
+                        android:textColor="#fff"
+                        android:textSize="19sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_time"
+                            android:drawablePadding="10dp"
+                            android:text="限时秒抢"
+                            android:textColor="#fff"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="快捷更方便"
+                            android:textColor="#fff"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dddddd"
+                    android:layout_width="160dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:background="#e5f4ff"
                     android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:orientation="vertical">
-               <TextView
-                   android:textSize="14sp"
-                   android:textColor="#056196"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="距离结束还剩："/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="距离结束还剩："
+                        android:textColor="#056196"
+                        android:textSize="14sp" />
+
                     <cn.iwgang.countdownview.CountdownView
-                        android:layout_marginTop="@dimen/dp_10"
+                        android:id="@+id/promotion_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dp_10"
                         app:isHideTimeBackground="false"
-                        app:isShowDay="false"
+                        app:isShowDay="true"
                         app:isShowHour="true"
                         app:isShowMillisecond="true"
                         app:isShowMinute="true"
@@ -114,9 +126,8 @@
                         app:timeBgColor="#056196"
                         app:timeBgSize="11dp"
                         app:timeTextColor="#FFFFFF"
-                        app:timeTextSize="11sp"/>
+                        app:timeTextSize="11sp" />
                 </LinearLayout>
-
 
 
                 <View
@@ -125,10 +136,7 @@
                     android:background="@color/colorBackground" />
 
 
-
-        </LinearLayout>
-
-
+            </LinearLayout>
 
 
         </LinearLayout>

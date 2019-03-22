@@ -75,7 +75,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
     private LinearLayout miaosha_layout;
     private Intent mIntent;
     private long endTime;
-
+    private DStoreHome.DataBean.JingxuanBean.AdBean jinxuanAd;
 
     @Override
     protected void onStart() {
@@ -160,6 +160,12 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
                 mIntent.putExtra("category_id", "");
                 startActivity(mIntent);
                 break;
+            case R.id.jingxuan_ad_img:
+                Intent intent = new Intent();
+                intent.putExtra(Constants.GOODS_ID, jinxuanAd.getGoods_id());
+                intent.setClass(DShopHomeActivity.this, DStoreDetailActivity.class);
+                DShopHomeActivity.this.startActivity(intent);
+                break;
         }
     }
 
@@ -205,6 +211,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         header.findViewById(R.id.action_zf_enter).setOnClickListener(this);
 
         jingxuan_ad_img = header.findViewById(R.id.jingxuan_ad_img);
+        jingxuan_ad_img.setOnClickListener(this);
         jingxuan_gridview = header.findViewById(R.id.jingxuan_gridview);
         miaosha_gridview = header.findViewById(R.id.miaosha_gridview);
         top_gridView = header.findViewById(R.id.top_gridView);
@@ -236,11 +243,8 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         super.onResume();
     }
 
-    /**
-     * 设置GirdView参数，绑定数据
-     */
-    private void setGridView() {
-        int size = 5;
+
+    private void updataColumnWidth(int size, MyGridView gridView) {
         int length = 100;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -250,12 +254,18 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
 
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
-        jingxuan_gridview.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
-        jingxuan_gridview.setColumnWidth(itemWidth); // 设置列表项宽
-        jingxuan_gridview.setHorizontalSpacing(5); // 设置列表项水平间距
-        jingxuan_gridview.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
-        jingxuan_gridview.setNumColumns(3); // 设置列数量=列表集合数
+        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        gridView.setColumnWidth(itemWidth); // 设置列表项宽
+        gridView.setHorizontalSpacing(20); // 设置列表项水平间距
+        gridView.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
+        gridView.setNumColumns(size); // 设置列数量=列表集合数
 
+    }
+
+    /**
+     * 设置GirdView参数，绑定数据
+     */
+    private void setGridView() {
         gridViewAdapter = new HomeSGridViewAdapter(DShopHomeActivity.this);
         jingxuan_gridview.setAdapter(gridViewAdapter);
 
@@ -270,13 +280,6 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
             }
         });
 
-        final LinearLayout.LayoutParams miaoshaParams = new LinearLayout.LayoutParams(
-                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
-        miaosha_gridview.setLayoutParams(miaoshaParams); // 设置GirdView布局参数,横向布局的关键
-        miaosha_gridview.setColumnWidth(itemWidth); // 设置列表项宽
-        miaosha_gridview.setHorizontalSpacing(20); // 设置列表项水平间距
-        miaosha_gridview.setStretchMode(GridView.NO_STRETCH);
-//        miaosha_gridview.setNumColumns(3); // 设置列数量=列表集合数
 
         secondAdapter = new HomoSecondAdapter(DShopHomeActivity.this);
         miaosha_gridview.setAdapter(secondAdapter);
@@ -336,21 +339,22 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
     }
 
     public void detailData(DStoreHome dStoreHome) {
-        DStoreHome.DataBean.JingxuanBean.AdBean jinxuanAd = dStoreHome.getData().getJingxuan().getAd();
+        jinxuanAd = dStoreHome.getData().getJingxuan().getAd();
         if (jinxuanAd != null && jinxuanAd.getPic_url() != null) {
             Glide.with(DShopHomeActivity.this).load(jinxuanAd.getPic_url()).into(jingxuan_ad_img);
         }
 
-        if (dStoreHome.getData().getJingxuan().getGoods() != null && dStoreHome.getData().getJingxuan().getGoods().size() > 0)
+        if (dStoreHome.getData().getJingxuan().getGoods() != null && dStoreHome.getData().getJingxuan().getGoods().size() > 0) {
+//            jingxuan_gridview.setNumColumns(dStoreHome.getData().getJingxuan().getGoods().size());
+            updataColumnWidth(dStoreHome.getData().getJingxuan().getGoods().size(),jingxuan_gridview);
             gridViewAdapter.setData(dStoreHome.getData().getJingxuan().getGoods());
-
+        }
 
         if (dStoreHome.getData().getTop6() != null && dStoreHome.getData().getTop6().size() > 0)
             topAdapter.setData(dStoreHome.getData().getTop6());
 
         if (dStoreHome.getData().getPromotionInfo().getPromotionGoods() != null && dStoreHome.getData().getPromotionInfo().getPromotionGoods().size() > 0) {
-
-            miaosha_gridview.setNumColumns(dStoreHome.getData().getPromotionInfo().getPromotionGoods().size());
+            updataColumnWidth(dStoreHome.getData().getPromotionInfo().getPromotionGoods().size(),miaosha_gridview);
             secondAdapter.setData(dStoreHome.getData().getPromotionInfo().getPromotionGoods());
 
             miaosha_horizontal.setVisibility(View.VISIBLE);
@@ -363,8 +367,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         if (dStoreHome.getData().getPromotionInfo().getEnd_time() != null) {
             endTime = Long.valueOf(dStoreHome.getData().getPromotionInfo().getEnd_time());
             showTime();
-
-
+            SpCommonUtils.put(DShopHomeActivity.this, Constants.ENDTIME, dStoreHome.getData().getPromotionInfo().getEnd_time());
         }
 
 

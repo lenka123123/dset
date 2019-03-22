@@ -81,6 +81,8 @@ public class ShopCartFragment extends BaseFragment {
     TextView actionSettleAccounts;
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
+    @BindView(R.id.activity_no_data)
+    ImageView activity_no_data;
 
     private int action = -1;
     private final static int EDIT = 0;
@@ -93,12 +95,31 @@ public class ShopCartFragment extends BaseFragment {
     private List<Integer> mCartIdList = new ArrayList<>();
     private List<CartList.DataBean.CartListInfoBean.GoodsItemBean> mGoPayList = new ArrayList<>();
     private List<CartList.DataBean.CartListInfoBean.GoodsItemBean> mAllOrderList = new ArrayList<>();
+    private String cart_id_str = "";
+    private int mTotalNum = 0; //选中的商品
+
+    private void updata() {
+
+        mSelect = false;
+        mTotalPrice = 0;
+        mCartIdList.clear();
+        mGoPayList.clear();
+        mAllOrderList.clear();
+        cart_id_str = "";
+        mTotalNum = 0; //选中的商品
+
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) { //界面可见
-            if (isCreated) getShopCartList();
+
+
+            if (isCreated) {
+                updata();
+                getShopCartList();
+            }
         } else {  //界面不可见 相当于 onpause
         }
     }
@@ -135,7 +156,7 @@ public class ShopCartFragment extends BaseFragment {
       }
   */
     private void initData() {
-        getShopCartList();
+//        getShopCartList();
     }
 
     @Override
@@ -166,11 +187,24 @@ public class ShopCartFragment extends BaseFragment {
             RxToast.showShort("购物车数量为空!");
             return;
         }
+        if (mGoPayList.size() == 0) {
+            RxToast.showShort("未选中商品");
+            return;
+        }
 
-        Intent intent = new Intent(getContext(), DStoreImmediatelyPayActivity.class);
-        intent.putExtra("list", (Serializable) mGoPayList);
-        intent.putExtra("doubleprice", mTotalPrice);
-        startActivity(intent);
+        if (cart_id_str.endsWith(",")) {
+            cart_id_str.substring(0, cart_id_str.length() - 1);
+        }
+
+        if ((actionSettleAccounts.getText().toString().startsWith("删除"))) {
+            deleteGoods(cart_id_str);
+        } else {
+            Intent intent = new Intent(getContext(), DStoreImmediatelyPayActivity.class);
+            intent.putExtra("list", (Serializable) mGoPayList);
+            intent.putExtra("doubleprice", mTotalPrice + "");
+            intent.putExtra("cart_id_str", cart_id_str);
+            startActivity(intent);
+        }
 
 
 //        for (CartList.DataBean.CartListInfoBean.GoodsItemBean goods : mGoPayList) {
@@ -202,8 +236,8 @@ public class ShopCartFragment extends BaseFragment {
         // mAdapter.setEmptyView(R.layout.layout_no_data_shop_cart_view, (ViewGroup) mRecyclerView.getParent());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.addItemDecoration(new MItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
+//        mRecyclerView.addItemDecoration(new MItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+//        mRecyclerView.addItemDecoration(new        RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.divide_gray_color)));
         //删除商品接口
         mAdapter.setOnDeleteClickListener(new ShopCartAdapter.OnDeleteClickListener() {
             @Override
@@ -227,18 +261,23 @@ public class ShopCartFragment extends BaseFragment {
                     actionSelectAll.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
                 }
                 mTotalPrice = 0;
-                int mTotalNum = 0;
+                mTotalNum = 0;
                 mGoPayList.clear();
                 for (int i = 0; i < mAllOrderList.size(); i++)
                     if (mAllOrderList.get(i).isSelect()) {
                         double v = DecimalUtil.mul(Double.valueOf(mAllOrderList.get(i).getPrice()), Integer.valueOf(mAllOrderList.get(i).getNum()));
                         mTotalPrice = DecimalUtil.add(mTotalPrice, v);
                         mTotalNum += 1;
-
+                        cart_id_str = cart_id_str + mAllOrderList.get(i).getCart_id() + ",";
                         mGoPayList.add(mAllOrderList.get(i));
                     }
                 tvTotalPrice.setText("¥ " + mTotalPrice + "");
-                actionSettleAccounts.setText("去结算(" + mTotalNum + ")");
+
+                if ((actionEdit.getText().toString()).startsWith("完成")) {
+                    actionSettleAccounts.setText("删除(" + mTotalNum + ")");
+                } else {
+                    actionSettleAccounts.setText("去结算(" + mTotalNum + ")");
+                }
             }
         });
         actionSelectAll.setOnClickListener(new View.OnClickListener() {
@@ -328,7 +367,8 @@ public class ShopCartFragment extends BaseFragment {
             for (TextView t : list) {
                 t.setVisibility(View.VISIBLE);
             }
-            tvTitle.setText("完成", null);
+            actionEdit.setText("完成", null);
+            actionSettleAccounts.setText("删除(" + mTotalNum + ")");
             action = COMPLETE;
         } else if (action == COMPLETE) {
             if (mCartIdList == null) return;
@@ -343,7 +383,8 @@ public class ShopCartFragment extends BaseFragment {
             for (TextView t : list) {
                 t.setVisibility(View.GONE);
             }
-            tvTitle.setText("编辑", null);
+            actionEdit.setText("编辑", null);
+            actionSettleAccounts.setText("去结算(" + mTotalNum + ")");
             action = EDIT;
         }
     }
@@ -377,6 +418,7 @@ public class ShopCartFragment extends BaseFragment {
                     public void onSuccess(Response<JsonObject> response) {
                         BaseResponse baseResponse = (BaseResponse) JosnFrom.getInstance().getObj(response.body().toString(), BaseResponse.class);
                         if (baseResponse != null && baseResponse.getStatus().equals("0001")) {
+                            getShopCartList();
                         } else {
                             RxToast.showShort(baseResponse.getMessage());
                         }
@@ -451,6 +493,7 @@ public class ShopCartFragment extends BaseFragment {
 
     //获取购物车列表
     private void getShopCartList() {
+
         String token = (String) SpCommonUtils.get(getContext(), Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(getContext(), Constants.USERID, "");
         String timestamp = StringUtil.getCurrentTime();
@@ -462,7 +505,7 @@ public class ShopCartFragment extends BaseFragment {
 
         final Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
+        final String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
 
         OkGo.<JsonObject>post(Constants.BASE_URL + Constants.GOODS_CART_LIST)
                 .tag(this)
@@ -475,13 +518,31 @@ public class ShopCartFragment extends BaseFragment {
                     public void onSuccess(Response<JsonObject> response) {
                         CartList cartList = (CartList) JosnFrom.getInstance().getObj(response.body().toString(), CartList.class);
                         if (cartList != null && cartList.getStatus().equals("0001")) {
+                            if (cartList.getData().getCartListInfo() == null || cartList.getData().getCartListInfo().size() == 0) {
+
+                                activity_no_data.setVisibility(View.VISIBLE);
+                                llBottom.setVisibility(View.GONE);
+                                mRecyclerView.setVisibility(View.GONE);
+                                return;
+                            }
+                            activity_no_data.setVisibility(View.GONE);
+                            llBottom.setVisibility(View.VISIBLE);
+                            mRecyclerView.setVisibility(View.VISIBLE);
+                            tvTotalPrice.setText("");
+                            actionSettleAccounts.setText("");
+
                             List<CartList.DataBean.CartListInfoBean.GoodsItemBean> list1 = new ArrayList<>();
                             List<CartList.DataBean.CartListInfoBean.GoodsItemBean> list2 = new ArrayList<>();
                             if (cartList.getData().getCartListInfo() != null) {
-                                for (CartList.DataBean.CartListInfoBean store : cartList.getData().getCartListInfo()) {
+                                String shopName = "";
+                                String shopID = "";
+                                for (CartList.DataBean.CartListInfoBean store : cartList.getData().getCartListInfo()) { //商店遍历
+                                    shopName = store.getShop_name();
+                                    shopID = store.getShop_id();
                                     if (store.getGoods_item() != null) {
                                         for (CartList.DataBean.CartListInfoBean.GoodsItemBean goods : store.getGoods_item()) {
-                                            goods.setStore_name(store.getShop_name());
+                                            goods.setStore_name(shopName);
+                                            goods.setStore_id(shopID);
                                             list2.add(goods);
                                         }
                                     }

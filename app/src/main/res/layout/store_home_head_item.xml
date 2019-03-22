@@ -176,11 +176,11 @@
                 android:id="@+id/miaosha_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/x10"
                 android:gravity="center"
                 android:listSelector="#00000000"
                 android:numColumns="auto_fit"
                 android:paddingLeft="@dimen/x10"
+                android:paddingRight="@dimen/x10"
                 android:scrollbars="none"
                 android:stretchMode="spacingWidthUniform" />
         </LinearLayout>
@@ -251,8 +251,11 @@
                 android:layout_height="@dimen/y226"
                 android:gravity="center"
                 android:listSelector="#00000000"
-                android:numColumns="3"
-                android:scrollbars="none" />
+                android:numColumns="auto_fit"
+                android:paddingLeft="@dimen/x10"
+                android:paddingRight="@dimen/x10"
+                android:scrollbars="none"
+                android:stretchMode="spacingWidthUniform" />
         </LinearLayout>
     </HorizontalScrollView>
 

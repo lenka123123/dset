@@ -2,6 +2,7 @@ package com.wokun.dset.store.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wokun.dset.R;
+import com.wokun.dset.model.Constants;
 import com.wokun.dset.store.bean.DStoreHome;
+import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +25,8 @@ import java.util.List;
 public class HomoSecondAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Picture> pictures;
-    private static int ROW_NUMBER = 3;
+    //    private List<Picture> pictures;
+//    private static int ROW_NUMBER = 3;
     private List<DStoreHome.DataBean.PromotionInfoBean.PromotionGoodsBean> cateListBeans = new ArrayList<>();
 
 
@@ -66,8 +69,17 @@ public class HomoSecondAdapter extends BaseAdapter {
 
             //设置标题
             holder.title.setText(bean.getGoods_name());
-            holder.price.setText("￥" + bean.getPromotion_price());
-            holder.oldprice.setText("￥" + bean.getPrice());
+            String promotionPrice = bean.getPromotion_price();
+            if (promotionPrice.endsWith("0")) {
+                promotionPrice = promotionPrice.substring(0, promotionPrice.length() - 1);
+            }
+            String price = bean.getPrice();
+            if (price.endsWith("0")) {
+                price = price.substring(0, price.length() - 1);
+            }
+            holder.price.setText("￥" + promotionPrice);
+            holder.oldprice.setText("￥" + price);
+
             holder.oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
             Glide.with(context).load(bean.getPic_cover_small()).into(holder.img);
             convertView.setTag(holder);
@@ -85,7 +97,12 @@ public class HomoSecondAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setOnClick(int onClick) {
+    public void setOnClick(int position) {
+
+        Intent intent = new Intent();
+        intent.putExtra(Constants.GOODS_ID, cateListBeans.get(position).getGoods_id());
+        intent.setClass(context, DStoreDetailActivity.class);
+        context.startActivity(intent);
 
 //        if (typeBeanList.size() > 0) {
 //            for (int i = 0; i < typeBeanList.size(); i++) {
@@ -96,7 +113,7 @@ public class HomoSecondAdapter extends BaseAdapter {
 //                }
 //            }
 //        }
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
     }
 
     class Holder {

@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -106,7 +105,6 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
     private String promote_price;
     private static final int SDK_PAY_FLAG = 1;
     private List<GoodsItemBean> mAllOrderList;
-
     private ShopCartForPayAdapter adapter;
     private String cart_id_str;
     private String inputContent;
@@ -132,22 +130,23 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
         promote_price = intent.getStringExtra("doubleprice");
         cart_id_str = intent.getStringExtra("cart_id_str");
 
+        Log.i(TAG, "init: 传过来的数据promote_price" + promote_price);
+        Log.i(TAG, "init: 传过来的数据cart_id_str" + cart_id_str);
+        store_name.setText(mAllOrderList.get(0).getStore_name());
         zhihui_goods_price.setText("￥" + promote_price);
         true_price.setText("￥" + promote_price);
         recyclerView.setLayoutManager(new LinearLayoutManager(DStoreImmediatelyPayActivity.this));
         recyclerView.addItemDecoration(new MItemDecoration(DStoreImmediatelyPayActivity.this, DividerItemDecoration.VERTICAL));
         adapter = new ShopCartForPayAdapter(R.layout.item_shop_cart_pay, mAllOrderList);
         recyclerView.setAdapter(adapter);
-
         defaultAddress();
-
     }
 
     // 支付类型 1微信 2支付宝 5余额
     private String pay_type = "";
 
     // R.id.action_wxpay, R.id.action_pay, R.id.select_address, R.id.show_address, R.id.zitidian, R.id.iv_go1})
-    @OnClick({R.id.goto_select, R.id.action_money_layout, R.id.action_alipey_layout, R.id.action_pay, R.id.back})
+    @OnClick({R.id.goto_select, R.id.action_money_layout, R.id.action_alipey_layout, R.id.action_pay, R.id.back,R.id.show_address})
     public void action(View v) {
         switch (v.getId()) {
             case R.id.action_money_layout: //金票支付
@@ -173,6 +172,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
 
                 break;
             case R.id.goto_select:
+            case R.id.show_address:
                 Intent intent = new Intent();
                 intent.setClass(this, AddressListActivity.class);
                 startActivityForResult(intent, 99);
@@ -189,10 +189,9 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 99 && resultCode == 20) {
-            show_address.setVisibility(View.GONE);
-            select_address.setVisibility(View.VISIBLE);
-
+        if (requestCode == 99 && resultCode == RESULT_OK) {
+            show_address.setVisibility(View.VISIBLE);
+            select_address.setVisibility(View.GONE);
             //Toast.makeText(this, "返回", Toast.LENGTH_SHORT).show();
             String name = data.getStringExtra(Constants.CONTACTS);
             String mobile = data.getStringExtra(Constants.TEL);
@@ -371,17 +370,26 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
         if (result.containsKey("resultStatus")) {
             Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
             if (result.get("resultStatus").equals("9000")) {
-                Log.i(TAG, "alipayManage: " + result.get("resultStatus"));
+                Intent intent = new Intent(DStoreImmediatelyPayActivity.this, ZhihuiSuccessfulActivity.class);
+                intent.putExtra("doubleprice", promote_price);
+                intent.putExtra("name", link_man);
+                intent.putExtra("phone", phone);
+                intent.putExtra("address", address);
+                DStoreImmediatelyPayActivity.this.startActivity(intent);
+
             }
 
             if (result.get("resultStatus").equals("4000")) {
+                RxToast.showShort("支付失败，请重试！");
                 // centerDialog.showDialog("支付失败，请重试！", R.drawable.payes_fail);
             }
 
             if (result.get("resultStatus").equals("6001")) {
+                RxToast.showShort("取消支付");
                 //  centerDialog.showDialog("取消支付", R.drawable.payes_fail);
             }
         }
+        DStoreImmediatelyPayActivity.this.finish();
     }
 
     private Dialog dialog;
@@ -399,8 +407,16 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
         final VerificationCodeView verificationCodeView = window.findViewById(R.id.icv);
         final TextView txt_next = window.findViewById(R.id.txt_next);
         final TextView pop_zhihui_shanchu = window.findViewById(R.id.pop_zhihui_shanchu);
+        final TextView pop_delete = window.findViewById(R.id.pop_delete);
         txt_next.setText("提交");
         pop_zhihui_shanchu.setText("请输入支付密码");
+        pop_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (dialog != null)
+                    dialog.dismiss();
+            }
+        });
         txt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -476,6 +492,9 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                             intent.putExtra("phone", phone);
                             intent.putExtra("address", address);
                             DStoreImmediatelyPayActivity.this.startActivity(intent);
+                            DStoreImmediatelyPayActivity.this.finish();
+                        } else {
+                            RxToast.showShort(baseResponse.getMsg());
                         }
                     }
 

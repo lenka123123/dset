@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.itheima.loopviewpager.LoopViewPager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shantoo.widget.toast.RxToast;
@@ -30,6 +31,7 @@ import com.wokun.dset.DsetApp;
 import com.wokun.dset.MainActivity;
 import com.wokun.dset.R;
 import com.wokun.dset.callback.JsonCallback;
+import com.wokun.dset.home.DShopHomeActivity;
 import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.response.BaseResponse;
@@ -59,6 +61,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import cn.iwgang.countdownview.CountdownView;
+
 import static com.wokun.dset.utils.MD5.ParameterUtils.removeEmptyData;
 import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
@@ -87,6 +91,10 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView pop_store;
     private String promote_price = "";
     private boolean immediatelyPay = false;
+    private LinearLayout price_linearlayout;
+    private LoopViewPager loopViewPager;
+    private TextView promotion_price;
+    private CountdownView countdownView;
 
 
     @Override
@@ -148,10 +156,14 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         store_attitude_point = findViewById(R.id.store_attitude_point);
         store_send_point = findViewById(R.id.store_send_point);
         webView = findViewById(R.id.webview);
+        price_linearlayout = findViewById(R.id.price_linearlayout);
+        loopViewPager = findViewById(R.id.lvp_pager);
+        promotion_price = findViewById(R.id.promotion_price);
+        countdownView = findViewById(R.id.promotion_time);
 
         findViewById(R.id.action_service).setOnClickListener(this);
         findViewById(R.id.action_shopping_cart).setOnClickListener(this);
-
+        findViewById(R.id.back).setOnClickListener(this);
 
         webView.getSettings().setJavaScriptEnabled(true);
         Intent intent = getIntent();
@@ -162,6 +174,12 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 //            goods_id = "51";
     }
 
+    public void showTime() {
+        long timeStamp = System.currentTimeMillis() / 1000;
+        long endTime = Long.valueOf((String) SpCommonUtils.get(DStoreDetailActivity.this, Constants.ENDTIME, ""));
+        if (endTime > timeStamp)
+            countdownView.start((endTime - timeStamp) * 1000); // Millisecond
+    }
 
     private void detailData(DStoreGoodsDetail goodsDetail) {
         if (goodsDetail == null || goodsDetail.getData() == null) return;
@@ -170,21 +188,26 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
         goodsSKUList = JosnFrom.getInstance().getObjList(goodsDetail.getData().getGoods_spec_format());
         initSku();
-        if (goodsSKUList.size() == 0 && dataBean.getGoods_sku().get(0) != null) {
+        if (goodsSKUList != null && goodsSKUList.size() == 0 && dataBean.getGoods_sku().get(0) != null) {
             sku_id = dataBean.getGoods_sku().get(0).getSku_id();  //没有规格的时候的sku
             search_goods_size.setText(dataBean.getGoods_sku().get(0).getSku_name());
             if (dataBean.getPromotion_type().equals("0")) { //无促销
+                price_linearlayout.setVisibility(View.VISIBLE);
+                loopViewPager.setVisibility(View.GONE);
                 promote_price = dataBean.getGoods_sku().get(0).getPrice();
-            } else {
-                promote_price = dataBean.getGoods_sku().get(0).getPromote_price();
-            }
 
+                price.setText("￥" + goodsDetail.getData().getPrice());
+                free_send.setText("运费：" + goodsDetail.getData().getFreight());
+            } else {
+                price_linearlayout.setVisibility(View.GONE);
+                loopViewPager.setVisibility(View.VISIBLE);
+                promote_price = dataBean.getGoods_sku().get(0).getPromote_price();
+                promotion_price.setText("￥" + goodsDetail.getData().getPromotion_price());
+                showTime();
+            }
         }
 
-
         search_textview.setText(goodsDetail.getData().getGoods_name());
-        price.setText("￥" + goodsDetail.getData().getPrice());
-        free_send.setText("运费：" + goodsDetail.getData().getFreight());
 
         if (goodsDetail.getData().getShop_id().equals("0")) {
             goods_name.setText(TextViewUtil.setSpanBgAndTvColor("自营" + goodsDetail.getData().getGoods_name(), 0, 2, "#ffffff", "#056198"));
@@ -197,15 +220,17 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         } else {
             mBanner.setVisibility(View.GONE);
         }
-        ImageLoaderUtils.load(context, store_logo, goodsDetail.getData().getShop().getShop_logo(), 0);
-        store_name.setText(goodsDetail.getData().getShop().getShop_name());
 
-        String desccredit = goodsDetail.getData().getShop().getShop_desccredit();
-        store_detail_point.setText(TextViewUtil.setSpanColor(context, "描述相符 " + desccredit, 5, 5 + desccredit.length(), "#f08619", null));
-        String servicecredit = goodsDetail.getData().getShop().getShop_servicecredit();
-        store_attitude_point.setText(TextViewUtil.setSpanColor(context, "服务态度 " + servicecredit, 5, 5 + servicecredit.length(), "#f08619", null));
-        String deliverycredit = goodsDetail.getData().getShop().getShop_deliverycredit();
-        store_send_point.setText(TextViewUtil.setSpanColor(context, "发货速度 " + deliverycredit, 5, 5 + deliverycredit.length(), "#f08619", null));
+        if (goodsDetail.getData().getShop() != null && goodsDetail.getData().getShop().getShop_logo() != null) {
+            ImageLoaderUtils.load(context, store_logo, goodsDetail.getData().getShop().getShop_logo(), 0);
+            store_name.setText(goodsDetail.getData().getShop().getShop_name());
+            String desccredit = goodsDetail.getData().getShop().getShop_desccredit();
+            store_detail_point.setText(TextViewUtil.setSpanColor(context, "描述相符 " + desccredit, 5, 5 + desccredit.length(), "#f08619", null));
+            String servicecredit = goodsDetail.getData().getShop().getShop_servicecredit();
+            store_attitude_point.setText(TextViewUtil.setSpanColor(context, "服务态度 " + servicecredit, 5, 5 + servicecredit.length(), "#f08619", null));
+            String deliverycredit = goodsDetail.getData().getShop().getShop_deliverycredit();
+            store_send_point.setText(TextViewUtil.setSpanColor(context, "发货速度 " + deliverycredit, 5, 5 + deliverycredit.length(), "#f08619", null));
+        }
         if (goodsDetail.getData().getDescription_url() == null) return;
         webView.loadUrl(goodsDetail.getData().getDescription_url());
         webView.setWebViewClient(new WebViewClient() {
@@ -260,6 +285,8 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                         DStoreGoodsDetail goodesDetail = (DStoreGoodsDetail) JosnFrom.getInstance().getObj(response.body().toString(), DStoreGoodsDetail.class);
                         if (goodesDetail != null && goodesDetail.getStatus().equals("0001")) {
                             detailData(goodesDetail);
+                        } else {
+                            RxToast.showShort(goodesDetail.getMsg());
                         }
                     }
 
@@ -424,6 +451,9 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.back:
+                DStoreDetailActivity.this.finish();
+                break;
             case R.id.choice_size_cancel:
                 if (null != popupWindow) {
                     popupWindow.dismiss();
@@ -558,14 +588,14 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                             bean.setSku_name(search_goods_size.getText().toString());
                             bean.setPrice(promote_price);
                             bean.setNum("1");
-                            bean.setStore_name(dataBean.getShop().getShop_name() );
+                            bean.setStore_name(dataBean.getShop().getShop_name());
 //                            bean.setCart_id(dataBean.g);/
 
                             mGoPayList.add(bean);
 
                             intent.putExtra("list", (Serializable) mGoPayList);
                             intent.putExtra("doubleprice", promote_price);
-                            intent.putExtra("cart_id_str", goodesDetail.getData().getCart_id_str()  );
+                            intent.putExtra("cart_id_str", goodesDetail.getData().getCart_id_str());
 
                             DStoreDetailActivity.this.startActivity(intent);
                             DStoreDetailActivity.this.finish();

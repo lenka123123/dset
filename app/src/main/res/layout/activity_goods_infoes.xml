@@ -3,40 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_DDD">
+    android:background="@color/color_mini">
 
     <LinearLayout
-        android:id="@+id/head_view"
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y80"
+        android:layout_height="@dimen/y120"
         android:background="@color/white"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="@dimen/x80"
-            android:layout_height="@dimen/y80"
-            android:padding="@dimen/y20"
+            android:layout_width="50dp"
+            android:layout_height="46dp"
+            android:padding="14dp"
             android:src="@drawable/arrow" />
 
         <TextView
             android:id="@+id/search_textview"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:ellipsize="middle"
+            android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center"
-            android:paddingRight="@dimen/x80"
             android:singleLine="true"
-            android:text="aa"
             android:textColor="@color/black"
             android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="46dp"
+            android:padding="14dp" />
     </LinearLayout>
 
     <!-- 滚动的view -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/head_view"
+        android:layout_below="@+id/search_bar"
         android:layout_marginBottom="@dimen/y98"
         android:scrollbars="none">
 
@@ -50,6 +55,13 @@
                 android:layout_height="@dimen/y750"
                 android:visibility="visible" />
 
+
+            <include
+                layout="@layout/layout_banner_goods_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/goods_name" />
+
             <TextView
                 android:id="@+id/goods_name"
                 android:layout_width="match_parent"
@@ -58,10 +70,10 @@
                 android:background="@color/white"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:paddingBottom="@dimen/y30"
                 android:paddingLeft="@dimen/x30"
                 android:paddingRight="@dimen/x30"
                 android:paddingTop="@dimen/y32"
-                android:text="中长款衣服"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -73,8 +85,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/y20"
-                android:paddingTop="@dimen/y46">
+                android:paddingBottom="@dimen/y20">
 
                 <TextView
                     android:id="@+id/price"
@@ -83,7 +94,6 @@
                     android:layout_marginLeft="@dimen/x30"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="￥199"
                     android:textColor="@color/color_ff_76_08"
                     android:textSize="15sp" />
 
@@ -167,10 +177,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/y6"
-                        android:drawableRight="@drawable/enter_next"
+
                         android:includeFontPadding="false"
                         android:paddingRight="@dimen/x30"
-                        android:text="商家名称"
                         android:textColor="@color/color_3_3_3"
                         android:textSize="14sp" />
 
@@ -178,7 +187,7 @@
                         android:id="@+id/cash_deposit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/salable_goods" />
+                        android:background="@drawable/real_goods" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -299,9 +308,9 @@
                 android:textColor="@color/color77" />
 
             <View
-                android:layout_width="1dp"
+                android:layout_width="@dimen/x1"
                 android:layout_height="match_parent"
-                android:background="@color/colorBackground" />
+                android:background="@color/color_mini" />
 
             <LinearLayout
                 android:id="@+id/action_collection_of_goods"
@@ -364,8 +373,8 @@
             android:background="@color/colorShopping"
             android:gravity="center"
             android:text="加入购物车"
-            android:textSize="15sp"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp" />
 
 
         <TextView
@@ -377,8 +386,8 @@
             android:background="#056196"
             android:gravity="center"
             android:text="立即购买"
-            android:textSize="15sp"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp" />
 
 
     </LinearLayout>

@@ -50,6 +50,7 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
     private RecyclerView mRecyclerView;
     private DStoreGoodsListAdapter mAdapter;
     private EditText search_ed;
+    private ImageView activity_no_data;
 
     @Override
     protected void onDestroy() {
@@ -88,6 +89,7 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
         findViewById(R.id.back).setOnClickListener(this);
 
         mEasyRefreshLayout = (SmartRefreshLayout) findViewById(R.id.easylayout);
+        activity_no_data = (ImageView) findViewById(R.id.activity_no_data);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         mEasyRefreshLayout.setEnableRefresh(false);
 
@@ -168,6 +170,7 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
     public void initData() {
         super.initData();
         mEasyRefreshLayout.setDisableContentWhenLoading(true);
+
         // 禁止刷新
 //        mEasyRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 //            @Override
@@ -291,11 +294,16 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
                     public void onSuccess(Response<JsonObject> response) {
                         DStoreGoodesList goodesList = (DStoreGoodesList) JosnFrom.getInstance().getObj(response.body().toString(), DStoreGoodesList.class);
                         if (goodesList != null && goodesList.getStatus().equals("0001")) {
-                            detailDta(goodesList);
 
+                            if (page.equals("1") && goodesList.getData().getGoodsList().size() == 0) {
+                                mEasyRefreshLayout.setVisibility(View.GONE);
+                                activity_no_data.setVisibility(View.VISIBLE);
+                            } else {
+                                mEasyRefreshLayout.setVisibility(View.VISIBLE);
+                                activity_no_data.setVisibility(View.GONE);
+                                detailDta(goodesList);
+                            }
                         }
-
-
                     }
 
                     @Override

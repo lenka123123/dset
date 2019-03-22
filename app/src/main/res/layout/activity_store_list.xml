@@ -6,11 +6,11 @@
 
     <LinearLayout
         android:id="@+id/search_bar"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y120"
         android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center_vertical">
 
         <ImageView
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/y1"
         android:layout_below="@+id/search_bar"
-        android:background="@color/color_DDD" />
+        android:background="@color/color_mini" />
 
     <!--  商品选择列表  -->
     <LinearLayout
@@ -169,11 +169,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/y1"
         android:layout_below="@+id/search_list"
-        android:background="@color/color_DDD" />
+        android:background="@color/color_mini" />
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/easylayout"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/below_line"
@@ -200,6 +201,15 @@
 
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <ImageView
+        android:id="@+id/activity_no_data"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/below_line"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:background="@drawable/activity_nodata">
+    </ImageView>
 
 
 </RelativeLayout>

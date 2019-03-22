@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorBackground"
-    style="@style/LinearLayout_Divider">
+    style="@style/LinearLayout_Divider"
+    android:background="@color/colorBackground">
 
     <RelativeLayout
         android:id="@+id/shop_cart_header_root"
@@ -21,11 +21,11 @@
             style="@style/TextView_RelativeLayout"
             android:layout_marginLeft="@dimen/margin_10"
             android:layout_marginStart="@dimen/margin_10"
-            android:layout_toRightOf="@+id/action_parent_selector"
             android:layout_toEndOf="@+id/action_parent_selector"
+            android:layout_toRightOf="@+id/action_parent_selector"
             android:drawableLeft="@drawable/ic_store"
             android:drawablePadding="@dimen/activity_padding_left"
-            android:drawableRight="@drawable/ic_go" />
+         />
     </RelativeLayout>
 
     <RelativeLayout
@@ -138,18 +138,24 @@
         </RelativeLayout>
 
         <TextView
-            android:layout_marginRight="@dimen/margin_default"
-            android:layout_marginEnd="@dimen/margin_default"
             android:id="@+id/action_delete"
             android:layout_width="30dp"
             android:layout_height="60dp"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
             android:background="@drawable/drawable_btn_bg_color_counter"
             android:gravity="center"
             android:text="删除"
             android:textSize="12sp"
             android:visibility="gone" />
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y1"
+        android:background="@color/color_mini"
+        />
 </LinearLayout>
