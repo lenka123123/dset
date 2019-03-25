@@ -6,15 +6,19 @@
 
     <RelativeLayout
         android:id="@+id/shop_cart_header_root"
-        style="@style/RelativeLayout_Default"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@drawable/item_bg_normal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/activity_padding_default">
 
         <com.shantoo.widget.imageview.SelectorImageView
             android:id="@+id/action_parent_selector"
             style="@style/ImageView_RelativeLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x40"
             android:src="@drawable/ic_un_selected"
-            app:rx_selected_src="@drawable/ic_selected" />
+            app:rx_selected_src="@drawable/select_goods" />
 
         <TextView
             android:id="@+id/store_name"
@@ -24,8 +28,7 @@
             android:layout_toEndOf="@+id/action_parent_selector"
             android:layout_toRightOf="@+id/action_parent_selector"
             android:drawableLeft="@drawable/ic_store"
-            android:drawablePadding="@dimen/activity_padding_left"
-         />
+            android:drawablePadding="@dimen/activity_padding_left" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,10 +46,10 @@
 
             <ImageView
                 android:id="@+id/action_child_selector"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/x40"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_selected" />
+                android:src="@drawable/select_goods" />
 
             <FrameLayout
                 android:id="@+id/rl"
@@ -115,7 +118,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="12dp"
-                    android:src="@drawable/ic_widget_miu" />
+                    android:src="@drawable/close_goods" />
 
                 <EditText
                     android:id="@+id/shop_cart_num"
@@ -123,8 +126,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/ic_widget_midden"
-                    android:cursorVisible="false"
+                    android:cursorVisible="true"
                     android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:singleLine="true"
                     android:textSize="@dimen/text_size_style_two" />
 
                 <ImageView
@@ -133,7 +139,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:src="@drawable/ic_widget_add" />
+                    android:src="@drawable/add_goods" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -156,6 +162,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/y1"
-        android:background="@color/color_mini"
-        />
+        android:background="@color/color_mini" />
 </LinearLayout>

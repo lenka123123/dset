@@ -36,7 +36,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/margin_10"
             android:src="@drawable/ic_un_selected"
-            app:rx_selected_src="@drawable/ic_selected" />
+            app:rx_selected_src="@drawable/select_goods" />
 
         <TextView
             android:id="@+id/action_set_normal_address"

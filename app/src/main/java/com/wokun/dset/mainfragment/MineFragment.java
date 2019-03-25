@@ -31,6 +31,7 @@ import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.model.UserBean;
 import com.wokun.dset.response.BaseResponse;
+import com.wokun.dset.store.dstore.dstorestate.DStoreStateActivity;
 import com.wokun.dset.ucenter.DsytYaoqingActivity;
 import com.wokun.dset.ucenter.DuihuanDetailsActivity;
 import com.wokun.dset.ucenter.FutouDetailsActivity;
@@ -48,6 +49,7 @@ import com.wokun.dset.ucenter.addcards.TixianMoneyActivity2;
 import com.wokun.dset.ucenter.bean.MyBean;
 import com.wokun.dset.ucenter.quanyi.PowerAccActivity;
 import com.wokun.dset.ucenter.quanyi.QuanyiActivity;
+import com.wokun.dset.ucenter.quanyi.dashishop.GoodsOrderActivity;
 import com.wokun.dset.ucenter.renamepassword.RenamepaypwdActvitity;
 import com.wokun.dset.utils.ImageLoader;
 import com.wokun.dset.utils.StringUtil;
@@ -67,13 +69,14 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
  * Created by Administrator on 2019\1\14 0014.
  */
 
-public class MineFragment  extends BaseFragment{
+public class MineFragment extends BaseFragment {
     @BindView(R.id.login)
     TextView login;
     @BindView(R.id.ucenter_jifen)
     RelativeLayout ucenterJifen;
-    @BindView(R.id.swipeRefreshLayout)SwipeRefreshLayout swipeRefreshLayout;
-    private  MyBean user;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    private MyBean user;
     @BindView(R.id.user_head_img)
     RoundedImageView userHeadImg;
     @BindView(R.id.star)
@@ -100,7 +103,7 @@ public class MineFragment  extends BaseFragment{
     @BindView(R.id.power_acc)
     RelativeLayout power_acc;
 
-  //  private PhotoSelector mPhotoSelector;
+    //  private PhotoSelector mPhotoSelector;
     @Override
     public int createView() {
         return R.layout.activity_mine;
@@ -147,7 +150,7 @@ public class MineFragment  extends BaseFragment{
                     public void onSuccess(Response<BaseResponse<MyBean>> response) {
                         BaseResponse body = response.body();
                         if (body == null) return;
-                        if(body.getMessage().equals("未登录")){
+                        if (body.getMessage().equals("未登录")) {
                             startActivity(LoginActivity.class);
                         }
                         Log.e("首页", "进来了2!!!!");
@@ -158,19 +161,19 @@ public class MineFragment  extends BaseFragment{
                             if (user == null) {
                                 return;
                             }
-                             ucenter_num_futou.setText(user.getOpportunity()+"");
-                             ucenter_money_futou.setText("/"+user.getQuota());
-                        //    Double quanyi = user.getQuanyi();
-                            if(user.getQuanyi() == null) {
+                            ucenter_num_futou.setText(user.getOpportunity() + "");
+                            ucenter_money_futou.setText("/" + user.getQuota());
+                            //    Double quanyi = user.getQuanyi();
+                            if (user.getQuanyi() == null) {
                                 uc_zhanghu_num.setText("0");
                             } else {
-                                uc_zhanghu_num.setText(user.getQuanyi()+"");
+                                uc_zhanghu_num.setText(user.getQuanyi() + "");
                             }
                             ucenter_yue.setText(user.getBalance());
                             ucenter_jifen_total.setText(user.getIntegral());
                             DsetApp.getInstance().setUser(user);
                             //用户头像
-                            Log.e("用户头像",user.getHead());
+                            Log.e("用户头像", user.getHead());
                             ImageLoader.loadImage(user.getHead(), userHeadImg);
                             //用户数据
                             shouye_user_name.setText("UID:" + user.getUserid());
@@ -182,43 +185,42 @@ public class MineFragment  extends BaseFragment{
                             RxToast.showShort(body.getMessage());
                             startActivity(LoginActivity.class);
 
-                        }else {
+                        } else {
                             DsetApp.getInstance().clear();
                             startActivity(LoginActivity.class);
                         }
                     }
 
-                        @Override
-                        public void onError(Response response) {
-                            super.onError(response);
-                            Log.e("首页3",response+"!!!!");
-                            DsetApp.getInstance().setRefreshShopCart(false);
-                        }
-                    });
+                    @Override
+                    public void onError(Response response) {
+                        super.onError(response);
+                        Log.e("首页3", response + "!!!!");
+                        DsetApp.getInstance().setRefreshShopCart(false);
+                    }
+                });
 
 
-
-                }
+    }
 
     private void setuser() {
         //  star.refreshDrawableState();
         star.removeAllViews();
-        if (user.getStart() == 1){
+        if (user.getStart() == 1) {
             TextView textView = new TextView(getActivity());
             textView.setTextColor(getResources().getColor(R.color.yellow));
             textView.setTextSize(12);
             textView.setText("普通");
             star.addView(textView);
-        }else if (user.getStart()>1){
-            for (int j = 0;j<(user.getStart()-1)/5;j++){
-                ViewGroup.LayoutParams layoutParams =  new ViewGroup.LayoutParams(32,32);
+        } else if (user.getStart() > 1) {
+            for (int j = 0; j < (user.getStart() - 1) / 5; j++) {
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(32, 32);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.shouye_huangguan);
                 star.addView(imageView);
             }
-            for (int i =0;i<(user.getStart()-1)%5;i++){
-                ViewGroup.LayoutParams layoutParams =  new ViewGroup.LayoutParams(32,32);
+            for (int i = 0; i < (user.getStart() - 1) % 5; i++) {
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(32, 32);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.shouye_xinxin);
@@ -227,43 +229,72 @@ public class MineFragment  extends BaseFragment{
         }
 
 
-
     }
-    /** 登录*/
+
+    /**
+     * 登录
+     */
     @OnClick(R.id.login)
-    public void action_login(View v){
-        if(R.id.login == v.getId()){
-        startActivity(LoginActivity.class);
+    public void action_login(View v) {
+        if (R.id.login == v.getId()) {
+            startActivity(LoginActivity.class);
         }
     }
 
-       /** 头像上传*/
+    /**
+     * 头像上传
+     */
     @OnClick(R.id.user_head_img)
-    public void action_user_head_img(View v){
-        if(R.id.user_head_img == v.getId()){
+    public void action_user_head_img(View v) {
+        if (R.id.user_head_img == v.getId()) {
             startActivity(PersonalInfoActivity.class);
         }
     }
 
 
-    /** 星星级别my_xinxin*/
+    /**
+     * 星星级别my_xinxin
+     */
     @OnClick(R.id.my_user_star)
-    public void actionMyxinxin(View v){
-        if(R.id.my_user_star == v.getId()){
+    public void actionMyxinxin(View v) {
+        if (R.id.my_user_star == v.getId()) {
             Intent intent = new Intent(getContext(), HuiyuanlevelActivity.class);
-            intent.putExtra("touxiang",user.getHead());
-            intent.putExtra("xinxin",String.valueOf(user.getStart()));
+            intent.putExtra("touxiang", user.getHead());
+            intent.putExtra("xinxin", String.valueOf(user.getStart()));
             startActivity(intent);
         }
     }
 
-    /** 申请超级节点*/
+    /**
+     * 申请超级节点
+     */
     @OnClick(R.id.ucenter_supper)
-    public void action_ucenter_supper(View v){
-        if(R.id.ucenter_supper == v.getId()){
-          comitSupper();
+    public void action_ucenter_supper(View v) {
+        if (R.id.ucenter_supper == v.getId()) {
+            comitSupper();
         }
     }
+
+    /**
+     * 更多订单详情
+     */
+    @OnClick({R.id.action_check_more_goods_order, R.id.cart_need_pay, R.id.cart_need_send, R.id.cart_need_accept, R.id.cart_need_refund})
+    public void action_check_more_goods_order(View v) {
+        Intent intent = new Intent(getContext(), DStoreStateActivity.class);
+        if (R.id.action_check_more_goods_order == v.getId()) {
+            intent.putExtra("me", "all");
+        } else if (R.id.cart_need_pay == v.getId()) {
+            intent.putExtra("me", "pay");
+        } else if (R.id.cart_need_send == v.getId()) {
+            intent.putExtra("me", "send");
+        } else if (R.id.cart_need_accept == v.getId()) {
+            intent.putExtra("me", "accept");
+        } else if (R.id.cart_need_refund == v.getId()) {
+            intent.putExtra("me", "refund");
+        }
+        startActivity(intent);
+    }
+
 
     private void comitSupper() {
 
@@ -287,148 +318,168 @@ public class MineFragment  extends BaseFragment{
                     @Override
                     public void onError(Response response) {
                         super.onError(response);
-                        Log.e("首页3",response+"!!!!");
+                        Log.e("首页3", response + "!!!!");
                     }
                 });
 
 
-
-
-
-
-
-
-
-
     }
 
 
-    /**复投 兑换记录*/
+    /**
+     * 复投 兑换记录
+     */
     @OnClick(R.id.lin_futou)
-      public void action_linfutou(View v){
-        if(R.id.lin_futou == v.getId()){
+    public void action_linfutou(View v) {
+        if (R.id.lin_futou == v.getId()) {
             startActivity(DuihuanDetailsActivity.class);
         }
     }
 
-    /**扫一扫*/
+    /**
+     * 扫一扫
+     */
     @OnClick(R.id.saoma)
-    public void action_saoma(View v){
-        if(R.id.saoma == v.getId()){
+    public void action_saoma(View v) {
+        if (R.id.saoma == v.getId()) {
             Intent intent = new Intent();
-            intent.setClass(getContext(),SaoyisaoActivity.class);
+            intent.setClass(getContext(), SaoyisaoActivity.class);
             startActivity(intent);
         }
     }
 
-    /**消息*/
+    /**
+     * 消息
+     */
     @OnClick(R.id.xiaoxi)
-    public void action_xiaoxi(View v){
-        if(R.id.xiaoxi == v.getId()){
+    public void action_xiaoxi(View v) {
+        if (R.id.xiaoxi == v.getId()) {
             Intent intent = new Intent();
-            intent.setClass(getContext(),XiaoxiDetailsActvitity.class);
+            intent.setClass(getContext(), XiaoxiDetailsActvitity.class);
             startActivity(intent);
         }
     }
 
-    /**余额记录*/
+    /**
+     * 余额记录
+     */
     @OnClick(R.id.lin_uc_dsyue)
-    public void action_lin_uc_dsyue(View v){
-        if(R.id.lin_uc_dsyue == v.getId()){
+    public void action_lin_uc_dsyue(View v) {
+        if (R.id.lin_uc_dsyue == v.getId()) {
             startActivity(YueDetailsActvitity.class);
         }
     }
 
-    /**积分记录*/
+    /**
+     * 积分记录
+     */
     @OnClick(R.id.lin_uc_jifen)
-    public void action_lin_uc_jifen(View v){
-        if(R.id.lin_uc_jifen == v.getId()){
+    public void action_lin_uc_jifen(View v) {
+        if (R.id.lin_uc_jifen == v.getId()) {
             startActivity(JifenDetailsActivity.class);
         }
     }
 
 
-    /** 转账*/
+    /**
+     * 转账
+     */
     @OnClick(R.id.ucenter_zhuanzhang)
-    public void action_ucenter_zhuanzhang(View v){
-        if(R.id.ucenter_zhuanzhang == v.getId()){
+    public void action_ucenter_zhuanzhang(View v) {
+        if (R.id.ucenter_zhuanzhang == v.getId()) {
             startActivity(ZhuanzhangActivity.class);
         }
     }
-    /** 积分兑换*/
+
+    /**
+     * 积分兑换
+     */
     @OnClick(R.id.ucenter_jifen)
-    public void action_ucenter_jifen(View v){
-        if(R.id.ucenter_jifen == v.getId()){
+    public void action_ucenter_jifen(View v) {
+        if (R.id.ucenter_jifen == v.getId()) {
             startActivity(JifenchangeActivity.class);
         }
     }
 
 
-    /** 收付款*/
+    /**
+     * 收付款
+     */
     @OnClick(R.id.ucenter_shoumoney)
-    public void action_ucenter_shoumoney(View v){
-        if(R.id.ucenter_shoumoney == v.getId()){
+    public void action_ucenter_shoumoney(View v) {
+        if (R.id.ucenter_shoumoney == v.getId()) {
             startActivity(ShouMoneyActivtity.class);
         }
     }
 
-    /**修改支付密码 */
+    /**
+     * 修改支付密码
+     */
     @OnClick(R.id.ucenter_changepwd)
-    public void action_ucenter_changepwd(View v){
-        if(R.id.ucenter_changepwd == v.getId()){
+    public void action_ucenter_changepwd(View v) {
+        if (R.id.ucenter_changepwd == v.getId()) {
             startActivity(RenamepaypwdActvitity.class);
         }
     }
 
-    /**邀请注册 */
+    /**
+     * 邀请注册
+     */
     @OnClick(R.id.ucenter_yaoqin)
-    public void action_ucenter_yaoqin(View v){
-        if(R.id.ucenter_yaoqin == v.getId()){
+    public void action_ucenter_yaoqin(View v) {
+        if (R.id.ucenter_yaoqin == v.getId()) {
             startActivity(DsytYaoqingActivity.class);
         }
     }
-    /**地址管理 */
+
+    /**
+     * 地址管理
+     */
     @OnClick(R.id.ucenter_place)
-    public void action_ucenter_place(View v){
-        if(R.id.ucenter_place == v.getId()){
+    public void action_ucenter_place(View v) {
+        if (R.id.ucenter_place == v.getId()) {
             startActivity(AddressListActivity.class);
         }
     }
-    /**账户设置 */
+
+    /**
+     * 账户设置
+     */
 
     @OnClick(R.id.ucenter_settings)
-    public void action_ucenter_settings(View v){
-        if(R.id.ucenter_settings == v.getId()){
+    public void action_ucenter_settings(View v) {
+        if (R.id.ucenter_settings == v.getId()) {
             startActivity(SettingsActivity.class);
         }
     }
-    /**添加银行卡
-     *
+
+    /**
+     * 添加银行卡
+     * <p>
      * 银行卡管理
-     * */
+     */
 
     @OnClick(R.id.ucenter_addcards)
-    public void action_ucenter_addcards(View v){
-        if(R.id.ucenter_addcards == v.getId()){
+    public void action_ucenter_addcards(View v) {
+        if (R.id.ucenter_addcards == v.getId()) {
             startActivity(TixianMoneyActivity2.class);
         }
     }
 
     /**
      * 权益转让
-     *
-     *
-     * */
+     */
 
     @OnClick(R.id.ucenter_quanyi)
-    public void action_ucenter_quanyi(View v){
-        if(R.id.ucenter_quanyi == v.getId()){
+    public void action_ucenter_quanyi(View v) {
+        if (R.id.ucenter_quanyi == v.getId()) {
             startActivity(QuanyiActivity.class);
         }
     }
+
     @OnClick(R.id.power_acc)
-    public void power_acc(View v){
-        if(R.id.power_acc == v.getId()){
+    public void power_acc(View v) {
+        if (R.id.power_acc == v.getId()) {
             startActivity(PowerAccActivity.class);
         }
     }

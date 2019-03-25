@@ -114,8 +114,6 @@ public class ShopCartFragment extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) { //界面可见
-
-
             if (isCreated) {
                 updata();
                 getShopCartList();
@@ -132,6 +130,8 @@ public class ShopCartFragment extends BaseFragment {
     @Override
     public void initViews() {
         isCreated = true;
+        updata();
+        getShopCartList();
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.height = ResourceUtil.getStatusBarHeight(getContext());
@@ -254,11 +254,11 @@ public class ShopCartFragment extends BaseFragment {
             public void onRefresh(boolean isSelect) {
                 mSelect = isSelect;
                 if (isSelect) {
-                    Drawable left = getResources().getDrawable(R.drawable.ic_selected);
-                    actionSelectAll.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
+                    Drawable left = getResources().getDrawable(R.drawable.select_goods);
+                    actionSelectAll.setBackground(left);
                 } else {
                     Drawable left = getResources().getDrawable(R.drawable.ic_un_selected);
-                    actionSelectAll.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
+                    actionSelectAll.setBackground(left);
                 }
                 mTotalPrice = 0;
                 mTotalNum = 0;
@@ -285,15 +285,16 @@ public class ShopCartFragment extends BaseFragment {
             public void onClick(View v) {
                 mSelect = !mSelect;
                 if (mSelect) {
-                    Drawable left = getResources().getDrawable(R.drawable.ic_selected);
-                    actionSelectAll.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
+                    Drawable left = getResources().getDrawable(R.drawable.select_goods);
+                    actionSelectAll.setBackground(left);
+//                    actionSelectAll.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
                     for (int i = 0; i < mAllOrderList.size(); i++) {
                         mAllOrderList.get(i).setSelect(true);
                         mAllOrderList.get(i).setShopSelect(true);
                     }
                 } else {
                     Drawable left = getResources().getDrawable(R.drawable.ic_un_selected);
-                    actionSelectAll.setCompoundDrawablesWithIntrinsicBounds(left, null, null, null);
+                    actionSelectAll.setBackground(left);
                     for (int i = 0; i < mAllOrderList.size(); i++) {
                         mAllOrderList.get(i).setSelect(false);
                         mAllOrderList.get(i).setShopSelect(false);
@@ -493,7 +494,6 @@ public class ShopCartFragment extends BaseFragment {
 
     //获取购物车列表
     private void getShopCartList() {
-
         String token = (String) SpCommonUtils.get(getContext(), Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(getContext(), Constants.USERID, "");
         String timestamp = StringUtil.getCurrentTime();
@@ -531,6 +531,7 @@ public class ShopCartFragment extends BaseFragment {
                             tvTotalPrice.setText("");
                             actionSettleAccounts.setText("");
 
+                            mAllOrderList.clear();
                             List<CartList.DataBean.CartListInfoBean.GoodsItemBean> list1 = new ArrayList<>();
                             List<CartList.DataBean.CartListInfoBean.GoodsItemBean> list2 = new ArrayList<>();
                             if (cartList.getData().getCartListInfo() != null) {
@@ -547,10 +548,13 @@ public class ShopCartFragment extends BaseFragment {
                                         }
                                     }
                                     list1.addAll(list2);
+                                    list2.clear();  //用过了删除
                                 }
                                 mAllOrderList = list1;
-                                mAdapter.setNewData(mAllOrderList);
                                 mRecyclerView.setVisibility(View.VISIBLE);
+                                mAdapter.setNewData(mAllOrderList);
+                                mAdapter.notifyDataSetChanged();
+
                             }
                             isSelectFirst(list1);
 
@@ -604,6 +608,7 @@ public class ShopCartFragment extends BaseFragment {
                         } else {
                             RxToast.showShort(baseResponse.getMessage());
                         }
+//                        mAdapter.notifyDataSetChanged();
                     }
 
                     @Override

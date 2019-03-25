@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/goods_picture"
+        style="@style/ImageView_RelativeLayout"
+        android:layout_width="@dimen/image_size_width"
+        android:layout_height="@dimen/image_size_height"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_img" />
+
+    <TextView
+        android:id="@+id/goods_name"
+        style="@style/TextView_Style_Title"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/goods_picture"
+        android:layout_marginLeft="@dimen/margin_default"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/goods_picture"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:maxLines="2"
+        android:text="123" />
+
+    <TextView
+        android:id="@+id/goods_num"
+        style="@style/TextView_Style_Content"
+        android:layout_alignBottom="@+id/goods_picture"
+        android:layout_marginLeft="@dimen/margin_default"
+        android:layout_toRightOf="@+id/goods_picture"
+        android:text="123" />
+
+    <TextView
+        android:id="@+id/goods_pay_price"
+        style="@style/TextView_Style_Content"
+        android:layout_alignBottom="@+id/goods_picture"
+        android:layout_alignParentRight="true"
+        android:text="123"
+        android:textColor="@color/colorShopping" />
+</RelativeLayout>

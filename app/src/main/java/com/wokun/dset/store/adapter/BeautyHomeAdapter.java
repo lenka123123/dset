@@ -40,7 +40,7 @@ public class BeautyHomeAdapter extends BaseQuickAdapter<DStoreHome.DataBean.Tuij
 
         ImageView imageView = helper.getView(R.id.img);
 //        Glide.with(context).load(item.getPic_cover_big()).into(imageView);
-        ImageLoaderUtils.load(context, imageView, item.getPic_cover_big(), 0);
+        ImageLoaderUtils.getInstance().load(context, imageView, item.getPic_cover_big(), 0);
 
         helper.setText(R.id.title, item.getGoods_name());
         helper.setText(R.id.price, item.getPrice());

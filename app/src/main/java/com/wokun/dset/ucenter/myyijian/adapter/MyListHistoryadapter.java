@@ -24,24 +24,25 @@ import java.util.List;
  * 添加数据  历史建议
  */
 
-public class MyListHistoryadapter extends BaseQuickAdapter<AdviceRecordBean,BaseViewHolder> {
+public class MyListHistoryadapter extends BaseQuickAdapter<AdviceRecordBean, BaseViewHolder> {
     public MyListHistoryadapter(int layoutResId, @Nullable List<AdviceRecordBean> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, AdviceRecordBean item) {
-        if(item.getStatus().equals("1")){
-            helper.setText(R.id.his_msg,"未处理");
-        }else  if(item.getStatus().equals("2")){
-            helper.setText(R.id.his_msg,"已处理");
+        if (item == null) return;
+        if (item.getStatus().equals("1")) {
+            helper.setText(R.id.his_msg, "未处理");
+        } else if (item.getStatus().equals("2")) {
+            helper.setText(R.id.his_msg, "已处理");
         }
 
         helper.setText(R.id.his_content, item.getContent());
-        helper.setText(R.id.his_time,item.getCreate_time()+"");
-
-        ImageLoader.loadImage(item.getPicture().get(0),(ImageView)helper.getView(R.id.image_his));
-       // helper.addOnClickListener(R.id.itenm_de_id).addOnLongClickListener(R.id.itenm_de_id);
+        helper.setText(R.id.his_time, item.getCreate_time() + "");
+        if (item.getPicture() == null || item.getPicture().size() == 0) return;
+        ImageLoader.loadImage(item.getPicture().get(0), (ImageView) helper.getView(R.id.image_his));
+        // helper.addOnClickListener(R.id.itenm_de_id).addOnLongClickListener(R.id.itenm_de_id);
     }
 
 

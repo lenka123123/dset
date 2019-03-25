@@ -20,18 +20,15 @@
            <include layout="@layout/layout_ucenter_login" ></include>
            <include layout="@layout/activity_putong_top"></include>
            <LinearLayout
-               android:visibility="gone"
                android:orientation="vertical"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:background="@drawable/drawable_btn_bg_color_white2">
 
-               <include layout="@layout/layout_ucenter_part_goods_order"></include>
-           <View
-               android:background="#f8f8f8"
-               android:layout_width="match_parent"
-               android:layout_height="10dp" />
-               <include layout="@layout/layout_ucenter_part_goods_order2"></include>
+               <include
+                   layout="@layout/layout_ucenter_part_goods_order"></include>
+
+               <!-- 众筹 <include layout="@layout/layout_ucenter_part_goods_order2"></include>-->
            </LinearLayout>
 
         <LinearLayout

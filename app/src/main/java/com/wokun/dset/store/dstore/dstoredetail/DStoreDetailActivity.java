@@ -1,10 +1,14 @@
 package com.wokun.dset.store.dstore.dstoredetail;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.IInterface;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -209,10 +213,14 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
         search_textview.setText(goodsDetail.getData().getGoods_name());
 
+        goods_name.setText(goodsDetail.getData().getGoods_name());
         if (goodsDetail.getData().getShop_id().equals("0")) {
-            goods_name.setText(TextViewUtil.setSpanBgAndTvColor("自营" + goodsDetail.getData().getGoods_name(), 0, 2, "#ffffff", "#056198"));
-        } else {
-            goods_name.setText(goodsDetail.getData().getGoods_name());
+            Drawable d = getResources().getDrawable(R.drawable.self_sale);
+            //必须设置图片大小，否则不显示【0,0表示坐标x,y坐标，50,50表示宽高】
+            d.setBounds(0, 0, 60, 30);
+            //四个参数分别表示文本左、上、右、下四个方向上的图片，null表示没有图片
+            goods_name.setCompoundDrawables(d, null, null, null);
+            //   goods_name.setText(TextViewUtil.setSpanBgAndTvColor("自营" + goodsDetail.getData().getGoods_name(), 0, 2, "#ffffff", "#056198"));
         }
 
         if (goodsDetail.getData().getShow_img().size() >= 1) {
@@ -222,7 +230,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         }
 
         if (goodsDetail.getData().getShop() != null && goodsDetail.getData().getShop().getShop_logo() != null) {
-            ImageLoaderUtils.load(context, store_logo, goodsDetail.getData().getShop().getShop_logo(), 0);
+            ImageLoaderUtils.getInstance().load(context, store_logo, goodsDetail.getData().getShop().getShop_logo(), 0);
             store_name.setText(goodsDetail.getData().getShop().getShop_name());
             String desccredit = goodsDetail.getData().getShop().getShop_desccredit();
             store_detail_point.setText(TextViewUtil.setSpanColor(context, "描述相符 " + desccredit, 5, 5 + desccredit.length(), "#f08619", null));
@@ -337,7 +345,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         pop_price = contentView.findViewById(R.id.pop_price);
         pop_store = contentView.findViewById(R.id.pop_store);
 
-        ImageLoaderUtils.load(context, pop_img, dataBean.getShow_img().get(0), 0);
+        ImageLoaderUtils.getInstance().load(context, pop_img, dataBean.getShow_img().get(0), 0);
         pop_price.setText("￥" + dataBean.getPrice());
         pop_store.setText("库存：" + dataBean.getStock());
 

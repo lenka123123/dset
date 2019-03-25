@@ -21,6 +21,7 @@ import com.wokun.dset.R;
 import com.wokun.dset.base.BaseBindingActivity;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
+import com.wokun.dset.store.dstore.immediatelypay.DStoreOrderDetailActivity;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class ZhihuiSuccessfulActivity extends BaseBindingActivity {
 
     @BindView(R.id.pay_total1)
     TextView pay_total1;
+    private String order_id;
 
 
     @Override
@@ -66,6 +68,7 @@ public class ZhihuiSuccessfulActivity extends BaseBindingActivity {
         String name = intent.getStringExtra("name");
         String phone = intent.getStringExtra("phone");
         String address = intent.getStringExtra("address");
+        order_id = intent.getStringExtra("order_id");
 
         pay_total1.setText("￥" + doubleprice);
         payName.setText(name);
@@ -78,9 +81,11 @@ public class ZhihuiSuccessfulActivity extends BaseBindingActivity {
     public void action(View v) {
         switch (v.getId()) {
             case R.id.see_order: //查看订单
-             /*   Intent intent = new Intent(ZhihuiSuccessfulActivity.this, GoodsOrderDetailActivity2.class);
-                intent.putExtra(Constants.ORDER_ID,order_id);
-                startActivity(intent);*/
+                if (order_id == null || order_id.equals("")) return;
+                Intent intent = new Intent();
+                intent.setClass(ZhihuiSuccessfulActivity.this, DStoreOrderDetailActivity.class);
+                intent.putExtra(Constants.ORDER_ID, order_id);
+                ZhihuiSuccessfulActivity.this.startActivity(intent);
                 break;
             case R.id.return_first: //返回首页
                 Intent mina = new Intent(ZhihuiSuccessfulActivity.this, MainActivity.class);

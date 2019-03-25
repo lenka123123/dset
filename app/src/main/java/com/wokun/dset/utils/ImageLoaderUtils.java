@@ -1,7 +1,12 @@
 package com.wokun.dset.utils;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,19 +23,35 @@ public class ImageLoaderUtils {
 
     private static final String TAG = "ImageLoaderUtils";
 
+    public ImageLoaderUtils() {
+    }
+
+    private static class GlideLoadUtilsHolder {
+        private final static ImageLoaderUtils INSTANCE = new ImageLoaderUtils();
+    }
+
+    public static ImageLoaderUtils getInstance() {
+        return GlideLoadUtilsHolder.INSTANCE;
+    }
+
+
     /**
      * 圆角图片加载
      *
-     * @param context      上下文
-     * @param imageView    图片显示控件
-     * @param url          图片链接
-     * @param radius       图片圆角半径
+     * @param context   上下文
+     * @param imageView 图片显示控件
+     * @param url       图片链接
+     * @param radius    图片圆角半径
      * @return
      * @author leibing
      * @createTime 2016/8/15
      * @lastModify 2016/8/15
      */
-    public static void load(Context context, ImageView imageView, String url,   int radius) {
+    public void load(Context context, ImageView imageView, String url, int radius) {
+        if (context == null) return;
+        if (context instanceof Activity && ((Activity) context).isDestroyed()) {
+            return;
+        }
         RequestOptions options = new RequestOptions()
                 .priority(Priority.NORMAL) //指定加载的优先级，优先级越高越优先加载，
                 .placeholder(R.drawable.default_img)
@@ -48,7 +69,7 @@ public class ImageLoaderUtils {
      * @param imageView
      * @param url
      */
-    public static void loadImgId(Context context, final ImageView imageView, int url,  int radius) {
+    public void loadImgId(Context context, final ImageView imageView, int url, int radius) {
         RequestOptions options = new RequestOptions()
                 .priority(Priority.NORMAL) //指定加载的优先级，优先级越高越优先加载，
                 .placeholder(R.drawable.default_img)
@@ -67,7 +88,7 @@ public class ImageLoaderUtils {
      * @param url
      */
 
-    public static void loadCircle(Context context, final ImageView imageView, String url) {
+    public void loadCircle(Context context, final ImageView imageView, String url) {
         RequestOptions options = new RequestOptions()
 
                 .priority(Priority.NORMAL) //指定加载的优先级，优先级越高越优先加载，
@@ -86,6 +107,44 @@ public class ImageLoaderUtils {
         });
     }
 
+
+//
+//    public void glideLoad(Context context, String url, ImageView imageView, int default_image) {
+//        if (context != null) {
+//            Glide.with(context).load(url).centerCrop().error(default_image).crossFade
+//                    ().into(imageView);
+//        } else {
+//            Log.i(TAG, "Picture loading failed,context is null");
+//        }
+//    }
+//
+//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+//    public void glideLoad(Activity activity, String url, ImageView imageView, int default_image) {
+//        if (!activity.isDestroyed()) {
+//            Glide.with(activity).load(url).centerCrop().error(default_image).crossFade
+//                    ().into(imageView);
+//        } else {
+//            Log.i(TAG, "Picture loading failed,activity is Destroyed");
+//        }
+//    }
+//
+//    public void glideLoad(Fragment fragment, String url, ImageView imageView, int default_image) {
+//        if (fragment != null && fragment.getActivity() != null) {
+//            Glide.with(fragment).load(url).centerCrop().error(default_image).crossFade
+//                    ().into(imageView);
+//        } else {
+//            Log.i(TAG, "Picture loading failed,fragment is null");
+//        }
+//    }
+//
+//    public void glideLoad(android.app.Fragment fragment, String url, ImageView imageView, int default_image) {
+//        if (fragment != null && fragment.getActivity() != null) {
+//            Glide.with(fragment).load(url).centerCrop().error(default_image).crossFade
+//                    ().into(imageView);
+//        } else {
+//            Log.i(TAG, "Picture loading failed,android.app.Fragment is null");
+//        }
+//    }
 
 }
 

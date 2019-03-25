@@ -28,6 +28,7 @@ import okhttp3.OkHttpClient;
 public class DsetApp extends Application {
 
     private static DsetApp mInstance;
+    // https://www.jianshu.com/p/e4da2f477cd8  友盟统计
 
     private Location mLocation;
     private int tabPosition = 0; //MainActivity默认底部位置

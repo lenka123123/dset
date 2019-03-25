@@ -18,7 +18,7 @@
             android:id="@+id/jinpiao_selector"
             android:src="@drawable/ic_un_selected"
             app:rx_checked="true"
-            app:rx_selected_src="@drawable/ic_selected"
+            app:rx_selected_src="@drawable/select_goods"
             style="@style/ImageView_RelativeLayout_Right" />
     </RelativeLayout>
 
@@ -38,7 +38,7 @@
             android:id="@+id/alipay_selector"
             android:src="@drawable/ic_un_selected"
             app:rx_checked="true"
-            app:rx_selected_src="@drawable/ic_selected"
+            app:rx_selected_src="@drawable/select_goods"
             style="@style/ImageView_RelativeLayout_Right" />
     </RelativeLayout>
 
@@ -55,7 +55,7 @@
         <com.shantoo.widget.imageview.SelectorImageView
             android:id="@+id/weixing_selector"
             android:src="@drawable/ic_un_selected"
-            app:rx_selected_src="@drawable/ic_selected"
+            app:rx_selected_src="@drawable/select_goods"
             style="@style/ImageView_RelativeLayout_Right" />
     </RelativeLayout>
 </LinearLayout>

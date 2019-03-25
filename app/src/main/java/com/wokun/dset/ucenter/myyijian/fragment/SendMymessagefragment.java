@@ -1,7 +1,6 @@
 package com.wokun.dset.ucenter.myyijian.fragment;
 
 
-
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -55,7 +54,7 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 //提交建议
 public class SendMymessagefragment extends BaseFragment {
     private PhotoSelector mPhotoSelector;
-   private  String src;
+    private String src;
     @BindView(R.id.if_context)
     EditText ifContext;
     @BindView(R.id.yijian_img)
@@ -63,7 +62,7 @@ public class SendMymessagefragment extends BaseFragment {
 
     private void initData() {
         EventBus.getDefault().register(this);
-     //   mMultiplePhotoSelector.setOnMultiplePhotoUpLoadListener(this);
+        //   mMultiplePhotoSelector.setOnMultiplePhotoUpLoadListener(this);
         mPhotoSelector = new PhotoSelector(getActivity());
         mPhotoSelector.setOnPhotoUpLoadListener(new OnPhotoUpLoadListener() {
             @Override
@@ -75,49 +74,49 @@ public class SendMymessagefragment extends BaseFragment {
 
     }
 
-/*
+    /*
 
-    */
-/**
+     */
+
+    /**
      * 单图片上传
-     * */
-
+     */
 
 
     private void upLoadPicture(File file) {
 
-            Map params = new HashMap();
-            params.put("timestamp", StringUtil.getCurrentTime());
-            Map<String, String> removeMap = removeEmptyData(params);
-            Map<String, String> resultMap = sortMapByKey(removeMap);
-             String    sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
-            OkGo.<BaseResponse<PostPictureBean>>post(Constants.BASE_URL + Constants.POST_PICTURE)
-                    .tag(this)
-                    .params("sign",sign)
-                    .params("timestamp",StringUtil.getCurrentTime())
-                    .params("file", file) 	// 支持多文件同时添加上传
-                    .execute(new JsonCallback<BaseResponse<PostPictureBean>>() {
-                        @Override
-                        public void onSuccess(Response<BaseResponse<PostPictureBean>> response) {
-                            BaseResponse body = response.body();
-                            if(body == null)return;
+        Map params = new HashMap();
+        params.put("timestamp", StringUtil.getCurrentTime());
+        Map<String, String> removeMap = removeEmptyData(params);
+        Map<String, String> resultMap = sortMapByKey(removeMap);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
+        OkGo.<BaseResponse<PostPictureBean>>post(Constants.BASE_URL + Constants.POST_PICTURE)
+                .tag(this)
+                .params("sign", sign)
+                .params("timestamp", StringUtil.getCurrentTime())
+                .params("file", file)    // 支持多文件同时添加上传
+                .execute(new JsonCallback<BaseResponse<PostPictureBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<PostPictureBean>> response) {
+                        BaseResponse body = response.body();
+                        if (body == null) return;
 //                          /  RxToast.showShort(body.getMessage());
-                            if(body.getStatus().equals("0001")){
-                                PostPictureBean    postpic = (PostPictureBean) body.getData();
-                                Log.e("图片上传","图片上传了"+body.getMessage());
-                                src = postpic.getSrc();
-                                RxToast.showShort(body.getMessage());
+                        if (body.getStatus().equals("0001")) {
+                            PostPictureBean postpic = (PostPictureBean) body.getData();
+                            Log.e("图片上传", "图片上传了" + body.getMessage());
+                            src = postpic.getSrc();
+                            RxToast.showShort(body.getMessage());
 
-                            }
                         }
+                    }
 
-                        @Override
-                        public void onError(Response<BaseResponse<PostPictureBean>> response) {
-                            super.onError(response);
+                    @Override
+                    public void onError(Response<BaseResponse<PostPictureBean>> response) {
+                        super.onError(response);
 
-                            RxToast.showShort("文件上传出错");
-                        }
-                    });
+                        RxToast.showShort("文件上传出错");
+                    }
+                });
 
     }
 
@@ -139,6 +138,7 @@ public class SendMymessagefragment extends BaseFragment {
             mPhotoSelector.showView(yijian_img);
         }
     }
+
     //提交图片
     @OnClick({R.id.action_submit})
     public void action_action_submit(View view) {
@@ -149,6 +149,10 @@ public class SendMymessagefragment extends BaseFragment {
 
     private void commitData() {
         String mifContext = ifContext.getText().toString().trim();
+        if (mifContext.length() < 1 && src.length() < 1) {
+            RxToast.showShort("请提交详细的意见内容");
+            return;
+        }
         Map params = new HashMap();
         params.put("timestamp", StringUtil.getCurrentTime());
         params.put("describe", mifContext);
@@ -157,11 +161,11 @@ public class SendMymessagefragment extends BaseFragment {
 
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String    sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
         OkGo.<BaseResponse<Object>>post(Constants.BASE_URL + Constants.ADVICE_REQUEST)
                 .tag(this)
-                .params("sign",sign)
-                .params("timestamp",StringUtil.getCurrentTime())
+                .params("sign", sign)
+                .params("timestamp", StringUtil.getCurrentTime())
                 .params("describe", mifContext)
                 .params("src", src)
                 .params("cs_type", "1")
@@ -169,12 +173,12 @@ public class SendMymessagefragment extends BaseFragment {
                     @Override
                     public void onSuccess(Response<BaseResponse<Object>> response) {
                         BaseResponse body = response.body();
-                        if(body == null)return;
+                        if (body == null) return;
                         RxToast.showShort(body.getMessage());
-                        if(body.getStatus().equals("0001")){
+                        if (body.getStatus().equals("0001")) {
 //                            RxToast.showShort(body.getMessage());
                             startActivity(MyyijianActivity.class);
-                              //  onFinish();
+                            //  onFinish();
                         }
                     }
 
@@ -187,25 +191,22 @@ public class SendMymessagefragment extends BaseFragment {
                 });
 
 
-
-
-
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void monooth(MyBean myBean){
-    Log.e("图片进来12","图片进来2");
-    mPhotoSelector.onActivityResult(myBean.requestCode, myBean.resultCode, myBean.data);
-}
+    public void monooth(MyBean myBean) {
+        Log.e("图片进来12", "图片进来2");
+        mPhotoSelector.onActivityResult(myBean.requestCode, myBean.resultCode, myBean.data);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mPhotoSelector.onActivityResult(requestCode, resultCode, data);
-        Log.e("图片进来2","图片进来2");
+        Log.e("图片进来2", "图片进来2");
         mPhotoSelector.onActivityResult(requestCode, resultCode, data);
     }
-
 
 
     @Override

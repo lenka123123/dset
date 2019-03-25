@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,9 +95,17 @@ public class MainActivity extends AppCompatActivity implements
         });
         initMainViewPager();
 
-        Intent intent = getIntent();
-        //      mina.putExtra("main", "joincart");
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+        intent = getIntent();
         joinAct = intent.getStringExtra("main");
+        Log.i(TAG, "onCreate: " + joinAct);
         if (joinAct != null && joinAct.equals("joincart")) {
             mViewPager.setCurrentItem(Constants.TAB_POSITION_SHOP_CART, false);
         } else {

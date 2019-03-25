@@ -30,6 +30,7 @@
             android:drawablePadding="15dp"
             android:hint="智能电视机"
             android:paddingLeft="10dp"
+            android:singleLine="true"
             android:textSize="15sp" />
     </LinearLayout>
 
@@ -174,10 +175,10 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/easylayout"
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/below_line"
+        android:visibility="visible"
         app:srlAccentColor="#00000000"
         app:srlEnablePreviewInEditMode="true"
         app:srlPrimaryColor="#00000000">
@@ -205,11 +206,10 @@
     <ImageView
         android:id="@+id/activity_no_data"
         android:layout_width="match_parent"
-        android:layout_below="@+id/below_line"
-        android:visibility="gone"
         android:layout_height="match_parent"
-        android:background="@drawable/activity_nodata">
-    </ImageView>
+        android:layout_below="@+id/below_line"
+        android:background="@drawable/activity_nodata"
+        android:visibility="gone"></ImageView>
 
 
 </RelativeLayout>

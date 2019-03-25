@@ -3,6 +3,8 @@ package com.wokun.dset.store.adapter;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +26,8 @@ import org.xml.sax.helpers.LocatorImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.OnTextChanged;
+
 public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartListInfoBean.GoodsItemBean, BaseViewHolder> {
 
     private static List<Integer> cartList = new ArrayList<>();
@@ -35,6 +39,7 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
     private ImageView actionAdd;
     List<TextView> deleteList = new ArrayList<>();
     private TextView actionDelete;
+    private EditText shopCartNum;
 
     public ShopCartAdapter(@LayoutRes int layoutResId, @Nullable List<CartList.DataBean.CartListInfoBean.GoodsItemBean> data) {
         super(layoutResId, data);
@@ -54,8 +59,8 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
         SelectorImageView parentSelector = helper.getView(R.id.action_parent_selector);
         ImageView childSelector = helper.getView(R.id.action_child_selector);
 
-        EditText shopCartNum = helper.getView(R.id.shop_cart_num);
-        shopCartNum.setText(String.valueOf(item.getNum()));
+        shopCartNum = helper.getView(R.id.shop_cart_num);
+
 
         actionDelete = helper.getView(R.id.action_delete);
         deleteList.add(actionDelete);
@@ -107,19 +112,20 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
                     isSelect = true;
                 }
             }
-            mOnRefreshListener.onRefresh(isSelect);
+            mOnRefreshListener.onRefresh(isSelect); //底部全选
         }
         if ((Integer.valueOf(mData.get(position).getStock()) < Integer.valueOf(mData.get(position).getNum()))) {
             childSelector.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_shop_cart_state));
         }
         initAsSelector(context, position, parentSelector, childSelector);
-        initListener(item, context, position);
+        initListener(helper.itemView, item, context, position);
     }
 
-    private void initListener(final CartList.DataBean.CartListInfoBean.GoodsItemBean item, final Context context, final int position) {
+    private void initListener(final View itemView, final CartList.DataBean.CartListInfoBean.GoodsItemBean item, final Context context, final int position) {
         actionMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                shopCartNum.setCursorVisible(false);
                 if (Integer.valueOf(mData.get(position).getNum()) > 1) {
                     int count = Integer.valueOf(mData.get(position).getNum()) - 1;
                     if (mOnEditClickListener != null) {
@@ -133,6 +139,7 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
         actionAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                shopCartNum.setCursorVisible(false);
                 if (Integer.valueOf(mData.get(position).getStock()) > Integer.valueOf(mData.get(position).getNum())) {
                     int count = Integer.valueOf(mData.get(position).getNum()) + 1;
                     if (mOnEditClickListener != null) {
@@ -145,6 +152,60 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
                 }
             }
         });
+
+        //        通过tag判断当前editText是否已经设置监听，有监听的话，移除监听再给editText赋值
+        if (shopCartNum.getTag() instanceof TextWatcher) {
+            shopCartNum.removeTextChangedListener((TextWatcher) shopCartNum.getTag());
+        }
+//        必须在判断tag后给editText赋值，否则会数据错乱
+        shopCartNum.setText(String.valueOf(item.getNum()));
+
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.i(TAG, "beforeTextChanged: 11 >>>>  " + charSequence.toString());
+                shopCartNum.setCursorVisible(true);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.i(TAG, "beforeTextChanged: 22 >>>>  " + charSequence.toString());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                Log.i(TAG, shopCartNum.isFocusable() + "beforeTextChanged: 33 >>>> " + editable.toString());
+
+                if (editable.toString().equals("") || Integer.valueOf(editable.toString()) < 1) {
+                    mData.get(position).setNum("1");
+                    mOnEditClickListener.onEditClick(item, 1);
+                    notifyDataSetChanged();
+                    return;
+                }
+
+                if (Integer.valueOf(mData.get(position).getStock()) > Integer.valueOf(editable.toString())) {
+                    int count = Integer.valueOf(editable.toString());
+                    if (mOnEditClickListener != null) {
+                        mOnEditClickListener.onEditClick(item, count);
+                    }
+                    mData.get(position).setNum("" + count);
+//                    shopCartNum.setText(String.valueOf(item.getNum()));
+                } else {
+                    mData.get(position).setNum(mData.get(position).getStock());
+                    if (mOnEditClickListener != null) {
+                        mOnEditClickListener.onEditClick(item, Integer.valueOf(mData.get(position).getStock()));
+                    }
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "库存不足", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        shopCartNum.addTextChangedListener(watcher);
+        shopCartNum.setTag(watcher);
+
         actionDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,10 +229,12 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
         return cartList;
     }
 
+
+    // 选择按钮点选操作
     private void initAsSelector(Context context, final int position, SelectorImageView parentSelector, ImageView childSelector) {
         if (mData.get(position).isSelect()) {
             //childSelector.toggle(true);
-            childSelector.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_selected));
+            childSelector.setImageDrawable(context.getResources().getDrawable(R.drawable.select_goods));
         } else {
             //childSelector.toggle(false);
             childSelector.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_un_selected));
@@ -197,19 +260,19 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
                 mData.get(position).setSelect(!mData.get(position).isSelect());
                 //通过循环找出不同商铺的第一个商品的位置
                 for (int i = 0; i < mData.size(); i++) {
-                    if (mData.get(i).getIsFirst() == 1) {
-                        //遍历去找出同一家商铺的所有商品的勾选情况
-                        for (int j = 0; j < mData.size(); j++) {
-                            //如果是同一家商铺的商品，并且其中一个商品是未选中，那么商铺的全选勾选取消
-                            if (mData.get(j).getCart_id() == mData.get(i).getCart_id() && !mData.get(j).isSelect()) {
-                                mData.get(i).setShopSelect(false);
-                                break;
-                            } else {
-                                //如果是同一家商铺的商品，并且所有商品是选中，那么商铺的选中全选勾选
-                                mData.get(i).setShopSelect(true);
-                            }
+//                    if (mData.get(i).getIsFirst() == 1) {
+                    //遍历去找出同一家商铺的所有商品的勾选情况
+                    for (int j = 0; j < mData.size(); j++) {
+                        //如果是同一家商铺的商品，并且其中一个商品是未选中，那么商铺的全选勾选取消
+                        if ((mData.get(j).getStore_id()).equals(mData.get(i).getStore_id()) && !mData.get(j).isSelect()) {
+                            mData.get(i).setShopSelect(false);
+                            break;
+                        } else {
+                            //如果是同一家商铺的商品，并且所有商品是选中，那么商铺的选中全选勾选
+                            mData.get(i).setShopSelect(true);
                         }
                     }
+//                    }
                 }
                 notifyDataSetChanged();
             }

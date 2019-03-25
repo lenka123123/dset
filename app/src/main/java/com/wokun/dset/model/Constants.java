@@ -2,9 +2,7 @@ package com.wokun.dset.model;
 
 public class Constants {
 
-
     public static final boolean isdebug = true;
-
 
     public static final String ACC = "account";
     public static final String PWD = "pwd";
@@ -137,6 +135,11 @@ public class Constants {
     public static String UPDATA_GOODS_NUM = "shop-goods/alter-cart.html"; //修改购物车商品数量
     public static String TELATE_GOODS = "shop-goods/del-cart-goods.html"; //删除商品
     public static String MONEY_PAY = "shop/yue-pay.html"; //金票支付
+    public static String ME_ORDER_LIST = "shop/my-order.html"; //我的订单列表
+    public static String CLOSE_ORDER = "shop/close-order.html"; //关闭订单
+    public static String ORDER_LIST_PAY = "shop/now-pay.html"; //订单列表立即支付
+    public static String EXPRESS_INFO = "shop/get-express.html"; //物流信息
+    public static String CART_DETAIL = "shop/order-info.html"; //购物车订单详情
 
 
     /**

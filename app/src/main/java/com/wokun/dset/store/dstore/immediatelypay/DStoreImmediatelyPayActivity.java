@@ -146,7 +146,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
     private String pay_type = "";
 
     // R.id.action_wxpay, R.id.action_pay, R.id.select_address, R.id.show_address, R.id.zitidian, R.id.iv_go1})
-    @OnClick({R.id.goto_select, R.id.action_money_layout, R.id.action_alipey_layout, R.id.action_pay, R.id.back,R.id.show_address})
+    @OnClick({R.id.goto_select, R.id.action_money_layout, R.id.action_alipey_layout, R.id.action_pay, R.id.back, R.id.show_address})
     public void action(View v) {
         switch (v.getId()) {
             case R.id.action_money_layout: //金票支付
@@ -375,6 +375,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                 intent.putExtra("name", link_man);
                 intent.putExtra("phone", phone);
                 intent.putExtra("address", address);
+                intent.putExtra("order_id", address);
                 DStoreImmediatelyPayActivity.this.startActivity(intent);
 
             }
@@ -415,6 +416,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
             public void onClick(View view) {
                 if (dialog != null)
                     dialog.dismiss();
+                DStoreImmediatelyPayActivity.this.finish();
             }
         });
         txt_next.setOnClickListener(new View.OnClickListener() {
@@ -450,7 +452,7 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
 
 
     //密码支付
-    private void moneyPay(MoneyBean.DataBean data, String password) {
+    private void moneyPay(final MoneyBean.DataBean data, String password) {
         String token = (String) SpCommonUtils.get(DStoreImmediatelyPayActivity.this, Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(DStoreImmediatelyPayActivity.this, Constants.USERID, "");
         String timestamp = StringUtil.getCurrentTime();
@@ -491,6 +493,8 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                             intent.putExtra("name", link_man);
                             intent.putExtra("phone", phone);
                             intent.putExtra("address", address);
+
+                            intent.putExtra("order_id", data.getOrder_id());
                             DStoreImmediatelyPayActivity.this.startActivity(intent);
                             DStoreImmediatelyPayActivity.this.finish();
                         } else {

@@ -25,7 +25,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -264,6 +266,14 @@ public class StringUtil {
         }
         return result;
     }
+
+    /*时间戳转换成字符窜*/
+    public static String getDateToString(long time) {
+        Date d = new Date(time);
+        SimpleDateFormat  sf = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+        return sf.format(d);
+    }
+
 
 
     public static String generateCheckValue(byte[] src) {
