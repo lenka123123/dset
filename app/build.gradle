@@ -14,8 +14,8 @@ android {
         applicationId "com.wokun.dset"
         minSdkVersion 18
         targetSdkVersion 27
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 1
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -116,4 +116,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
     implementation 'com.android.support:support-v13:27.1.1'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
+    // https://github.com/pinguo-zhouwei/CustomPopwindow
+    implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
 }

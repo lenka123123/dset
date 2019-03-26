@@ -15,9 +15,44 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y120"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="50dp"
+                    android:layout_height="46dp"
+                    android:padding="14dp"
+                    android:src="@drawable/arrow" />
+
+                <TextView
+                    android:id="@+id/search_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="支付成功"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="46dp"
+                    android:padding="14dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@color/white"
+                android:background="@drawable/pay_success_bg"
+
                 android:orientation="horizontal">
 
                 <ImageView
@@ -56,9 +91,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/pay_zitiandian"
-                    android:layout_toLeftOf="@+id/pay_place"
-                    android:layout_toStartOf="@+id/pay_place"
-                    android:text="xxx"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_toRightOf="@+id/pay_nameclass"
+                    android:text="axx"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -195,26 +230,29 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/aaa"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y20"
-                android:background="@color/color_DDD" />
+                android:background="@color/color_mini" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="@dimen/y10"
+                android:paddingTop="@dimen/y10"
                 android:background="@drawable/item_bg_normal"
+                android:paddingLeft="10dp"
                 android:text="安全提醒"
                 android:textColor="@color/black" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="@dimen/y20"
                 android:background="@drawable/item_bg_normal"
                 android:lineSpacingExtra="4dp"
+                android:paddingBottom="@dimen/y30"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="@dimen/y20"
                 android:text="付款成功后，商家不会付款异常、卡单、系统升级为理由联系您。请勿泄漏银行卡号，手机验证码，否则会造成钱款损失。谨防电话诈骗！"
                 android:textColor="@color/colorPrimary" />
 

@@ -139,7 +139,7 @@
             app:isHideTimeBackground="false"
             app:isShowDay="true"
             app:isShowHour="true"
-            app:isShowMillisecond="true"
+            app:isShowMillisecond="false"
             app:isShowMinute="true"
             app:isShowSecond="true"
             app:isShowTimeBgDivisionLine="false"

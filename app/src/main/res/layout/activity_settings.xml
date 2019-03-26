@@ -162,6 +162,7 @@
                 style="@style/TextView_RelativeLayout"
                 android:text="当前版本" />
          <TextView
+             android:id="@+id/current_code"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_alignParentRight="true"

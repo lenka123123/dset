@@ -65,10 +65,19 @@ public class DStoreGoodesList {
             private String goods_id;
             private String goods_name;
             private String price;
+            private String market_price;
             private String shop_id;
             private String shop_name;
             private String pic_cover_mid;
             private String pic_cover_small;
+
+            public String getMarket_price() {
+                return market_price;
+            }
+
+            public void setMarket_price(String market_price) {
+                this.market_price = market_price;
+            }
 
             public String getGoods_id() {
                 return goods_id;

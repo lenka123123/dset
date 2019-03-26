@@ -309,7 +309,6 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         final Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
         String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
-
         OkGo.<JsonObject>post(Constants.BASE_URL + Constants.STORE_HOME_URL)
                 .tag(this)
                 .params("sign", sign)
@@ -334,8 +333,6 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
                         DsetApp.getInstance().setRefreshShopCart(false);
                     }
                 });
-
-
     }
 
     public void detailData(DStoreHome dStoreHome) {
@@ -410,11 +407,11 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         //设置图片集合
         banner.setImages(bannerImageArray);
         //设置banner动画效果
-        banner.setBannerAnimation(Transformer.RotateDown);
+        banner.setBannerAnimation(Transformer.DepthPage);
         //设置标题集合（当banner样式有显示title时）
         //  banner.setBannerTitles(adTitle);
         //设置轮播时间
-        banner.setDelayTime(8000);
+        banner.setDelayTime(5000);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //banner设置方法全部调用完毕时最后调用

@@ -89,7 +89,6 @@ public class LoginActivity extends BaseBindingActivity {
         //记住密码
         remberPhone();
 
-        versionupdate();
       /*  Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -376,48 +375,6 @@ public class LoginActivity extends BaseBindingActivity {
     }
 
 
-    //调用支付
-    private void versionupdate() {
-        String token = (String) SpCommonUtils.get(LoginActivity.this, Constants.TOKEN, "");
-        String user_id = (String) SpCommonUtils.get(LoginActivity.this, Constants.USERID, "");
-        String timestamp = StringUtil.getCurrentTime();
-        Map params = new HashMap();
-
-        params.put("user_id", user_id);
-        params.put("token", token);
-        params.put("timestamp", timestamp);
-        params.put("type", "1");
-
-        final Map<String, String> removeMap = removeEmptyData(params);
-        Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
-        OkGo.<JsonObject>post(Constants.BASE_URL + Constants.VENSION)
-                .tag(this)
-                .params("sign", sign)
-                .params("timestamp", timestamp)
-                .params("user_id", user_id)
-                .params("token", token)
-                .params("type", "1")
-                .execute(new JsonCallback<JsonObject>() {
-                    @Override
-                    public void onSuccess(Response<JsonObject> response) {
-//                        DefaultAddress defaultAddress = (DefaultAddress) JosnFrom.getInstance().getObj(response.body().toString(), DefaultAddress.class);
-//                        if (defaultAddress != null && defaultAddress.getStatus().equals("0001")) {
-//
-//                        }
-                    }
-
-                    @Override
-                    public void onError(Response response) {
-//                        dismissLP();
-                        super.onError(response);
-                        Log.e("user", response + "!!!!");
-                        DsetApp.getInstance().setRefreshShopCart(false);
-                    }
-                });
-
-
-    }
 
 
 }

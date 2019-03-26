@@ -217,14 +217,10 @@ public class ShopCartFragment extends BaseFragment {
 //        if (cartInfoList != null && mTotalPrice > 0) {
 //            cartUpdate(cartInfoList, mTotalPrice);
 //        }
-
-
     }
 
     @Override
     public void loadData() {
-
-
         mAdapter = new ShopCartAdapter(R.layout.item_shop_cart, null);
         mAdapter.setOnEditClickListener(new ShopCartAdapter.OnEditClickListener() {
             @Override

@@ -58,6 +58,7 @@ public class ZhihuiSuccessfulActivity extends BaseBindingActivity {
 
     @Override
     public WidgetBar createToolBar() {
+        mWidgetBar.setVisibility(View.GONE);
         return mWidgetBar.setWidgetBarTitle("付款成功");
     }
 
@@ -77,9 +78,12 @@ public class ZhihuiSuccessfulActivity extends BaseBindingActivity {
     }
 
 
-    @OnClick({R.id.see_order, R.id.return_first})
+    @OnClick({R.id.see_order, R.id.return_first, R.id.back})
     public void action(View v) {
         switch (v.getId()) {
+            case R.id.back: //查看订单
+                ZhihuiSuccessfulActivity.this.finish();
+                break;
             case R.id.see_order: //查看订单
                 if (order_id == null || order_id.equals("")) return;
                 Intent intent = new Intent();

@@ -27,7 +27,7 @@ public class ShopCartDetailAdapter extends BaseQuickAdapter<CartDetailBean.DataB
 
         Context context = helper.itemView.getContext();
 
-        ImageLoaderUtils.getInstance().load(context, (ImageView) helper.getView(R.id.goods_image), item.getGoods_picture(), 0);
+        ImageLoaderUtils.getInstance().load(context, (ImageView) helper.getView(R.id.goods_image), item.getPic_cover_small(), 2);
         helper.setText(R.id.goods_name, item.getGoods_name());
         helper.setText(R.id.size, item.getSku_name());
         helper.setText(R.id.goods_price, "￥" + item.getPrice());

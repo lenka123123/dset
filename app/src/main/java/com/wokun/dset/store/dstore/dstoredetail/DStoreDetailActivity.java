@@ -1,6 +1,8 @@
 package com.wokun.dset.store.dstore.dstoredetail;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.IInterface;
@@ -15,6 +17,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.GridLayout;
@@ -49,6 +53,7 @@ import com.wokun.dset.utils.ImageLoadUtils;
 import com.wokun.dset.utils.ImageLoader;
 import com.wokun.dset.utils.ImageLoaderUtils;
 import com.wokun.dset.utils.JosnFrom;
+import com.wokun.dset.utils.ScreenUtils;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
 import com.wokun.dset.utils.TextViewUtil;
@@ -75,6 +80,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     private String goods_id;
     private TextView goods_name;
     private TextView price;
+    private TextView old_price;
     private TextView free_send;
     private TextView search_goods_size;
     private ImageView store_logo;
@@ -130,7 +136,6 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
             mBanner.removeAllViews();
 //        Glide.with(this).onDestroy();
         Glide.get(context).clearMemory();
-
         super.onDestroy();
     }
 
@@ -150,6 +155,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         mBanner = findViewById(R.id.banner);
         goods_name = findViewById(R.id.goods_name);
         price = findViewById(R.id.price);
+        old_price = findViewById(R.id.old_price);
         free_send = findViewById(R.id.free_send);
         search_goods_size = findViewById(R.id.search_goods_size);
 
@@ -201,6 +207,9 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                 promote_price = dataBean.getGoods_sku().get(0).getPrice();
 
                 price.setText("￥" + goodsDetail.getData().getPrice());
+                old_price.setText("￥" + goodsDetail.getData().getMarket_price());
+                old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+
                 free_send.setText("运费：" + goodsDetail.getData().getFreight());
             } else {
                 price_linearlayout.setVisibility(View.GONE);
@@ -621,5 +630,6 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
 
     }
+
 
 }

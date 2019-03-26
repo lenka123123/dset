@@ -6,9 +6,9 @@
 
     <RelativeLayout
         android:id="@+id/shop_cart_header_root"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y100"
+        android:layout_marginTop="10dp"
         android:background="@drawable/item_bg_normal"
         android:gravity="center_vertical"
         android:padding="@dimen/activity_padding_default">
@@ -129,7 +129,7 @@
                     android:cursorVisible="true"
                     android:gravity="center"
                     android:inputType="number"
-                    android:maxLength="4"
+                    android:maxLength="3"
                     android:singleLine="true"
                     android:textSize="@dimen/text_size_style_two" />
 

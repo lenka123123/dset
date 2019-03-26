@@ -55,7 +55,6 @@
                 android:layout_height="@dimen/y750"
                 android:visibility="visible" />
 
-
             <include
                 layout="@layout/layout_banner_goods_detail"
                 android:layout_width="match_parent"
@@ -69,6 +68,7 @@
                 android:layout_below="@+id/banner"
                 android:background="@color/white"
                 android:ellipsize="end"
+                android:gravity="top|left"
                 android:maxLines="2"
                 android:paddingBottom="@dimen/y30"
                 android:paddingLeft="@dimen/x30"
@@ -89,12 +89,21 @@
 
                 <TextView
                     android:id="@+id/price"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/x30"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:textColor="@color/color_ff_76_08"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/old_price"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/color_9_9_9"
                     android:textSize="15sp" />
 
                 <TextView
@@ -266,6 +275,7 @@
                     android:src="@drawable/store_detail_right" />
 
             </LinearLayout>
+
             <WebView
                 android:id="@+id/webview"
                 android:layout_width="match_parent"

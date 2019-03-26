@@ -1,12 +1,17 @@
 package com.wokun.dset.store.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,11 +20,14 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.zhouwei.library.CustomPopWindow;
 import com.shantoo.widget.imageview.SelectorImageView;
 import com.wokun.dset.R;
 import com.wokun.dset.mainfragment.ShopCartFragment;
 import com.wokun.dset.store.bean.CartList;
+import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
 import com.wokun.dset.utils.ImageLoader;
+import com.wokun.dset.utils.ScreenUtils;
 
 import org.xml.sax.helpers.LocatorImpl;
 
@@ -40,6 +48,21 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
     List<TextView> deleteList = new ArrayList<>();
     private TextView actionDelete;
     private EditText shopCartNum;
+    private Context context;
+
+
+    public void getCenterCancelDialog(View itemView, String title) {
+        View contentView = LayoutInflater.from(context).inflate(R.layout.item_dialog_toast, null);
+        CustomPopWindow popWindow = new CustomPopWindow.PopupWindowBuilder(context)
+                .setView(contentView)//显示的布局，还可以通过设置一个View
+                //     .size(600,400) //设置显示的大小，不设置就默认包裹内容
+                .setFocusable(true)//是否获取焦点，默认为ture
+                .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
+                .create()//创建PopupWindow
+                .showAsDropDown(itemView, 0, 10);//显示PopupWindow
+        TextView textView = contentView.findViewById(R.id.dialog_title);
+        textView.setText(title);
+    }
 
     public ShopCartAdapter(@LayoutRes int layoutResId, @Nullable List<CartList.DataBean.CartListInfoBean.GoodsItemBean> data) {
         super(layoutResId, data);
@@ -52,7 +75,7 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
     @Override
     protected void convert(BaseViewHolder helper, CartList.DataBean.CartListInfoBean.GoodsItemBean item) {
 
-        Context context = helper.itemView.getContext();
+        context = helper.itemView.getContext();
         final int position = helper.getAdapterPosition();
         RelativeLayout shopCartHeaderRoot = helper.getView(R.id.shop_cart_header_root);
 
@@ -60,8 +83,6 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
         ImageView childSelector = helper.getView(R.id.action_child_selector);
 
         shopCartNum = helper.getView(R.id.shop_cart_num);
-
-
         actionDelete = helper.getView(R.id.action_delete);
         deleteList.add(actionDelete);
         actionMinus = helper.getView(R.id.action_minus);
@@ -156,6 +177,7 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
         //        通过tag判断当前editText是否已经设置监听，有监听的话，移除监听再给editText赋值
         if (shopCartNum.getTag() instanceof TextWatcher) {
             shopCartNum.removeTextChangedListener((TextWatcher) shopCartNum.getTag());
+            shopCartNum.setCursorVisible(false);
         }
 //        必须在判断tag后给editText赋值，否则会数据错乱
         shopCartNum.setText(String.valueOf(item.getNum()));
@@ -163,8 +185,8 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
                 Log.i(TAG, "beforeTextChanged: 11 >>>>  " + charSequence.toString());
-                shopCartNum.setCursorVisible(true);
             }
 
             @Override
@@ -175,15 +197,15 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
 
             @Override
             public void afterTextChanged(Editable editable) {
-
-                Log.i(TAG, shopCartNum.isFocusable() + "beforeTextChanged: 33 >>>> " + editable.toString());
-
-                if (editable.toString().equals("") || Integer.valueOf(editable.toString()) < 1) {
-                    mData.get(position).setNum("1");
-                    mOnEditClickListener.onEditClick(item, 1);
-                    notifyDataSetChanged();
+                if (editable.toString().isEmpty())
                     return;
-                }
+                Log.i(TAG, shopCartNum.isFocusable() + "beforeTextChanged: 33 >>>> " + editable.toString());
+//                if (editable.toString().equals("") || Integer.valueOf(editable.toString()) < 1) {
+//                    mData.get(position).setNum("1");
+//                    mOnEditClickListener.onEditClick(item, 1);
+//                    notifyDataSetChanged();
+//                    return;
+//                }
 
                 if (Integer.valueOf(mData.get(position).getStock()) > Integer.valueOf(editable.toString())) {
                     int count = Integer.valueOf(editable.toString());
@@ -197,12 +219,14 @@ public class ShopCartAdapter extends BaseQuickAdapter<CartList.DataBean.CartList
                     if (mOnEditClickListener != null) {
                         mOnEditClickListener.onEditClick(item, Integer.valueOf(mData.get(position).getStock()));
                     }
+                    Toast.makeText(context, "库存不足! 最大库存" + mData.get(position).getStock(), Toast.LENGTH_SHORT).show();
+//                    getCenterCancelDialog(itemView, "  提示：最大内存" + mData.get(position).getStock());
                     notifyDataSetChanged();
-                    Toast.makeText(context, "库存不足", Toast.LENGTH_SHORT).show();
                 }
+                shopCartNum.clearFocus();
             }
         };
-
+        shopCartNum.setCursorVisible(true);
         shopCartNum.addTextChangedListener(watcher);
         shopCartNum.setTag(watcher);
 

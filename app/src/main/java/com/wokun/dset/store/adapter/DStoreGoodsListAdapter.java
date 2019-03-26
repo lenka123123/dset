@@ -3,8 +3,10 @@ package com.wokun.dset.store.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +41,10 @@ public class DStoreGoodsListAdapter extends BaseQuickAdapter<DStoreGoodesList.Da
 
         helper.setText(R.id.title, item.getGoods_name());
         helper.setText(R.id.price, "￥" + item.getPrice());
+
+        helper.setText(R.id.old_price, "￥" + item.getMarket_price());
+        ((TextView) (helper.getView(R.id.old_price))).getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+
         helper.setText(R.id.shop_name, item.getShop_name());
 
         helper.getView(R.id.root_view).setOnClickListener(new View.OnClickListener() {

@@ -19,24 +19,41 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shantoo.widget.toast.RxToast;
+import com.wokun.dset.callback.JsonCallback;
+import com.wokun.dset.login.LoginActivity;
+import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.mainfragment.EcologyFragment;
 import com.wokun.dset.mainfragment.HomeFragment;
 import com.wokun.dset.mainfragment.MineFragment;
 import com.wokun.dset.mainfragment.ShopCartFragment;
 import com.wokun.dset.model.Constants;
+import com.wokun.dset.store.bean.VersionBean;
+import com.wokun.dset.utils.DownloadUtil;
+import com.wokun.dset.utils.JosnFrom;
+import com.wokun.dset.utils.SpCommonUtils;
+import com.wokun.dset.utils.StringUtil;
+import com.wokun.dset.utils.VsersionUtil;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+
+import static com.wokun.dset.utils.MD5.ParameterUtils.removeEmptyData;
+import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
 public class MainActivity extends AppCompatActivity implements
         ViewPager.OnPageChangeListener, View.OnClickListener {
@@ -94,8 +111,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
         initMainViewPager();
-
-
     }
 
     @Override
@@ -130,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+
         //    Logger.e(TAG,Constants.TAB_POSITION + AppCache.getTabPosition());
 //        if (DsetApp.getInstance().isRefreshShopCart()) {
 //            changeTextViewColor();
@@ -345,4 +361,64 @@ public class MainActivity extends AppCompatActivity implements
             return mFragment.size();
         }
     };
+
+    private void versionupDate() {
+        String token = (String) SpCommonUtils.get(MainActivity.this, Constants.TOKEN, "");
+        String user_id = (String) SpCommonUtils.get(MainActivity.this, Constants.USERID, "");
+        String timestamp = StringUtil.getCurrentTime();
+        Map params = new HashMap();
+
+        params.put("user_id", user_id);
+        params.put("token", token);
+        params.put("timestamp", timestamp);
+        params.put("type", "1");
+
+        final Map<String, String> removeMap = removeEmptyData(params);
+        Map<String, String> resultMap = sortMapByKey(removeMap);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
+        OkGo.<JsonObject>post(Constants.BASE_URL + Constants.VENSION)
+                .tag(this)
+                .params("sign", sign)
+                .params("timestamp", timestamp)
+                .params("user_id", user_id)
+                .params("token", token)
+                .params("type", "1")
+                .execute(new JsonCallback<JsonObject>() {
+                    @Override
+                    public void onSuccess(Response<JsonObject> response) {
+                        final VersionBean versionBean = (VersionBean) JosnFrom.getInstance().getObj(response.body().toString(), VersionBean.class);
+                        if (versionBean != null && versionBean.getStatus().equals("0001")) {
+                            if (versionBean.getData().getSwitchX() == 1) {//表示开启
+                                Log.i(TAG, "onSuccess:版本 " + VsersionUtil.getLocalVersion(MainActivity.this));
+                                Log.i(TAG, "onSuccess:版本12 " + Integer.valueOf(versionBean.getData().getVersion()));
+                                Log.i(TAG, "onSuccess:版本url " + versionBean.getData().getUrl());
+                                if (VsersionUtil.getLocalVersion(MainActivity.this) < Integer.valueOf(versionBean.getData().getVersion())) {// 本地版本  线上版本
+                                    final String fileDir = MainActivity.this.getCacheDir().getAbsolutePath();
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //网络加载图片的方法
+//                                            DownloadUtil.get().download(versionBean.getData().getUrl(), fileDir, "dsyt.apk", MainActivity.this);
+                                        }
+                                    }).start();
+
+
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response response) {
+//                        dismissLP();
+                        super.onError(response);
+                        Log.e("user", response + "!!!!");
+                        DsetApp.getInstance().setRefreshShopCart(false);
+                    }
+                });
+
+
+    }
+
+
 }

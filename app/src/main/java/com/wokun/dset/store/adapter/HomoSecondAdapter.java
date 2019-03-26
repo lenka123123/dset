@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -63,6 +64,10 @@ public class HomoSecondAdapter extends BaseAdapter {
             holder.title = (TextView) convertView.findViewById(R.id.title);
             holder.price = (TextView) convertView.findViewById(R.id.price);
             holder.oldprice = (TextView) convertView.findViewById(R.id.oldprice);
+            holder.layout = (LinearLayout) convertView.findViewById(R.id.layout);
+            holder.title.setVisibility(View.VISIBLE);
+            holder.layout.setVisibility(View.VISIBLE);
+
             holder.img = (ImageView) convertView.findViewById(R.id.img);
 
 //            Log.i("=====", position + "==getView总数==" + bean.isClick);
@@ -70,13 +75,13 @@ public class HomoSecondAdapter extends BaseAdapter {
             //设置标题
             holder.title.setText(bean.getGoods_name());
             String promotionPrice = bean.getPromotion_price();
-            if (promotionPrice.endsWith("0")) {
-                promotionPrice = promotionPrice.substring(0, promotionPrice.length() - 1);
-            }
+//            if (promotionPrice.endsWith("0")) {
+//                promotionPrice = promotionPrice.substring(0, promotionPrice.length() - 1);
+//            }
             String price = bean.getPrice();
-            if (price.endsWith("0")) {
-                price = price.substring(0, price.length() - 1);
-            }
+//            if (price.endsWith("0")) {
+//                price = price.substring(0, price.length() - 1);
+//            }
             holder.price.setText("￥" + promotionPrice);
             holder.oldprice.setText("￥" + price);
 
@@ -120,6 +125,7 @@ public class HomoSecondAdapter extends BaseAdapter {
         TextView title;
         TextView price;
         TextView oldprice;
+        LinearLayout layout;
         ImageView img;
     }
 

@@ -28,23 +28,19 @@ public class BeautyHomeAdapter extends BaseQuickAdapter<DStoreHome.DataBean.Tuij
     public BeautyHomeAdapter(Context context) {
         super(R.layout.item_store_adapter_info, null);
         this.context = context;
-
     }
 
     public void setData() {
     }
 
-
     @Override
     protected void convert(final BaseViewHolder helper, final DStoreHome.DataBean.TuijianBean item) {
-
         ImageView imageView = helper.getView(R.id.img);
 //        Glide.with(context).load(item.getPic_cover_big()).into(imageView);
         ImageLoaderUtils.getInstance().load(context, imageView, item.getPic_cover_big(), 0);
 
         helper.setText(R.id.title, item.getGoods_name());
-        helper.setText(R.id.price, item.getPrice());
-
+        helper.setText(R.id.price, "￥" + item.getPrice());
         if (getData().indexOf(item) % 2 == 0) {
             helper.getView(R.id.left_linearlayout).setVisibility(View.VISIBLE);
             helper.getView(R.id.right_linearlayout).setVisibility(View.GONE);
@@ -54,7 +50,6 @@ public class BeautyHomeAdapter extends BaseQuickAdapter<DStoreHome.DataBean.Tuij
             helper.getView(R.id.right_linearlayout).setVisibility(View.VISIBLE);
             helper.getView(R.id.left_linearlayout_item).setVisibility(View.VISIBLE);
         }
-
         helper.getView(R.id.root_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
