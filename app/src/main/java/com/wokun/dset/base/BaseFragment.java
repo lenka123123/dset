@@ -21,7 +21,6 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener {
 
 
-
     protected String TAG = this.getClass().getSimpleName();
     protected Unbinder unbinder;
 
@@ -56,7 +55,6 @@ public abstract class BaseFragment extends Fragment implements ViewTreeObserver.
     }
 
 
-
     /**
      * 是否使用沉浸式状态栏
      */
@@ -65,8 +63,8 @@ public abstract class BaseFragment extends Fragment implements ViewTreeObserver.
     }
 
 
-
-    public void initToolBar() {}
+    public void initToolBar() {
+    }
 
     public abstract int createView();
 
@@ -84,7 +82,7 @@ public abstract class BaseFragment extends Fragment implements ViewTreeObserver.
             if (DsetApp.getInstance().isLogin()) { //已登录
                 startActivity(intent);
             } else { //未登录
-                intent.setClass(DsetApp.getContext(),LoginActivity.class);
+                intent.setClass(DsetApp.getContext(), LoginActivity.class);
                 startActivityForResult(intent, Constants.LOGIN_REQUEST_CODE);
             }
         } else {
@@ -95,13 +93,13 @@ public abstract class BaseFragment extends Fragment implements ViewTreeObserver.
     //打开一个Activity时不需要携带数据
     public void startActivity(Class<?> cls, boolean isNeedLogin) {
         if (isNeedLogin) {
-           // User user = TyslApp.getInstance().getUser();
-           // boolean hasLogin = TyslApp.getInstance().checkLogin();
+            // User user = TyslApp.getInstance().getUser();
+            // boolean hasLogin = TyslApp.getInstance().checkLogin();
             if (DsetApp.getInstance().isLogin()) {//已登录
                 startActivity(cls);
             } else {//未登录
                 Intent intent = new Intent();
-                intent.setClass(DsetApp.getContext(),LoginActivity.class);
+                intent.setClass(DsetApp.getContext(), LoginActivity.class);
                 startActivityForResult(intent, Constants.LOGIN_REQUEST_CODE);
             }
         } else {
@@ -109,13 +107,13 @@ public abstract class BaseFragment extends Fragment implements ViewTreeObserver.
         }
     }
 
-    public void startActivityForResult(Intent intent, int requestCode, boolean isNeedLogin){
-        if(isNeedLogin){
-            intent.setClass(DsetApp.getContext(),LoginActivity.class);
+    public void startActivityForResult(Intent intent, int requestCode, boolean isNeedLogin) {
+        if (isNeedLogin) {
+            intent.setClass(DsetApp.getContext(), LoginActivity.class);
             startActivity(intent);
             return;
         }
-        startActivityForResult(intent,requestCode);
+        startActivityForResult(intent, requestCode);
     }
 
     protected void showLoadingProgress() {
@@ -129,5 +127,8 @@ public abstract class BaseFragment extends Fragment implements ViewTreeObserver.
     @Override
     public void onGlobalLayout() {
 
+    }
+
+    public void onRestart() {
     }
 }

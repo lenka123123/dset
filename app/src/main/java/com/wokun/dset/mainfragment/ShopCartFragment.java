@@ -110,13 +110,20 @@ public class ShopCartFragment extends BaseFragment {
 
     }
 
+    public void onRestart() {
+        if(isCreated){
+            updata();
+            getShopCartList();
+        }
+
+    }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) { //界面可见
             if (isCreated) {
-                updata();
-                getShopCartList();
+                onRestart();
             }
         } else {  //界面不可见 相当于 onpause
         }
@@ -248,6 +255,7 @@ public class ShopCartFragment extends BaseFragment {
         mAdapter.setRefreshListener(new ShopCartAdapter.OnRefreshListener() {
             @Override
             public void onRefresh(boolean isSelect) {
+                cart_id_str = "";
                 mSelect = isSelect;
                 if (isSelect) {
                     Drawable left = getResources().getDrawable(R.drawable.select_goods);

@@ -29,6 +29,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.maning.updatelibrary.InstallUtils;
 import com.shantoo.widget.toast.RxToast;
+import com.wokun.dset.base.BaseFragment;
 import com.wokun.dset.callback.JsonCallback;
 import com.wokun.dset.login.LoginActivity;
 import com.wokun.dset.login.LoginMgr;
@@ -94,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements
         }
     };
     private String joinAct;
+    private BaseFragment homeFragment;
+    private BaseFragment ecologyFragment;
+    private BaseFragment shopCartFragment;
+    private BaseFragment mineFragment;
 
 
     @Override
@@ -116,7 +121,19 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }
         });
+
+        homeFragment = new HomeFragment();
+        ecologyFragment = new EcologyFragment();
+        shopCartFragment = new ShopCartFragment();
+        mineFragment = new MineFragment();
         initMainViewPager();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (shopCartFragment != null)
+            shopCartFragment.onRestart();
 
     }
 
@@ -172,10 +189,10 @@ public class MainActivity extends AppCompatActivity implements
         mRelativeLayout[Constants.TAB_POSITION_SHOP_CART].setOnClickListener(this);
         mRelativeLayout[Constants.TAB_POSITION_UCENTER].setOnClickListener(this);
 
-        mFragment.add(new HomeFragment());
-        mFragment.add(new EcologyFragment());
-        mFragment.add(new ShopCartFragment());
-        mFragment.add(new MineFragment());
+        mFragment.add(homeFragment);
+        mFragment.add(ecologyFragment);
+        mFragment.add(shopCartFragment);
+        mFragment.add(mineFragment);
 
         mViewPager.setAdapter(fragmentPagerAdapter);
         mViewPager.setOffscreenPageLimit(4);

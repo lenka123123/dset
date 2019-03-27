@@ -28,15 +28,15 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
 /**
  * 下拉刷新，上拉加载几类Fragment
- * */
+ */
 public abstract class BaseRefreshAndLoadMoreFragment<T> extends BaseFragment
-        implements SwipeRefreshLayout.OnRefreshListener ,
+        implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener,
-        BaseQuickAdapter.OnItemClickListener{
+        BaseQuickAdapter.OnItemClickListener {
 
-  private int mNextRequestPage = 1;
-  //  private int PAGE_SIZE = Constants.PG_SIZE;
-  private  String    mNextRequestPage2  ;
+    private int mNextRequestPage = 1;
+    //  private int PAGE_SIZE = Constants.PG_SIZE;
+    private String mNextRequestPage2;
     protected Request mRequest;
     protected List<T> mDataList;
     protected RecyclerView mRecyclerView;
@@ -60,7 +60,8 @@ public abstract class BaseRefreshAndLoadMoreFragment<T> extends BaseFragment
     }
 
     @Override
-    public void loadData() {}
+    public void loadData() {
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -85,41 +86,46 @@ public abstract class BaseRefreshAndLoadMoreFragment<T> extends BaseFragment
 
     @Override
     public void onRefresh() {
+        Log.i(TAG, mNextRequestPage + "==aaaaaaaaaaaa: " + mNextRequestPage2);
         mNextRequestPage = 1;
-        mNextRequestPage2 =String.valueOf(mNextRequestPage);
+        mNextRequestPage2 = String.valueOf(mNextRequestPage);
         Map params = new HashMap();
         params.put("timestamp", StringUtil.getCurrentTime());
         params.put("page", mNextRequestPage2);
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
 
         mRequest.params(Constants.PAGE, mNextRequestPage2)
-                .params("timestamp",  StringUtil.getCurrentTime())
+                .params("timestamp", StringUtil.getCurrentTime())
                 .params("sign", sign);
 
-             //   .params(Constants.PAGE_SIZE, PAGE_SIZE);
-        mAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
+        //   .params(Constants.PAGE_SIZE, PAGE_SIZE);
+        mAdapter.setEnableLoadMore(true);//这里的作用是防止下拉刷新的时候还可以上拉加载
         doOnRefreshData();
     }
 
     @Override
     public void onLoadMoreRequested() {
+
+        Log.i(TAG, mNextRequestPage + "==onLoadMoreRequested: " + mNextRequestPage2);
+
         Map params = new HashMap();
         params.put("timestamp", StringUtil.getCurrentTime());
         params.put("page", mNextRequestPage2);
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
         mRequest.params(Constants.PAGE, mNextRequestPage2)
-                .params("timestamp",  StringUtil.getCurrentTime())
+                .params("timestamp", StringUtil.getCurrentTime())
                 .params("sign", sign);
-              //  .params(Constants.PAGE_SIZE, PAGE_SIZE);
+        //  .params(Constants.PAGE_SIZE, PAGE_SIZE);
         doOnLoadMoreData();
     }
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {}
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+    }
 
     public void setData(boolean isRefresh, List<T> data) {
         mNextRequestPage++;
@@ -146,15 +152,15 @@ public abstract class BaseRefreshAndLoadMoreFragment<T> extends BaseFragment
         } else {
             mAdapter.loadMoreComplete();
         }*/
-     //   mAdapter.loadMoreComplete();
+        //   mAdapter.loadMoreComplete();
         mDataList = mAdapter.getData();
     }
 
-    public void doOnRefreshData(){
+    public void doOnRefreshData() {
         loadData(true);
     }
 
-    public void doOnLoadMoreData(){
-        loadData(false);
+    public void doOnLoadMoreData() {
+        loadData(true);
     }
 }
