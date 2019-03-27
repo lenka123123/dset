@@ -15,7 +15,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.2"
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -118,4 +118,5 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     // https://github.com/pinguo-zhouwei/CustomPopwindow
     implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
+    implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
 }

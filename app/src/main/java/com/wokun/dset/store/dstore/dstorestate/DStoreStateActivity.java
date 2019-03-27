@@ -58,6 +58,7 @@ import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.PopWindow;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
+import com.wokun.dset.utils.ToastUtil;
 import com.wokun.dset.utils.alertview.AlertViewContorller;
 import com.wokun.dset.utils.alertview.OnItemClickListener;
 
@@ -432,16 +433,15 @@ public class DStoreStateActivity extends BaseActivity implements OnItemClickList
 //                intent.putExtra("phone", phone);
 //                intent.putExtra("address", address);
 //                DStoreOrderDetailActivity.this.startActivity(intent);
-
             }
 
             if (result.get("resultStatus").equals("4000")) {
-                RxToast.showShort("支付失败，请重试！");
+                ToastUtil.showToastThread(DStoreStateActivity.this, "支付失败，请重试！");
                 // centerDialog.showDialog("支付失败，请重试！", R.drawable.payes_fail);
             }
 
             if (result.get("resultStatus").equals("6001")) {
-                RxToast.showShort("取消支付");
+                ToastUtil.showToastThread(DStoreStateActivity.this, "取消支付！");
                 //  centerDialog.showDialog("取消支付", R.drawable.payes_fail);
             }
         }

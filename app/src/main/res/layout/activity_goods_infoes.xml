@@ -93,6 +93,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/x30"
                     android:gravity="center_vertical"
+                    android:text="123"
                     android:textColor="@color/color_ff_76_08"
                     android:textSize="15sp" />
 
@@ -103,6 +104,7 @@
                     android:layout_marginLeft="@dimen/x20"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:text="123"
                     android:textColor="@color/color_9_9_9"
                     android:textSize="15sp" />
 
@@ -241,7 +243,6 @@
                     android:text="描述相符"
                     android:textColor="@color/color_6_6_6"
                     android:textSize="14sp" />
-
             </LinearLayout>
 
             <!-- 商品详情 -->

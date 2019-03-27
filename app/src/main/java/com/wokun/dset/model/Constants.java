@@ -2,7 +2,7 @@ package com.wokun.dset.model;
 
 public class Constants {
 
-    public static final boolean isdebug = true;
+    public static final boolean isdebug = false;
 
     public static final String ACC = "account";
     public static final String PWD = "pwd";
@@ -16,7 +16,9 @@ public class Constants {
     public static double LATITUDE = 0;//纬度
     public static String PROVICE = "";//省
     public static String CITY = "";//市
-    //   public static String AREA = "";//县
+
+    public static int netVersion = 1;//最新版本
+    public static int addressVersion = 1;//最新版本
 
     public static final int RESULT_TO_FRAGMENT = 556;
     public static final int RESULT_PHOTO_CODE = 0x0201; // 拍照

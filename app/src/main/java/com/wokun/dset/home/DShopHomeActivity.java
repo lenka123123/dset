@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +37,7 @@ import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
 import com.wokun.dset.store.dstore.dstorelist.DStoreSearchListActivity;
 import com.wokun.dset.store.rcycleview.RecyclerItemDecoration;
 import com.wokun.dset.store.view.MyGridView;
+import com.wokun.dset.utils.DisplayUtil;
 import com.wokun.dset.utils.ImageLoadUtils;
 import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.SpCommonUtils;
@@ -188,6 +190,31 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
 
         getStoreInfo();
 
+        //添加滑动监听
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();//获取LayoutManager
+                if (manager != null && manager instanceof LinearLayoutManager) {
+                    //第一个可见的位置
+                    int firstPosition = ((LinearLayoutManager) manager).findFirstVisibleItemPosition();
+                    Log.i(TAG, "onScrolled:firstpostion " + firstPosition);
+                    if (firstPosition == 0) {
+                        showTime();
+                    }
+                    //如果 dx>0 则表示 右滑 ,dx<0 表示 左滑,dy <0 表示 上滑, dy>0 表示下滑
+                    if (dy < 0) {
+                        //上滑监听
+//                        topBar.setVisibility(firstPosition>1 ? View.VISIBLE : View.GONE);
+                    } else {
+                        //下滑监听
+//                        topBar.setVisibility(firstPosition==0 ? View.GONE : View.VISIBLE);
+                    }
+                }
+            }
+        });
+
     }
 
 
@@ -243,14 +270,16 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         super.onResume();
     }
 
-
     private void updataColumnWidth(int size, MyGridView gridView) {
-        int length = 100;
+        int length = 110;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        float density = dm.density;
+        float density = dm.density;  //2.0
+        Log.i(TAG, "updataColumnWidth:111 " + density);
         int gridviewWidth = (int) (size * (length + 4) * density);
-        int itemWidth = (int) (length * density);
+        int itemWidth = (int) (length * density); //200
+        itemWidth = DisplayUtil.dp2px(DShopHomeActivity.this, itemWidth);
+        Log.i(TAG, "updataColumnWidth:222 " + itemWidth);
 
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -343,7 +372,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
 
         if (dStoreHome.getData().getJingxuan().getGoods() != null && dStoreHome.getData().getJingxuan().getGoods().size() > 0) {
 //            jingxuan_gridview.setNumColumns(dStoreHome.getData().getJingxuan().getGoods().size());
-            updataColumnWidth(dStoreHome.getData().getJingxuan().getGoods().size(),jingxuan_gridview);
+            updataColumnWidth(dStoreHome.getData().getJingxuan().getGoods().size(), jingxuan_gridview);
             gridViewAdapter.setData(dStoreHome.getData().getJingxuan().getGoods());
         }
 
@@ -351,7 +380,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
             topAdapter.setData(dStoreHome.getData().getTop6());
 
         if (dStoreHome.getData().getPromotionInfo().getPromotionGoods() != null && dStoreHome.getData().getPromotionInfo().getPromotionGoods().size() > 0) {
-            updataColumnWidth(dStoreHome.getData().getPromotionInfo().getPromotionGoods().size(),miaosha_gridview);
+            updataColumnWidth(dStoreHome.getData().getPromotionInfo().getPromotionGoods().size(), miaosha_gridview);
             secondAdapter.setData(dStoreHome.getData().getPromotionInfo().getPromotionGoods());
 
             miaosha_horizontal.setVisibility(View.VISIBLE);
@@ -383,6 +412,13 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         mRecyclerView.scrollToPosition(0);
 
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        showTime();
+    }
+
 
     public void showTime() {
         long timeStamp = System.currentTimeMillis() / 1000;

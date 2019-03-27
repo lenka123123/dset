@@ -161,10 +161,10 @@ public class AlertDialogUtil implements Serializable {
     /**
      * 全局提示框
      */
-    public static void showDialog(final Context context){
+    public static void showDialog(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        AlertDialog dialog=builder.setMessage(R.string.tip_logout)
-                .setPositiveButton(R.string.ensure,new DialogInterface.OnClickListener(){
+        AlertDialog dialog = builder.setMessage(R.string.tip_logout)
+                .setPositiveButton(R.string.ensure, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(context.getApplicationContext(), LoginActivity.class);
@@ -175,4 +175,33 @@ public class AlertDialogUtil implements Serializable {
         dialog.setCanceledOnTouchOutside(false);//点击屏幕不消失
         dialog.show();
     }
+
+
+    public OnClickDialogListener mOnClickListener;
+
+    public interface OnClickDialogListener {
+        void OnOnClickDialogListener(boolean isUpdata, int flag);
+    }
+
+    public void showCustomDialogFlag(Context mContext, final int flag, String mTitle, String mContent, final OnClickDialogListener onClickDialogListener) {
+        AlertDialog.Builder localBuilder = new AlertDialog.Builder(mContext);
+        localBuilder.setTitle(mTitle);  // "应用更新提示"
+        //localBuilder.setIcon(R.mipmap.ic_launcher);
+        localBuilder.setMessage(mContent); //"您好检测到新版本"
+        localBuilder.setPositiveButton(flag < 10 ? "立即更新" : "确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
+                onClickDialogListener.OnOnClickDialogListener(true, flag);
+            }
+        });
+        localBuilder.setNegativeButton(flag < 10 ? "以后再说" : "取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
+                onClickDialogListener.OnOnClickDialogListener(false, flag);
+            }
+        });
+        //设置点击返回键不会消失
+        localBuilder.setCancelable(false).create();
+        localBuilder.show();
+    }
+
+
 }

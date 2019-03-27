@@ -37,6 +37,10 @@ public class DsetApp extends Application {
     private boolean login = false;
     private static boolean isdebug = true;
 
+    public static Context getApplication() {
+        return mInstance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

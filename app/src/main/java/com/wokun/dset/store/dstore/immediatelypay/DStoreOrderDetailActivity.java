@@ -70,6 +70,7 @@ import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
 import com.wokun.dset.utils.TextViewUtil;
+import com.wokun.dset.utils.ToastUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -343,12 +344,12 @@ public class DStoreOrderDetailActivity extends BaseBindingActivity {
             }
 
             if (result.get("resultStatus").equals("4000")) {
-                RxToast.showShort("支付失败，请重试！");
+                ToastUtil.showToastThread(DStoreOrderDetailActivity.this, "支付失败，请重试！");
                 // centerDialog.showDialog("支付失败，请重试！", R.drawable.payes_fail);
             }
 
             if (result.get("resultStatus").equals("6001")) {
-                RxToast.showShort("取消支付");
+                ToastUtil.showToastThread(DStoreOrderDetailActivity.this, "取消支付！");
                 //  centerDialog.showDialog("取消支付", R.drawable.payes_fail);
             }
         }
@@ -516,26 +517,34 @@ public class DStoreOrderDetailActivity extends BaseBindingActivity {
                     public void onError(Response response) {
 //                        dismissLP();
                         super.onError(response);
-                        Log.e("user", response + "!!!!");
                         DsetApp.getInstance().setRefreshShopCart(false);
                     }
                 });
-
-
     }
 
     private void dellData(CartDetailBean.DataBean dataBean) {
         if (dataBean == null) return;
         order_id = dataBean.getOrder_id();
         store_name.setText(dataBean.getShop_name());
-        order_id_tv.setText(dataBean.getShippingInfo().getExpress_no());
-        order_tiime.setText(StringUtil.getDateToString(Long.valueOf(dataBean.getCreate_time())));
-        order_pay_type.setText("");
-        order_send.setText(dataBean.getShippingInfo().getExpress_company());
+        order_id_tv.setText(dataBean.getOrder_no());
+        order_tiime.setText(dataBean.getCreate_time());
+        // payment_type 1微信支付 2支付宝 4货到付款 5余额支付 10线下支付
+        if (dataBean.getPayment_type().endsWith("1")) {
+            order_pay_type.setText("微信支付");
+        } else if (dataBean.getPayment_type().endsWith("2")) {
+            order_pay_type.setText("支付宝");
+        } else if (dataBean.getPayment_type().endsWith("4")) {
+            order_pay_type.setText("货到付款");
+        } else if (dataBean.getPayment_type().endsWith("5")) {
+            order_pay_type.setText("余额支付");
+        } else if (dataBean.getPayment_type().endsWith("10")) {
+            order_pay_type.setText("线下支付");
+        }
+        // shipping_type 1物流 2自提
+        order_send.setText(dataBean.getShipping_type().equals("1") ? "物流" : "自提");
         zhihui_goods_price.setText(dataBean.getOrder_money());
         send_money.setText("￥" + dataBean.getShipping_money());
         adapter.getData().addAll(dataBean.getOrderGoods());
         adapter.notifyDataSetChanged();
     }
-
 }

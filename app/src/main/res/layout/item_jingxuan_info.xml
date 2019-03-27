@@ -22,8 +22,10 @@
         android:layout_height="@dimen/y40"
         android:layout_gravity="center"
         android:background="@drawable/textview_border_color"
+        android:ellipsize="end"
         android:gravity="center"
         android:includeFontPadding="false"
+        android:singleLine="true"
         android:text="  面部识别技术  "
         android:textColor="@color/color_fd_bc_12"
         android:textSize="10sp" />

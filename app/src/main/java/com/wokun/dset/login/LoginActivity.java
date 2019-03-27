@@ -230,7 +230,8 @@ public class LoginActivity extends BaseBindingActivity {
     @OnClick(R.id.action_login)
     public void action_dset_login_lin(View v) {
         if (R.id.action_login == v.getId()) {
-            if (Constants.isdebug)
+            String mobile = etUserUsername.getText().toString().trim();
+            if (mobile.equals("18851032658"))
                 etUserPwd.setText("123456");
             mylogin();
         }
@@ -373,8 +374,6 @@ public class LoginActivity extends BaseBindingActivity {
             startActivity(AlterPwdActivity.class);
         }
     }
-
-
 
 
 }

@@ -42,6 +42,7 @@ import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.ScreenUtils;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
+import com.wokun.dset.utils.ToastUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -381,12 +382,12 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
             }
 
             if (result.get("resultStatus").equals("4000")) {
-                RxToast.showShort("支付失败，请重试！");
+                ToastUtil.showToastThread(DStoreImmediatelyPayActivity.this, "支付失败，请重试！");
                 // centerDialog.showDialog("支付失败，请重试！", R.drawable.payes_fail);
             }
 
             if (result.get("resultStatus").equals("6001")) {
-                RxToast.showShort("取消支付");
+                ToastUtil.showToastThread(DStoreImmediatelyPayActivity.this, "您点击了取消支付");
                 //  centerDialog.showDialog("取消支付", R.drawable.payes_fail);
             }
         }
@@ -506,7 +507,6 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                     public void onError(Response response) {
 //                        dismissLP();
                         super.onError(response);
-                        Log.e("user", response + "!!!!");
                         DsetApp.getInstance().setRefreshShopCart(false);
                     }
                 });

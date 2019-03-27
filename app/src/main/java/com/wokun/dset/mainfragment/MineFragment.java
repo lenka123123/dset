@@ -102,11 +102,23 @@ public class MineFragment extends BaseFragment {
 
     @BindView(R.id.power_acc)
     RelativeLayout power_acc;
+    private boolean isCreated = false;
 
     //  private PhotoSelector mPhotoSelector;
     @Override
     public int createView() {
         return R.layout.activity_mine;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) { //界面可见
+            if (isCreated) {
+                loadDataMessage();
+            }
+        } else {  //界面不可见 相当于 onpause
+        }
     }
 
     @Override
@@ -131,6 +143,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void loadData() {
+        isCreated = true;
         loadDataMessage();
 
     }
@@ -153,7 +166,6 @@ public class MineFragment extends BaseFragment {
                         if (body.getMessage().equals("未登录")) {
                             startActivity(LoginActivity.class);
                         }
-                        Log.e("首页", "进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
                             RxToast.showShort(body.getMessage());
                             user = (MyBean) body.getData();
