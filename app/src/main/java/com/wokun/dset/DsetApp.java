@@ -1,5 +1,6 @@
 package com.wokun.dset;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.location.Location;
@@ -20,6 +21,8 @@ import com.wokun.dset.ucenter.bean.MyBean;
 import com.wokun.dset.utils.LocationUtils;
 import com.wokun.dset.utils.SpCommonUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -29,7 +32,7 @@ public class DsetApp extends Application {
 
     private static DsetApp mInstance;
     // https://www.jianshu.com/p/e4da2f477cd8  友盟统计
-
+    public static List<Activity> activityList = new ArrayList<>();
     private Location mLocation;
     private int tabPosition = 0; //MainActivity默认底部位置
     private boolean isRefreshUCenter = false; //是否刷新个人中心数据,默认不刷新
@@ -39,6 +42,24 @@ public class DsetApp extends Application {
 
     public static Context getApplication() {
         return mInstance;
+    }
+
+    public void addAct(Activity activity) {
+        activityList.add(activity);
+    }
+
+    public void delateAct(Activity activity) {
+        if (activityList.size() > 0 && activityList.contains(activity)) {
+            activity.finish();
+        }
+    }
+
+    public void delateAll() {
+        if (activityList.size() > 0) {
+            for (int i = 0; i < activityList.size(); i++) {
+                activityList.get(i).finish();
+            }
+        }
     }
 
     @Override

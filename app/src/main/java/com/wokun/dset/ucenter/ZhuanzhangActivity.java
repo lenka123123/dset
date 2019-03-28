@@ -227,12 +227,13 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
                         BaseResponse4 body = response.body();
                         if (body == null) return;
                         if (body.getStatus() == 0001) {
+                            RxToast.showShort(body.getMessage());
                             finish();
                         } else if (body.getStatus() == 0005) {
                             ZhuanzhangBean data = (ZhuanzhangBean) body.getData();
                             Log.e("转账状态3", data.toString());
                             jiediandialog(body.getMessage(), data, pass);
-                        }else {
+                        } else {
                             RxToast.showShort(body.getMessage());
                         }
                     }

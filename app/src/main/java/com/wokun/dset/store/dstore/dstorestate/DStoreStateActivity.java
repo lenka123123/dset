@@ -286,7 +286,7 @@ public class DStoreStateActivity extends BaseActivity implements OnItemClickList
     private OrderStateBean.DataBean.OrderInfoBean orderInfoBean = null;
 
 
-    String[] type = {"余额", "金票支付"};
+    String[] type = {"金票支付", "支付宝"};
 
     @Override
     public void onItemClick(View view, List<String> mOthers, Object o, int position) {

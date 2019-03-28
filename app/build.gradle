@@ -5,7 +5,7 @@ android {
         release {
             keyAlias 'dsyt'
             keyPassword '383838'
-            storeFile file('C:/Users/Administrator/Desktop/key/dsyt/dsyt.jks')
+            storeFile file('C:/Users/Administrator/Desktop/apl/dsyt.jks')
             storePassword '383838'
         }
     }

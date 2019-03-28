@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DsetApp.getInstance().addAct(this);
         Constants.addressVersion = VsersionUtil.getLocalVersion(this);
         View root = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
         setContentView(root);

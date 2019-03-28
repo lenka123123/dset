@@ -1,16 +1,10 @@
 package com.wokun.dset.ucenter.quanyi;
 
-import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.classic.common.MultipleStatusView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;

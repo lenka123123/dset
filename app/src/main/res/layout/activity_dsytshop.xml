@@ -30,7 +30,7 @@
             android:drawablePadding="15dp"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:text="请输入选择的商品"
+            android:text="请输入商品名称"
             android:textColor="@color/color_153_153_153"
             android:textSize="15sp" />
     </LinearLayout>

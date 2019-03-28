@@ -69,6 +69,14 @@ public final class LocationUtils {
             lat = myLocation.getLatitude();
             lon = myLocation.getLongitude();
         }
+
+
+
+
+
+
+
+
         return new LatLng(lat, lon);
     }
 

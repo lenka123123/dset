@@ -53,6 +53,7 @@ public class Fragment_near extends Fragment {
     private void loadConetext(int type) {
         LocationUtils.getInstance().start(100, true, null);
         Log.e("位置",LocationUtils.getLatLng().latitude+"位置");
+        Log.e("位置",LocationUtils.getLatLng().longitude+"位置");
         Log.e("fragmet进来了1","fragmet进来了1");
         Map params = new HashMap();
         params.put("timestamp", StringUtil.getCurrentTime());

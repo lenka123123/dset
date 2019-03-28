@@ -10,6 +10,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shantoo.widget.toast.RxToast;
 import com.shantoo.widget.toolbar.WidgetBar;
+import com.wokun.dset.DsetApp;
 import com.wokun.dset.R;
 import com.wokun.dset.base.BaseBindingActivity;
 import com.wokun.dset.callback.JsonCallback;
@@ -185,6 +186,7 @@ public class SettingsActivity extends BaseBindingActivity {
     @OnClick(R.id.action_logout)
     public void action_logout(View v) {
         LoginMgr.getInstance().logout(this);
+        DsetApp.getInstance().delateAll();
         startActivity(LoginActivity.class);
     }
 

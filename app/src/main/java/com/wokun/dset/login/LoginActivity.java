@@ -1,7 +1,9 @@
 package com.wokun.dset.login;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 
@@ -38,7 +40,10 @@ import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -80,12 +85,38 @@ public class LoginActivity extends BaseBindingActivity {
         return mWidgetBar;
     }
 
+
+    public String StringsHA1(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
+            byte[] cert = info.signatures[0].toByteArray();
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            byte[] publicKey = md.digest(cert);
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < publicKey.length; i++) {
+                String appendString = Integer.toHexString(0xFF & publicKey[i]).toUpperCase(Locale.US);
+                if (appendString.length() == 1) hexString.append("0");
+                hexString.append(appendString);
+                hexString.append(":");
+            }
+            String result = hexString.toString();
+            return result.substring(0, result.length() - 1);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public void init() {
         //  initPermission();//针对6.0以上版本做权限适配
         etUserPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
         initquanxian();
 
+        //  高德地图获取hia 21:C9:41:7A:19:C6:58:48:8A:54:75:F7:18:82:88:B5:76:59:EE:3F
+        Log.i(TAG, "init: 高德地图获取hia" + StringsHA1(this));
         //记住密码
         remberPhone();
 

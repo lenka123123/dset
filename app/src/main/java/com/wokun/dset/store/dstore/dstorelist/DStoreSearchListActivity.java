@@ -110,7 +110,14 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
         tv_price_search.setTextColor(price ? getResources().getColor(R.color.color_05_61_96) : getResources().getColor(R.color.color_3_3_3));
         tv_search_search.setTextColor(search ? getResources().getColor(R.color.color_05_61_96) : getResources().getColor(R.color.color_3_3_3));
 
-        mImg_total_search.setBackgroundResource(total ? R.drawable.single_down_blue : R.drawable.single_down_black);
+//        mImg_total_search.setBackgroundResource(total ? R.drawable.single_down_blue : R.drawable.single_down_black);
+        if (array[0] == 1) {
+            if (total) {
+                mImg_total_search.setBackgroundResource(changeTotal ? R.drawable.single_down_blue : R.drawable.single_up_blue);
+            } else {
+                mImg_total_search.setBackgroundResource(R.drawable.single_down_black);
+            }
+        }
         if (array[1] == 1) {
             if (sales) {
                 mImg_sales_search.setBackgroundResource(changeSales ? R.drawable.double_up_blue : R.drawable.double_down_blue);

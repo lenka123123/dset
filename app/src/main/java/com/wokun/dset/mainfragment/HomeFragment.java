@@ -54,6 +54,7 @@ import com.wokun.dset.utils.ToastUtil;
 import com.wokun.dset.utils.VsersionUtil;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -257,7 +258,16 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
     private void openhongbao(String amounts) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_sign_open, null);
         TextView hongbao_account = (TextView) view.findViewById(R.id.hongbao_account);
-        hongbao_account.setText(amounts);
+        String[] num = amounts.split("\\.");
+        if (num.length > 1) {
+            DecimalFormat df = new DecimalFormat("#.00");
+            String str = df.format(amounts);
+            hongbao_account.setText(str);
+        } else {
+            hongbao_account.setText(amounts + ".00");
+        }
+
+
         // 实例化 AlertDialog
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
         // 获取 AlertDialog 的窗体

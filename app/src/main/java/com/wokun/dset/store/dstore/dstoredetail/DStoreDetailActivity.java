@@ -351,7 +351,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void startBar(Banner banner, ArrayList bannerImageArray) {
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new ImageLoadUtils());
         //设置图片集合
@@ -361,9 +361,10 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         //设置标题集合（当banner样式有显示title时）
         //  banner.setBannerTitles(adTitle);
         //设置轮播时间
-        banner.setDelayTime(Integer.MAX_VALUE);
+        banner.setDelayTime(5000);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.RIGHT);
+
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }
@@ -585,7 +586,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                                 popupWindow.dismiss();
                             }
                         } else {
-                            RxToast.showShort(goodesDetail.getMessage());
+                            RxToast.showShort("请选择规格");
                         }
                     }
 
