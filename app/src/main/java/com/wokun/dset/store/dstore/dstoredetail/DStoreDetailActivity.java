@@ -52,6 +52,7 @@ import com.wokun.dset.store.dstore.immediatelypay.DStoreImmediatelyPayActivity;
 import com.wokun.dset.utils.ImageLoadUtils;
 import com.wokun.dset.utils.ImageLoader;
 import com.wokun.dset.utils.ImageLoaderUtils;
+import com.wokun.dset.utils.ImageUtils;
 import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.ScreenUtils;
 import com.wokun.dset.utils.SpCommonUtils;
@@ -198,13 +199,22 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
         goodsSKUList = JosnFrom.getInstance().getObjList(goodsDetail.getData().getGoods_spec_format());
         initSku();
+
+        System.out.println("getMarket_price:sss223 " + goodsSKUList);
+        System.out.println("getMarket_price:sss224 " + goodsSKUList.size());
+        System.out.println("getMarket_price:sss 225" + dataBean.getGoods_sku().get(0).getStock());
         if (goodsSKUList != null && goodsSKUList.size() == 0 && dataBean.getGoods_sku().get(0) != null) {
             sku_id = dataBean.getGoods_sku().get(0).getSku_id();  //没有规格的时候的sku
             search_goods_size.setText(dataBean.getGoods_sku().get(0).getSku_name());
+            System.out.println("getMarket_price:sss " + goodsDetail.getData().getPrice());
+            System.out.println("getMarket_price:sss " + dataBean.getPromotion_type());
             if (dataBean.getPromotion_type().equals("0")) { //无促销
                 price_linearlayout.setVisibility(View.VISIBLE);
                 loopViewPager.setVisibility(View.GONE);
                 promote_price = dataBean.getGoods_sku().get(0).getPrice();
+
+                System.out.println("getMarket_price: " + goodsDetail.getData().getPrice());
+                System.out.println("getMarket_price111: " + goodsDetail.getData().getMarket_price());
 
                 price.setText("￥" + goodsDetail.getData().getPrice());
                 old_price.setText("￥" + goodsDetail.getData().getMarket_price());
@@ -220,17 +230,36 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
             }
         }
 
-        search_textview.setText(goodsDetail.getData().getGoods_name());
+        if (dataBean.getPromotion_type().equals("0")) { //无促销
+            price_linearlayout.setVisibility(View.VISIBLE);
+            loopViewPager.setVisibility(View.GONE);
+            promote_price = dataBean.getGoods_sku().get(0).getPrice();
 
-        goods_name.setText(goodsDetail.getData().getGoods_name());
-        if (goodsDetail.getData().getShop_id().equals("0")) {
-            Drawable d = getResources().getDrawable(R.drawable.self_sale);
-            //必须设置图片大小，否则不显示【0,0表示坐标x,y坐标，50,50表示宽高】
-            d.setBounds(0, 0, 60, 30);
-            //四个参数分别表示文本左、上、右、下四个方向上的图片，null表示没有图片
-            goods_name.setCompoundDrawables(d, null, null, null);
-            //   goods_name.setText(TextViewUtil.setSpanBgAndTvColor("自营" + goodsDetail.getData().getGoods_name(), 0, 2, "#ffffff", "#056198"));
+
+            price.setText("￥" + goodsDetail.getData().getPrice());
+            old_price.setText("￥" + goodsDetail.getData().getMarket_price());
+            old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+
+            free_send.setText("运费：" + goodsDetail.getData().getFreight());
+        } else {
+            price_linearlayout.setVisibility(View.GONE);
+            loopViewPager.setVisibility(View.VISIBLE);
+            promote_price = dataBean.getGoods_sku().get(0).getPromote_price();
+            promotion_price.setText("￥" + goodsDetail.getData().getPromotion_price());
+            showTime();
         }
+
+        search_textview.setText(goodsDetail.getData().getGoods_name());
+        ImageUtils.setImgTv(context, goodsDetail.getData().getShop_id(), goods_name, goodsDetail.getData().getGoods_name());
+//        goods_name.setText(goodsDetail.getData().getGoods_name());
+//        if (goodsDetail.getData().getShop_id().equals("0")) {
+//            Drawable d = getResources().getDrawable(R.drawable.self_sale);
+//            //必须设置图片大小，否则不显示【0,0表示坐标x,y坐标，50,50表示宽高】
+//            d.setBounds(0, 0, 60, 30);
+//            //四个参数分别表示文本左、上、右、下四个方向上的图片，null表示没有图片
+//            goods_name.setCompoundDrawables(d, null, null, null);
+//            //   goods_name.setText(TextViewUtil.setSpanBgAndTvColor("自营" + goodsDetail.getData().getGoods_name(), 0, 2, "#ffffff", "#056198"));
+//        }
 
         if (goodsDetail.getData().getShow_img().size() >= 1) {
             startBar(mBanner, (ArrayList) goodsDetail.getData().getShow_img());
@@ -301,6 +330,8 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                     public void onSuccess(Response<JsonObject> response) {
                         DStoreGoodsDetail goodesDetail = (DStoreGoodsDetail) JosnFrom.getInstance().getObj(response.body().toString(), DStoreGoodsDetail.class);
                         if (goodesDetail != null && goodesDetail.getStatus().equals("0001")) {
+                            System.out.println("getMarket_price  ");
+                            System.out.println("=TypeBean设置===getMarket_price ");
                             detailData(goodesDetail);
                         } else {
                             RxToast.showShort(goodesDetail.getMsg());

@@ -233,7 +233,7 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
                                     alertDialog.dismiss();
                                     SignBean data = (SignBean) body.getData();
                                     double amount = data.getAmount();
-                                    String amounts =   data.getAmount() + "";
+                                    String amounts = data.getAmount() + "";
                                     openhongbao(amounts);
 
                            /*         btnDialogSignOpen.setVisibility(View.GONE);
@@ -281,17 +281,25 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
             TextView textView = new TextView(getActivity());
             textView.setTextColor(getResources().getColor(R.color.yellow));
             textView.setTextSize(12);
-            textView.setText("普通");
+            textView.setText("等级：普通");
             star.addView(textView);
         } else if (user.getUser().getStart() > 1) {
-            for (int j = 0; j < (user.getUser().getStart() - 1) / 5; j++) {
+            TextView textView = new TextView(getActivity());
+            textView.setTextColor(getResources().getColor(R.color.yellow));
+            textView.setTextSize(12);
+            textView.setText("等级：");
+
+            if (user.getUser().getStart() > 6) {
                 ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(32, 32);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.shouye_huangguan);
+                star.addView(textView);
                 star.addView(imageView);
+                return;
             }
-            for (int i = 0; i < (user.getUser().getStart() - 1) % 5; i++) {
+            star.addView(textView);
+            for (int i = 0; i < (user.getUser().getStart() - 1); i++) {
                 ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(32, 32);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setLayoutParams(layoutParams);

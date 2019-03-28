@@ -4,7 +4,6 @@ package com.wokun.dset.store.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +17,22 @@ import com.wokun.dset.R;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.store.bean.DStoreHome;
 import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
+import com.wokun.dset.store.dstore.dstorelist.DStoreSearchListActivity;
+import com.wokun.dset.utils.ImageLoaderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomoTopAdapter extends BaseAdapter {
+public class HomoClassAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Picture> pictures;
-    private static int ROW_NUMBER = 3;
-    private List<DStoreHome.DataBean.ZuizhidangBean.FenleiBean> cateListBeans = new ArrayList<>();
+    //    private List<Picture> pictures;
+//    private static int ROW_NUMBER = 3;
+    private List<DStoreHome.DataBean.ClassBean> cateListBeans = new ArrayList<>();
 
 
-    public HomoTopAdapter(Context context) {
+    public HomoClassAdapter(Context context) {
         this.context = context;
     }
 
@@ -56,39 +57,50 @@ public class HomoTopAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final DStoreHome.DataBean.ZuizhidangBean.FenleiBean bean = cateListBeans.get(position);
+        DStoreHome.DataBean.ClassBean bean = cateListBeans.get(position);
         Holder holder;
         if (convertView == null) {
             holder = new Holder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_miaosha_info, null);
-
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_class_info, null);
+            holder.title = (TextView) convertView.findViewById(R.id.title);
             holder.img = (ImageView) convertView.findViewById(R.id.img);
-            Glide.with(context).load(bean.getCategory_pic()).into(holder.img);
+            holder.title.setText(bean.getCategory_name());
+            ImageLoaderUtils.getInstance().load(context, holder.img, bean.getCategory_pic(), 0);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
+
         return convertView;
     }
 
 
-    public void setData(List<DStoreHome.DataBean.ZuizhidangBean.FenleiBean> dataes) {
-
+    public void setData(List<DStoreHome.DataBean.ClassBean> dataes) {
+        System.out.println("=TypeBean设置=== " + cateListBeans.size());
         cateListBeans.addAll(dataes);
         notifyDataSetChanged();
     }
 
-
     public void setOnClick(int position) {
-        if (cateListBeans.get(position) == null) return;
-        if (cateListBeans.get(position).getCategory_id().equals("0")) return;
         Intent intent = new Intent();
-        intent.putExtra(Constants.GOODS_ID, cateListBeans.get(position).getCategory_id());
-        intent.setClass(context, DStoreDetailActivity.class);
+        intent.putExtra("category_id", cateListBeans.get(position).getCategory_id());
+        intent.setClass(context, DStoreSearchListActivity.class);
         context.startActivity(intent);
+
+//        if (typeBeanList.size() > 0) {
+//            for (int i = 0; i < typeBeanList.size(); i++) {
+//                if (onClick == i) {
+//                    typeBeanList.get(i).name = "rrr";
+//                } else {
+//                    typeBeanList.get(i).name = "gggg";
+//                }
+//            }
+//        }
+//        notifyDataSetChanged();
     }
 
     class Holder {
+        TextView title;
         ImageView img;
     }
 

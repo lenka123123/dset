@@ -1,10 +1,20 @@
 package com.wokun.dset.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
+import com.wokun.dset.R;
+import com.yanzhenjie.loading.Utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -126,4 +136,22 @@ public class ImageUtils {
         return qrImage.getPath();
     }
 
+    public static void setImgTv(Context content, String shop_id, TextView notice_tv, String showText) {
+        if (!shop_id.equals("0")) {
+            notice_tv.setText(showText);
+            return;
+        }
+        SpannableString ss = new SpannableString("  " + showText);
+        int len = ss.length();
+        //图片
+        Drawable d = ContextCompat.getDrawable(content, (R.drawable.self_sale));
+        // dp转换成px
+//        d.setBounds(Utils.dp2px(0), Utils.dp2px(0), Utils.dp2px(20), Utils.dp2px(20)); //绘画的区域
+        d.setBounds(10, StringUtil.dp2px(content, 0), StringUtil.dp2px(content, 40), StringUtil.dp2px(content, 14));
+        //第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        //构建ImageSpan
+        ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
+        ss.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        notice_tv.setText(ss);
+    }
 }

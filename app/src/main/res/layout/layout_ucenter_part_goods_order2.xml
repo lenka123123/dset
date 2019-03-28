@@ -89,7 +89,7 @@
                 android:id="@+id/action_goods_order_wait_evaluate"
                 style="@style/TextView_UCenter_Order"
                 android:drawableTop="@drawable/ic_tuikuan"
-                android:text="退款" />
+                android:text="已完成" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

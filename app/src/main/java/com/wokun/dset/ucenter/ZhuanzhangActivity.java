@@ -59,12 +59,13 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
     @BindView(R.id.zhuanzhang_yue)
     EditText zhuanzhang_yue;
 
-    private  String  inputContent;
-    private  String  pass;
+    private String inputContent;
+    private String pass;
 
-    private  String zhuanzhangUid;
+    private String zhuanzhangUid;
     private String zhuanzhangPhone;
     private String zhuanzhangYue;
+
     @Override
     public int createView() {
         return R.layout.activity_zhuanzhang;
@@ -73,26 +74,26 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
     @Override
     public WidgetBar createToolBar() {
         return mWidgetBar.setWidgetBarTitle("转账")
-                .setMenu("转账记录",null)
+                .setMenu("转账记录", null)
                 .setMenuTextColor(Color.parseColor("#ffffff"))
                 .setOnMenuClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         startActivity(ZhuanzhangDetailsActivity.class);
                     }
-                },null);
+                }, null);
     }
 
     @Override
     public void init() {
 
-      if(getIntent() !=null){
-          String uid = getIntent().getStringExtra("uid");
-          String last_phone = getIntent().getStringExtra("last_phone");
-          zhuanzhang_uid.setText(uid);
-          zhuanzhang_phone.setText(last_phone);
-          loadDataMessage();
-      }
+        if (getIntent() != null) {
+            String uid = getIntent().getStringExtra("uid");
+            String last_phone = getIntent().getStringExtra("last_phone");
+            zhuanzhang_uid.setText(uid);
+            zhuanzhang_phone.setText(last_phone);
+            loadDataMessage();
+        }
         loadDataMessage();
 
     }
@@ -103,8 +104,8 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
         params.put("timestamp", StringUtil.getCurrentTime());
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
-        Log.e("进来来dsa2211","进来来dsa22");
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
+        Log.e("进来来dsa2211", "进来来dsa22");
         OkGo.<BaseResponse<RollOutBean>>post(Constants.BASE_URL + Constants.ROLL_OUT)
                 .tag(this)
                 .params("sign", sign)
@@ -113,12 +114,12 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
                     @Override
                     public void onSuccess(Response<BaseResponse<RollOutBean>> response) {
                         BaseResponse body = response.body();
-                        if(body == null)return;
+                        if (body == null) return;
                         if (body.getStatus().equals("0001")) {
                             RxToast.showShort(body.getMessage());
                             RollOutBean data = (RollOutBean) body.getData();
-                            if(data == null)return;
-                              zhuanzhangyue2.setText("金票："+data.getCash_wa());
+                            if (data == null) return;
+                            zhuanzhangyue2.setText("金票：" + data.getCash_wa());
 
                         }
                     }
@@ -126,11 +127,13 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
 
     }
 
-    /** 提交转账*/
+    /**
+     * 提交转账
+     */
     @OnClick(R.id.txt_zhuanzhang)
-    public void action_zhuanzhang(View v){
-        if(R.id.txt_zhuanzhang == v.getId()){
-          Log.e("我进来了提交转账","我进来了");
+    public void action_zhuanzhang(View v) {
+        if (R.id.txt_zhuanzhang == v.getId()) {
+            Log.e("我进来了提交转账", "我进来了");
 
             showpayDialog();
 
@@ -138,7 +141,7 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
     }
 
     private void showpayDialog() {
-        Log.e("我进来了提交转账","我进来了2");
+        Log.e("我进来了提交转账", "我进来了2");
         AlertDialog.Builder customizeDialog = new AlertDialog.Builder(this);
         View dialogView = LayoutInflater.from(this)
                 .inflate(R.layout.pop_layout3, null);
@@ -181,27 +184,21 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
         });
 
 
-
-
-
     }
 
     private void loadData(final String pass) {
-         zhuanzhangPhone = zhuanzhang_phone.getText().toString().trim();
-         zhuanzhangYue = zhuanzhang_yue.getText().toString().trim();
-         zhuanzhangUid = zhuanzhang_uid.getText().toString().trim();
-        if(TextUtils.isEmpty(zhuanzhangPhone))
-        {
+        zhuanzhangPhone = zhuanzhang_phone.getText().toString().trim();
+        zhuanzhangYue = zhuanzhang_yue.getText().toString().trim();
+        zhuanzhangUid = zhuanzhang_uid.getText().toString().trim();
+        if (TextUtils.isEmpty(zhuanzhangPhone)) {
             RxToast.showShort("对方手机后四位不能为空");
             return;
         }
-        if(TextUtils.isEmpty(zhuanzhangYue))
-        {
+        if (TextUtils.isEmpty(zhuanzhangYue)) {
             RxToast.showShort("转账金额不能为空");
             return;
         }
-        if(TextUtils.isEmpty(zhuanzhangUid))
-        {
+        if (TextUtils.isEmpty(zhuanzhangUid)) {
             RxToast.showShort("转账的UID不能为空");
             return;
         }
@@ -213,8 +210,8 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
         params.put("password", pass);
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
-        Log.e("进来来dsa22121","进来来dsa22");
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
+        Log.e("进来来dsa22121", "进来来dsa22");
         OkGo.<BaseResponse4<ZhuanzhangBean>>post(Constants.BASE_URL + Constants.ROLL_OUT_CHECK)
                 .tag(this)
                 .params("sign", sign)
@@ -228,20 +225,15 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
                     @Override
                     public void onSuccess(Response<BaseResponse4<ZhuanzhangBean>> response) {
                         BaseResponse4 body = response.body();
-                        if(body == null)return;
-
-
-                        Log.e("转账状态1",""+body.getStatus());
-                        Log.e("转账状态2",""+body.getMessage());
-
-                        if (body.getStatus()==0001) {
-                            RxToast.showShort(body.getMessage());
+                        if (body == null) return;
+                        if (body.getStatus() == 0001) {
                             finish();
-                        }
-                     else   if(body.getStatus()==0005){
-                            ZhuanzhangBean data =(ZhuanzhangBean) body.getData();
-                            Log.e("转账状态3",  data.toString());
-                            jiediandialog(body.getMessage(), data ,pass);
+                        } else if (body.getStatus() == 0005) {
+                            ZhuanzhangBean data = (ZhuanzhangBean) body.getData();
+                            Log.e("转账状态3", data.toString());
+                            jiediandialog(body.getMessage(), data, pass);
+                        }else {
+                            RxToast.showShort(body.getMessage());
                         }
                     }
 
@@ -249,23 +241,20 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
                     public void onError(Response<BaseResponse4<ZhuanzhangBean>> response) {
                         super.onError(response);
 
-                        Log.e("转账状态4",  response.message()+"&&&"+response.toString());
+                        Log.e("转账状态4", response.message() + "&&&" + response.toString());
 
                     }
                 });
 
 
-
-
-
     }
 
-    private void jiediandialog(String mymsg, ZhuanzhangBean data, final String password ) {//pop_zhuanzhang
+    private void jiediandialog(String mymsg, ZhuanzhangBean data, final String password) {//pop_zhuanzhang
 
-        Log.e("景来了","景来了");
+        Log.e("景来了", "景来了");
         final AlertDialog.Builder customizeDialog = new AlertDialog.Builder(ZhuanzhangActivity.this);
         final View dialog = LayoutInflater.from(ZhuanzhangActivity.this)
-                .inflate(R.layout.pop_zhuanzhang,null);
+                .inflate(R.layout.pop_zhuanzhang, null);
 
         ImageView delete_pop = (ImageView) dialog.findViewById(R.id.delete_pop);
 
@@ -277,9 +266,9 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
         TextView sure_zhuanzhang = (TextView) dialog.findViewById(R.id.sure_zhuanzhang);
 
         zhuanzhuang_context.setText(mymsg);
-        benci_zhuanzhang.setText(data.getOut_num()+"");
-        shouxu_zhuanzhang.setText(data.getShouxu()+"");
-        shiji_zhuanzhang.setText(data.getPay_num()+"");
+        benci_zhuanzhang.setText(data.getOut_num() + "");
+        shouxu_zhuanzhang.setText(data.getShouxu() + "");
+        shiji_zhuanzhang.setText(data.getPay_num() + "");
         customizeDialog.setView(dialog);
         final AlertDialog s = customizeDialog.show();
         delete_pop.setOnClickListener(new View.OnClickListener() {
@@ -297,7 +286,7 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
         sure_zhuanzhang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("进来了进来了2","进来了");
+                Log.e("进来了进来了2", "进来了");
                 Map params = new HashMap();
                 params.put("timestamp", StringUtil.getCurrentTime());
                 params.put("inAccount", zhuanzhangUid);
@@ -306,7 +295,7 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
                 params.put("password", password);
                 Map<String, String> removeMap = removeEmptyData(params);
                 Map<String, String> resultMap = sortMapByKey(removeMap);
-                String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+                String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
                 OkGo.<BaseResponse<Object>>post(Constants.BASE_URL + Constants.NODE_TURNOUT)
                         .tag(this)
                         .params("sign", sign)
@@ -320,11 +309,11 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
                             @Override
                             public void onSuccess(Response<BaseResponse<Object>> response) {
                                 BaseResponse body = response.body();
-                                if(body == null)return;
+                                if (body == null) return;
                                 if (body.getStatus().equals("0001")) {
                                     RxToast.showShort(body.getMessage());
-                                    Log.e("进来了进来了","进来了");
-                                finish();
+                                    Log.e("进来了进来了", "进来了");
+                                    finish();
                                 }
 
                             }
@@ -333,18 +322,12 @@ public class ZhuanzhangActivity extends BaseBindingActivity {
                             public void onError(Response<BaseResponse<Object>> response) {
                                 super.onError(response);
 
-                             ;
+                                ;
 
                             }
                         });
             }
         });
-
-
-
-
-
-
 
 
     }

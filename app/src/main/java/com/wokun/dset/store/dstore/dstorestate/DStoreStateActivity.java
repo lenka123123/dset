@@ -286,7 +286,7 @@ public class DStoreStateActivity extends BaseActivity implements OnItemClickList
     private OrderStateBean.DataBean.OrderInfoBean orderInfoBean = null;
 
 
-    String[] type = {"余额", "支付宝"};
+    String[] type = {"余额", "金票支付"};
 
     @Override
     public void onItemClick(View view, List<String> mOthers, Object o, int position) {
@@ -558,7 +558,6 @@ public class DStoreStateActivity extends BaseActivity implements OnItemClickList
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
 
     public void itemClick(String text, OrderStateBean.DataBean.OrderInfoBean item) {
         if (text.equals("取消订单")) {

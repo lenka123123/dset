@@ -1,10 +1,23 @@
 package com.wokun.dset.utils;
 
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CheckUtil {
+
+    public static boolean checkAliPayInstalled(Context context) {
+        Uri uri = Uri.parse("alipays://platformapi/startApp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+        return componentName == null;
+    }
+
 
     /**
      * 大陆号码或香港号码均可
@@ -41,7 +54,7 @@ public class CheckUtil {
 
     /**
      * 校验是否是邮箱
-     * */
+     */
     public static boolean isEmailLegal(String str) {
         String regExp = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
         Pattern p = Pattern.compile(regExp);

@@ -18,6 +18,7 @@ import com.wokun.dset.pinkongshop.GoodsDetailActivity;
 import com.wokun.dset.store.bean.DStoreGoodesList;
 import com.wokun.dset.store.bean.DStoreHome;
 import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
+import com.wokun.dset.utils.ImageUtils;
 
 
 /**
@@ -39,7 +40,8 @@ public class DStoreGoodsListAdapter extends BaseQuickAdapter<DStoreGoodesList.Da
         ImageView imageView = helper.getView(R.id.img);
         Glide.with(context).load(item.getPic_cover_small()).into(imageView);
 
-        helper.setText(R.id.title, item.getGoods_name());
+        ImageUtils.setImgTv(context,item.getShop_id(), (TextView) helper.getView(R.id.title), item.getGoods_name());
+
         helper.setText(R.id.price, "￥" + item.getPrice());
 
         helper.setText(R.id.old_price, "￥" + item.getMarket_price());

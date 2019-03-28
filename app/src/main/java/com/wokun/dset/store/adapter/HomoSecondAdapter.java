@@ -78,7 +78,7 @@ public class HomoSecondAdapter extends BaseAdapter {
 //            if (promotionPrice.endsWith("0")) {
 //                promotionPrice = promotionPrice.substring(0, promotionPrice.length() - 1);
 //            }
-            String price = bean.getPrice();
+            String price = bean.getPrice() + "";
 //            if (price.endsWith("0")) {
 //                price = price.substring(0, price.length() - 1);
 //            }

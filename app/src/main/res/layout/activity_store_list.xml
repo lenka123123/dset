@@ -28,7 +28,7 @@
             android:background="@drawable/searchbox"
             android:drawableLeft="@drawable/search_edit"
             android:drawablePadding="15dp"
-            android:hint="智能电视机"
+            android:hint="请输入商品名称"
             android:paddingLeft="10dp"
             android:singleLine="true"
             android:textSize="15sp" />

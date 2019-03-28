@@ -11,8 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/y328" />
 
+    <com.wokun.dset.store.view.MyGridView
+        android:id="@+id/class_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/y20"
+        android:gravity="center"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        />
+
     <!-- 商城头布局第一行 -->
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y20"
@@ -50,6 +61,7 @@
 
     <!-- 商城头布局第二行 -->
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"

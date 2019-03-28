@@ -37,7 +37,9 @@ import com.wokun.dset.store.bean.CartList.DataBean.CartListInfoBean.GoodsItemBea
 import com.wokun.dset.store.bean.DefaultAddress;
 import com.wokun.dset.store.bean.AilPayBean;
 import com.wokun.dset.store.bean.MoneyBean;
+import com.wokun.dset.store.dstore.dstorestate.DStoreStateActivity;
 import com.wokun.dset.ucenter.zhifudiaolog.VerificationCodeView;
+import com.wokun.dset.utils.CheckUtil;
 import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.ScreenUtils;
 import com.wokun.dset.utils.SpCommonUtils;
@@ -260,12 +262,10 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
 
     //调用支付
     private void payForOrder_id(final String payType) {
-        Log.i(TAG, "promote_price:1 " + cart_id_str);
-        Log.i(TAG, "promote_price:2 " + link_man);
-        Log.i(TAG, "promote_price:3 " + phone);
-        Log.i(TAG, "promote_price:4 " + address);
-        Log.i(TAG, "promote_price:5 " + String.valueOf(promote_price));
-
+        if (payType.equals("2") && CheckUtil.checkAliPayInstalled(DStoreImmediatelyPayActivity.this)) {
+            RxToast.showShort("检测到支付宝未安装");
+            return;
+        }
         String token = (String) SpCommonUtils.get(DStoreImmediatelyPayActivity.this, Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(DStoreImmediatelyPayActivity.this, Constants.USERID, "");
         String timestamp = StringUtil.getCurrentTime();
@@ -500,6 +500,12 @@ public class DStoreImmediatelyPayActivity extends BaseBindingActivity {
                             DStoreImmediatelyPayActivity.this.finish();
                         } else {
                             RxToast.showShort(baseResponse.getMsg());
+                            if (baseResponse.getMsg().startsWith("支付密码")) {
+                                Intent intent = new Intent(DStoreImmediatelyPayActivity.this, DStoreStateActivity.class);
+                                intent.putExtra("me", "pay");
+                                startActivity(intent);
+                            }
+                            DStoreImmediatelyPayActivity.this.finish();
                         }
                     }
 

@@ -64,6 +64,7 @@ import com.wokun.dset.store.bean.MoneyBean;
 import com.wokun.dset.store.dstore.dstorestate.DStoreStateActivity;
 import com.wokun.dset.store.dstore.expressinfo.DStoreExpressInfoActivity;
 import com.wokun.dset.ucenter.zhifudiaolog.VerificationCodeView;
+import com.wokun.dset.utils.CheckUtil;
 import com.wokun.dset.utils.ImageLoadUtils;
 import com.wokun.dset.utils.ImageLoaderUtils;
 import com.wokun.dset.utils.JosnFrom;
@@ -225,10 +226,10 @@ public class DStoreOrderDetailActivity extends BaseBindingActivity {
 
     //调用支付
     private void payForOrder_id(final String payType) {
-        Log.i(TAG, "promote_price:1 " + cart_id_str);
-        Log.i(TAG, "promote_price:2 " + link_man);
-        Log.i(TAG, "promote_price:3 " + phone);
-        Log.i(TAG, "promote_price:4 " + address);
+        if (payType.equals("2") && CheckUtil.checkAliPayInstalled(DStoreOrderDetailActivity.this)) {
+            RxToast.showShort("检测到支付宝未安装");
+            return;
+        }
 
         String token = (String) SpCommonUtils.get(DStoreOrderDetailActivity.this, Constants.TOKEN, "");
         String user_id = (String) SpCommonUtils.get(DStoreOrderDetailActivity.this, Constants.USERID, "");
@@ -264,9 +265,9 @@ public class DStoreOrderDetailActivity extends BaseBindingActivity {
                 .execute(new JsonCallback<JsonObject>() {
                     @Override
                     public void onSuccess(Response<JsonObject> response) {
-//  余额支付返回的数据如下（返回的参数是余额支付输入密码点击确认调用的接口的参数）
-// "data": { "out_trade_no": "201903151424502268", "order_id": 53 }
-//  支付宝支付返回的data里面数据如下 "data":{"orderString":"**"}
+                    //  余额支付返回的数据如下（返回的参数是余额支付输入密码点击确认调用的接口的参数）
+                    // "data": { "out_trade_no": "201903151424502268", "order_id": 53 }
+                    //  支付宝支付返回的data里面数据如下 "data":{"orderString":"**"}
                         if (payType.equals("2")) {
                             AilPayBean payBean = (AilPayBean) JosnFrom.getInstance().getObj(response.body().toString(), AilPayBean.class);
                             if (payBean != null && payBean.getStatus().equals("0001")) {

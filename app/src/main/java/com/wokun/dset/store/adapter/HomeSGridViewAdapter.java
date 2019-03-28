@@ -70,7 +70,7 @@ public class HomeSGridViewAdapter extends BaseAdapter {
 //            Log.i("=====", position + "==getView总数==" + bean.isClick);
 
             //设置标题
-            holder.title.setText(bean.getGoods_name());
+            holder.title.setText(bean.getIntroduction());
 
             if (bean.getIntroduction() != null && bean.getIntroduction().length() > 0) {
                 holder.light.setText(bean.getIntroduction());

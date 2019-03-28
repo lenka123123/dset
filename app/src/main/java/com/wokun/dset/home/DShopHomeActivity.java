@@ -30,6 +30,7 @@ import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.store.adapter.BeautyHomeAdapter;
 import com.wokun.dset.store.adapter.HomeSGridViewAdapter;
+import com.wokun.dset.store.adapter.HomoClassAdapter;
 import com.wokun.dset.store.adapter.HomoSecondAdapter;
 import com.wokun.dset.store.adapter.HomoTopAdapter;
 import com.wokun.dset.store.bean.DStoreHome;
@@ -39,6 +40,7 @@ import com.wokun.dset.store.rcycleview.RecyclerItemDecoration;
 import com.wokun.dset.store.view.MyGridView;
 import com.wokun.dset.utils.DisplayUtil;
 import com.wokun.dset.utils.ImageLoadUtils;
+import com.wokun.dset.utils.ImageLoaderUtils;
 import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
@@ -78,6 +80,8 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
     private Intent mIntent;
     private long endTime;
     private DStoreHome.DataBean.JingxuanBean.AdBean jinxuanAd;
+    private MyGridView class_gridView;
+    private HomoClassAdapter classAdapter;
 
     @Override
     protected void onStart() {
@@ -110,11 +114,9 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         init();
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.action_mp_enter:
                 mIntent.putExtra("category_id", "6");
                 startActivity(mIntent);
@@ -217,13 +219,10 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
 
     }
 
-
     private void addHeaderView() {
         View header = LayoutInflater.from(this).inflate(R.layout.store_home_head_item, null);
         initBear(header);
         mAdapter.addHeaderView(header);
-
-
     }
 
     private void initBear(View header) {
@@ -237,6 +236,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         header.findViewById(R.id.action_cz_enter).setOnClickListener(this);
         header.findViewById(R.id.action_zf_enter).setOnClickListener(this);
 
+        class_gridView = header.findViewById(R.id.class_gridView);
         jingxuan_ad_img = header.findViewById(R.id.jingxuan_ad_img);
         jingxuan_ad_img.setOnClickListener(this);
         jingxuan_gridview = header.findViewById(R.id.jingxuan_gridview);
@@ -271,7 +271,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
     }
 
     private void updataColumnWidth(int size, MyGridView gridView) {
-        int length = 110;
+        int length = 120;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         float density = dm.density;  //2.0
@@ -313,10 +313,24 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         secondAdapter = new HomoSecondAdapter(DShopHomeActivity.this);
         miaosha_gridview.setAdapter(secondAdapter);
 
+        classAdapter = new HomoClassAdapter(DShopHomeActivity.this);
+        class_gridView.setAdapter(classAdapter);
+
         miaosha_gridview.setOnRadioItemClickListener(new MyGridView.OnRadioItemClickListener() {
             @Override
             public void onItemClick(int gridViewId, int position) {
                 secondAdapter.setOnClick(position);
+//                cate_id = cateList.get(position).category_id;
+//                currentPage = 1;
+//                getShopList();
+                Log.i(TAG, "onItemClick: " + gridViewId + "点击位置" + position);
+            }
+        });
+
+        class_gridView.setOnRadioItemClickListener(new MyGridView.OnRadioItemClickListener() {
+            @Override
+            public void onItemClick(int gridViewId, int position) {
+                classAdapter.setOnClick(position);
 //                cate_id = cateList.get(position).category_id;
 //                currentPage = 1;
 //                getShopList();
@@ -367,7 +381,8 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
     public void detailData(DStoreHome dStoreHome) {
         jinxuanAd = dStoreHome.getData().getJingxuan().getAd();
         if (jinxuanAd != null && jinxuanAd.getPic_url() != null) {
-            Glide.with(DShopHomeActivity.this).load(jinxuanAd.getPic_url()).into(jingxuan_ad_img);
+//            Glide.with(DShopHomeActivity.this).load(jinxuanAd.getPic_url()).into(jingxuan_ad_img);
+            ImageLoaderUtils.getInstance().load(DShopHomeActivity.this, jingxuan_ad_img, jinxuanAd.getPic_url(), 4);
         }
 
         if (dStoreHome.getData().getJingxuan().getGoods() != null && dStoreHome.getData().getJingxuan().getGoods().size() > 0) {
@@ -377,8 +392,9 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         }
 
         if (dStoreHome.getData().getTop6() != null && dStoreHome.getData().getTop6().size() > 0)
-            topAdapter.setData(dStoreHome.getData().getTop6());
+            topAdapter.setData(dStoreHome.getData().getZuizhidang().getFenlei());
 
+        classAdapter.setData(dStoreHome.getData().getClassX());
         if (dStoreHome.getData().getPromotionInfo().getPromotionGoods() != null && dStoreHome.getData().getPromotionInfo().getPromotionGoods().size() > 0) {
             updataColumnWidth(dStoreHome.getData().getPromotionInfo().getPromotionGoods().size(), miaosha_gridview);
             secondAdapter.setData(dStoreHome.getData().getPromotionInfo().getPromotionGoods());
@@ -431,10 +447,10 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent();
-                intent.putExtra(Constants.GOODS_ID, ad.get(position).getGoods_id());
-                intent.setClass(DShopHomeActivity.this, DStoreDetailActivity.class);
-                DShopHomeActivity.this.startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.putExtra(Constants.GOODS_ID, ad.get(position).getGoods_id());
+//                intent.setClass(DShopHomeActivity.this, DStoreDetailActivity.class);
+//                DShopHomeActivity.this.startActivity(intent);
             }
         });
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);

@@ -114,7 +114,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/x30"
                     android:gravity="center_vertical"
-                    android:text="运费：包邮"
                     android:textColor="@color/color_9_9_9"
                     android:textSize="12sp" />
 
@@ -122,6 +121,7 @@
 
             <!--  选择规格  -->
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/search_size"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y85"

@@ -138,17 +138,20 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
                 array[0] = 1;
                 changeSales = false;
                 changePrice = false;
+                changeTotal = !changeTotal;
                 changeStatus(true, false, false, false);
                 break;
             case R.id.linearlayout_sales_search:
                 array[1] = 1;
                 changeSales = !changeSales;
                 changePrice = false;
+                changeTotal = false;
                 changeStatus(false, true, false, false);
                 break;
             case R.id.linearlayout_price_search:
                 array[2] = 1;
                 changeSales = false;
+                changeTotal = false;
                 changePrice = !changePrice;
                 changeStatus(false, false, true, false);
                 break;
@@ -157,6 +160,7 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
                 array[3] = 1;
                 changeSales = false;
                 changePrice = false;
+                changeTotal = false;
                 changeStatus(false, false, false, true);
                 break;
             case R.id.back:
@@ -224,11 +228,16 @@ public class DStoreSearchListActivity extends BaseActivity implements View.OnCli
     private String page = "1"; // 第几页
     private boolean changeSales = false;
     private boolean changePrice = false;
+    private boolean changeTotal = false;
 
     public void changeValue(boolean total, boolean sales, boolean price) {
         if (total) {
             order = "create_time";
-            sort = "";
+            if (changeTotal) {
+                sort = "desc";
+            } else {
+                sort = "asc";
+            }
         }
         if (sales) {
             order = "sales";

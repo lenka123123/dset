@@ -2,7 +2,7 @@ package com.wokun.dset.model;
 
 public class Constants {
 
-    public static final boolean isdebug = false;
+    public static final boolean isdebug = true;
 
     public static final String ACC = "account";
     public static final String PWD = "pwd";

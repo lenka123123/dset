@@ -122,6 +122,12 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
+    public void onRestart() {
+        super.onRestart();
+        loadDataMessage();
+    }
+
+    @Override
     public void initViews() {
       /*  mPhotoSelector = new PhotoSelector(getActivity());
         mPhotoSelector.setOnPhotoUpLoadListener(new OnPhotoUpLoadListener() {
@@ -221,17 +227,25 @@ public class MineFragment extends BaseFragment {
             TextView textView = new TextView(getActivity());
             textView.setTextColor(getResources().getColor(R.color.yellow));
             textView.setTextSize(12);
-            textView.setText("普通");
+            textView.setText("等级：普通");
             star.addView(textView);
         } else if (user.getStart() > 1) {
-            for (int j = 0; j < (user.getStart() - 1) / 5; j++) {
+            TextView textView = new TextView(getActivity());
+            textView.setTextColor(getResources().getColor(R.color.yellow));
+            textView.setTextSize(12);
+            textView.setText("等级：");
+
+            if (user.getStart() > 6) {
                 ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(32, 32);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.shouye_huangguan);
+                star.addView(textView);
                 star.addView(imageView);
+                return;
             }
-            for (int i = 0; i < (user.getStart() - 1) % 5; i++) {
+            star.addView(textView);
+            for (int i = 0; i < (user.getStart() - 1); i++) {
                 ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(32, 32);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setLayoutParams(layoutParams);
@@ -239,9 +253,8 @@ public class MineFragment extends BaseFragment {
                 star.addView(imageView);
             }
         }
-
-
     }
+
 
     /**
      * 登录
