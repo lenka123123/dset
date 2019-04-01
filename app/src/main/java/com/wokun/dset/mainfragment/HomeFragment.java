@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.JsonObject;
 import com.itheima.roundedimageview.RoundedImageView;
 import com.lzy.okgo.OkGo;
@@ -27,7 +26,6 @@ import com.shantoo.widget.toast.RxToast;
 import com.sunfusheng.marqueeview.MarqueeView;
 import com.wokun.dset.AppCache;
 import com.wokun.dset.DsetApp;
-import com.wokun.dset.MainActivity;
 import com.wokun.dset.R;
 import com.wokun.dset.base.BaseFragment;
 import com.wokun.dset.callback.JsonCallback;
@@ -83,7 +81,7 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
     RoundedImageView userHeadImg;
     @BindView(R.id.shouye_user_name)
     TextView shouye_user_name;
-    /*   @BindView(R.id.evalution_score1)
+    /*@BindView(R.id.evalution_score1)
        MyRatingBar xinxin;*/
     @BindView(R.id.star)
     LinearLayout star;
@@ -108,6 +106,7 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
             }
         });
         versionupDate();
+
     }
 
     @Override
@@ -195,8 +194,10 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
     private void showHongbao() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_sign, null);
         final ImageView btnDialogSignOpen = (ImageView) view.findViewById(R.id.btnDialogSignOpen);
+        final ImageView close = (ImageView) view.findViewById(R.id.close);
         final LinearLayout hongbao_lin = (LinearLayout) view.findViewById(R.id.hongbao_lin);
         final TextView hongbao_account = (TextView) view.findViewById(R.id.hongbao_account);
+        final TextView hongbao_account_title = (TextView) view.findViewById(R.id.hongbao_account_title);
         // 实例化 AlertDialog
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
         // 获取 AlertDialog 的窗体
@@ -210,6 +211,12 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
         // 加载布局，必须在 show 之后
         window.setContentView(view);
         // 打开
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
         btnDialogSignOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,16 +238,24 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
                                 Log.e("user", "进来了2!!!!");
                                 if (body.getStatus().equals("0001")) {
                                     //   RxToast.showShort(body.getMessage());
-                                    alertDialog.dismiss();
+//                                    alertDialog.dismiss();
+                                    hongbao_account.setVisibility(View.VISIBLE);
+                                    hongbao_account_title.setVisibility(View.VISIBLE);
                                     SignBean data = (SignBean) body.getData();
                                     double amount = data.getAmount();
-                                    String amounts = data.getAmount() + "";
-                                    openhongbao(amounts);
+
+                                    DecimalFormat df = new DecimalFormat("#.00");
+                                    String str = df.format(amount);
+                                    hongbao_account.setText(str);
+
+//                                    openhongbao(amounts);
 
                            /*         btnDialogSignOpen.setVisibility(View.GONE);
                                     hongbao_lin.setVisibility(View.VISIBLE);
                                     hongbao_account.setText((int) data.getAmount()+"");*/
 
+                                } else {
+                                    RxToast.showShort(body.getMessage());
                                 }
                             }
 

@@ -18,6 +18,7 @@ import com.wokun.dset.R;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.store.bean.DStoreHome;
 import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
+import com.wokun.dset.store.dstore.dstorelist.DStoreSearchListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,14 +78,13 @@ public class HomoTopAdapter extends BaseAdapter {
         cateListBeans.addAll(dataes);
         notifyDataSetChanged();
     }
-
-
+    
     public void setOnClick(int position) {
         if (cateListBeans.get(position) == null) return;
         if (cateListBeans.get(position).getCategory_id().equals("0")) return;
         Intent intent = new Intent();
-        intent.putExtra(Constants.GOODS_ID, cateListBeans.get(position).getCategory_id());
-        intent.setClass(context, DStoreDetailActivity.class);
+        intent.putExtra("category_id", cateListBeans.get(position).getCategory_id());
+        intent.setClass(context, DStoreSearchListActivity.class);
         context.startActivity(intent);
     }
 

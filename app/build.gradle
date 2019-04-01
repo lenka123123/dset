@@ -3,10 +3,16 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            keyAlias 'dsyt'
-            keyPassword '383838'
-            storeFile file('C:/Users/Administrator/Desktop/apl/dsyt.jks')
-            storePassword '383838'
+            keyAlias 'Dset'
+            keyPassword 'admin1314'
+            storeFile file('C:/Users/Administrator/Desktop/key/Dset.jks')
+            storePassword 'admin1314'
+        }
+        debug {
+            keyAlias 'Dset'
+            keyPassword 'admin1314'
+            storeFile file('C:/Users/Administrator/Desktop/key/Dset.jks')
+            storePassword 'admin1314'
         }
     }
     compileSdkVersion 27

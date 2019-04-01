@@ -3,85 +3,88 @@
     android:layout_width="match_parent"
     android:layout_height="170dp"
     android:padding="5dp">
+
     <ImageView
         android:id="@+id/item_img"
         android:layout_width="130dp"
-        android:src="@drawable/ic_moren"
         android:layout_height="130dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/ic_moren" />
+
     <TextView
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/item_img"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/item_img"
-        android:maxWidth="200dp"
         android:lines="1"
-        android:layout_marginRight="10dp"
+        android:maxWidth="200dp"
         android:text="鑫鑫养生馆 （软件大厦店）" />
 
     <TextView
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/item_title"
         android:layout_toRightOf="@id/item_title"
-        android:text="" />
+        android:text=""
+        android:visibility="gone" />
     <!--星星-->
     <LinearLayout
-        android:layout_below="@id/item_title"
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@id/item_title"
+        android:layout_below="@id/item_title"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
-  <!--  <RatingBar
-        android:id="@+id/rating"
-        style="@style/myRatingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="13dp"
-        android:layout_below="@id/item_title"
-        android:layout_alignLeft="@id/item_title"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp"
-        android:numStars="3"
-        android:rating="15"
-        android:stepSize="1.0" />-->
+        android:orientation="horizontal" />
+    <!--  <RatingBar
+          android:id="@+id/rating"
+          style="@style/myRatingBar"
+          android:layout_width="wrap_content"
+          android:layout_height="13dp"
+          android:layout_below="@id/item_title"
+          android:layout_alignLeft="@id/item_title"
+          android:layout_marginRight="20dp"
+          android:layout_marginTop="15dp"
+          android:numStars="3"
+          android:rating="15"
+          android:stepSize="1.0" />-->
     <LinearLayout
-        android:layout_below="@id/rating"
-        android:layout_alignLeft="@id/rating"
-        android:layout_marginTop="15dp"
+        android:id="@+id/aaa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/rating"
+        android:layout_below="@id/rating"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
+
         <ImageView
-             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/adderss"/>
-    <TextView
-        android:layout_marginLeft="5dp"
-        android:id="@+id/item_place"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:lines="2"
-        android:layout_marginRight="60dp"
-        android:drawablePadding="5dp"
-        android:text="浦口区柳州东路弘扬广场浦口区柳州东路弘扬广场浦口区柳州东路弘扬广场浦口区柳州东路弘扬广场" />
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/adderss" />
+
+        <TextView
+            android:id="@+id/item_place"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_weight="1"
+            android:lines="2"
+            android:text="浦口区柳州东路弘扬广场浦口区柳州东路弘扬广场浦口区柳州东路弘扬广场浦口区柳州东路弘扬广场" />
+
+        <TextView
+            android:id="@+id/itenm_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x30"
+            android:paddingLeft="@dimen/x10"
+            android:text="" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/itenm_distance"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rating"
-        android:layout_marginTop="15dp"
-        android:drawablePadding="5dp"
-        android:text="" />
+
 </RelativeLayout>

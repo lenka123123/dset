@@ -1,15 +1,5 @@
 package com.wokun.dset.hudongshop;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.ActivityCompat;
@@ -19,7 +9,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -37,9 +29,6 @@ import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.response.BaseResponse;
 import com.wokun.dset.response.BaseResponse2;
-import com.wokun.dset.ucenter.bean.BankCardBean;
-import com.wokun.dset.ucenter.quanyi.dashishop.bean.BaojiaBean;
-import com.wokun.dset.utils.AppLocationUtils;
 import com.wokun.dset.utils.LocationUtils;
 import com.wokun.dset.utils.StringUtil;
 
@@ -60,6 +49,7 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
     private TabLayout mTab;
     private List<String> title;
     private VpAdapter vpAdapter;
+    private EditText mSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,21 +57,35 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_near);
         loadTitle();
         initView();
-       // LocationUtils.getInstance().start(100, true, null);
+        // LocationUtils.getInstance().start(100, true, null);
 
     }
 
     private void initView() {
         ImageView mFinish = findViewById(R.id.finish);
-        EditText mSearch = findViewById(R.id.search);
+        mSearch = findViewById(R.id.search);
         mTab = findViewById(R.id.tablayout);
         ViewPager mVp = findViewById(R.id.viewpager);
         mFinish.setOnClickListener(this);
-        mSearch.setOnClickListener(this);
         vpAdapter = new VpAdapter(getSupportFragmentManager());
         mVp.setAdapter(vpAdapter);
         mTab.setupWithViewPager(mVp);
 
+        mSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Log.i("", "afterTextChanged: " + editable.toString());
+//                Fragment_near.getInstance(neetType, editable.toString());
+            }
+        });
     }
 
     private void loadTitle() {
@@ -89,7 +93,7 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
         params.put("timestamp", StringUtil.getCurrentTime());
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
         OkGo.<BaseResponse2<String>>post(Constants.BASE_URL + Constants.BUSINESS)
                 .params("sign", sign)
                 .params("timestamp", StringUtil.getCurrentTime())
@@ -97,12 +101,13 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onSuccess(Response<BaseResponse2<String>> response) {
                         BaseResponse2 body = response.body();
-                        if(body == null)return;
+                        if (body == null) return;
                         if (body.getStatus().equals("0001")) {
-                            RxToast.showShort(body.getMessage());
-                           title= (List<String>) body.getData();
+                            title = (List<String>) body.getData();
                             vpAdapter.notifyDataSetChanged();
-                            Log.e("进来来dsa22","进来来dsa22"+title);
+                            Log.e("进来来dsa22", "进来来dsa22" + title);
+                        } else {
+                            RxToast.showShort(body.getMessage());
                         }
                     }
                 });
@@ -116,13 +121,13 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
             case R.id.finish:
                 finish();
                 break;
-            case R.id.search:
 
-                break;
             default:
                 break;
         }
     }
+
+    private int neetType = 0;
 
     class VpAdapter extends FragmentStatePagerAdapter {
         //String[] title={"全部","化妆品","电子产品","日用百货","服饰衣帽"};
@@ -133,12 +138,13 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
 
         @Override
         public Fragment getItem(int i) {
-            return Fragment_near.getInstance(i);
+            neetType = i;
+            return Fragment_near.getInstance(i, "");
         }
 
         @Override
         public int getCount() {
-            return title==null?0:title.size();
+            return title == null ? 0 : title.size();
         }
 
         @Nullable

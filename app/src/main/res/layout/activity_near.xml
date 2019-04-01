@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#100a32"
+        android:focusable="true"
         android:gravity="center_vertical">
 
         <ImageView
@@ -26,7 +27,6 @@
             android:background="@drawable/searchbox"
             android:drawableLeft="@mipmap/ic_serach"
             android:drawablePadding="15dp"
-            android:enabled="false"
             android:hint="请输入商品名称"
             android:paddingLeft="10dp" />
     </LinearLayout>

@@ -23,7 +23,7 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
 
     public DialogCallback(Activity activity) {
         super();
-        initDialog(activity);
+//        initDialog(activity);
     }
 
     public DialogCallback(Activity activity,int state,String url) {

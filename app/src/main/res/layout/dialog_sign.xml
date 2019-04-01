@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
+
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -12,39 +13,56 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_hongbao"/>
-        <ImageView
-            android:id="@+id/btnDialogSignOpen"
-            android:layout_marginTop="40dp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:src="@drawable/ic_hongbao" />
+
+        <LinearLayout
+            android:id="@+id/hongbao_lin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_hb_lq"/>
-<LinearLayout
-    android:id="@+id/hongbao_lin"
-    android:visibility="gone"
-    android:layout_marginTop="40dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    >
-    <TextView
-        android:textColor="#fff"
-        android:textSize="16sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="恭喜您释放达事余额"/>
-    <TextView
-        android:id="@+id/hongbao_account"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:textColor="#fff"
-        android:textSize="40sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0.00"/>
-</LinearLayout>
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/hongbao_account_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="恭喜您释放达事余额"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/hongbao_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="0.00"
+                android:textColor="#fff"
+                android:textSize="40sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/btnDialogSignOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_hb_lq" />
+
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:src="@drawable/pop_delete" />
+        </LinearLayout>
 
     </FrameLayout>
+
 </LinearLayout>
