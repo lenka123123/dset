@@ -1,8 +1,12 @@
 package com.wokun.dset.mainfragment;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Environment;
+import android.graphics.BitmapFactory;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -17,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.JsonObject;
 import com.itheima.roundedimageview.RoundedImageView;
 import com.lzy.okgo.OkGo;
@@ -34,7 +39,7 @@ import com.wokun.dset.home.DShopHomeActivity;
 import com.wokun.dset.home.HuiyuanlevelActivity;
 import com.wokun.dset.home.NoticeWebActivity;
 import com.wokun.dset.home.SignBean;
-import com.wokun.dset.hudongshop.changeshopActivity;
+import com.wokun.dset.hudongshop.ChangeshopActivity;
 import com.wokun.dset.login.LoginActivity;
 import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.model.Constants;
@@ -48,7 +53,6 @@ import com.wokun.dset.utils.ImageLoader;
 import com.wokun.dset.utils.JosnFrom;
 import com.wokun.dset.utils.SpCommonUtils;
 import com.wokun.dset.utils.StringUtil;
-import com.wokun.dset.utils.ToastUtil;
 import com.wokun.dset.utils.VsersionUtil;
 
 import java.io.File;
@@ -60,6 +64,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.shantoo.widget.utils.ManagerTool.getPackageManager;
 import static com.wokun.dset.utils.MD5.ParameterUtils.removeEmptyData;
 import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
@@ -67,7 +72,7 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
  * Created by Administrator on 2019\1\14 0014
  */
 
-public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClickDialogListener {
+public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClickDialogListener, InstallUtils.DownloadCallBack {
     @BindView(R.id.ivLD_matchTip)
     ImageView ivLDMatchTip;
     @BindView(R.id.saoyisao)
@@ -87,6 +92,10 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
     LinearLayout star;
     private UserBean.ChecksignBean checksign;
     private String apkDownloadUrl = "";
+    private String fileDir;
+    private NotificationCompat.Builder builder;
+    private Notification notification;
+    private NotificationManager notificationManager;
 
     @Override
     public int createView() {
@@ -341,7 +350,7 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
     @OnClick(R.id.dsyt_zengzhi)
     public void action_dsyt_zengzhi(View v) {
         if (R.id.dsyt_zengzhi == v.getId()) {
-            startActivity(changeshopActivity.class);
+            startActivity(ChangeshopActivity.class);
         }
     }
 
@@ -377,14 +386,19 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
     @OnClick(R.id.home_tysl)
     public void action_home_tysl(View v) {
         if (R.id.home_tysl == v.getId()) {
-            startActivity(AboutTyslActivity.class);
+            Intent intent = getPackageManager().getLaunchIntentForPackage("com.wokun.tysl");
+            if (intent != null) {
+                startActivity(intent);
+            } else {
+                //没有安装要跳转的app应用，提醒一下
+                startActivity(AboutTyslActivity.class);
+            }
         }
     }
 
     /**
      * 达事商城
      */
-
     @OnClick(R.id.dsyt_findyue)
     public void action_dsyt_dsyt_findyue(View v) {
         if (R.id.dsyt_findyue == v.getId()) {
@@ -403,7 +417,6 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
             startActivity(intent);
         }
     }
-
 
     private static final int apkDownload = 100;
     private static final int apkUpdate = 101;
@@ -435,6 +448,12 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
                         final VersionBean versionBean = (VersionBean) JosnFrom.getInstance().getObj(response.body().toString(), VersionBean.class);
                         if (versionBean != null && versionBean.getStatus().equals("0001")) {
                             if (versionBean.getData().getSwitchX() == 1) {//表示开启
+
+                                apkDownloadUrl = versionBean.getData().getUrl();
+                                AlertDialogUtil.getInstance().showCustomDialogFlag(getActivity(),
+                                        apkDownload, "应用更新提示", "您好检测到新版本", HomeFragment.this);
+
+
                                 Log.i(TAG, "onSuccess:版本 " + VsersionUtil.getLocalVersion(getActivity()));
                                 Log.i(TAG, "onSuccess:版本12 " + Integer.valueOf(versionBean.getData().getVersion()));
                                 Log.i(TAG, "onSuccess:版本url " + versionBean.getData().getUrl());
@@ -459,119 +478,14 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
     }
 
 
-    private void DownloadApk(String url, String fileDir) {
-        InstallUtils.with(getActivity())
-                //必须-下载地址
-                .setApkUrl(url)
-                //非必须-下载保存的文件的完整路径+/name.apk，使用自定义路径需要获取读写权限
-                .setApkPath(fileDir)
-                //非必须-下载回调
-                .setCallBack(new InstallUtils.DownloadCallBack() {
-                    @Override
-                    public void onStart() {
-                        //下载开始
-                    }
-
-                    @Override
-                    public void onComplete(final String path) {
-
-                        //下载完成
-                        //先判断有没有安装权限---适配8.0
-                        //如果不想用封装好的，可以自己去实现8.0适配
-                        InstallUtils.checkInstallPermission(getActivity(), new InstallUtils.InstallPermissionCallBack() {
-                            @Override
-                            public void onGranted() {
-                                //去安装APK
-                                installApk(path);
-                            }
-
-                            @Override
-                            public void onDenied() {
-                                //弹出弹框提醒用户
-                                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                                        .setTitle("温馨提示")
-                                        .setMessage("必须授权才能安装APK，请设置允许安装")
-                                        .setNegativeButton("取消", null)
-                                        .setPositiveButton("设置", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                //打开设置页面
-                                                InstallUtils.openInstallPermissionSetting(getActivity(), new InstallUtils.InstallPermissionCallBack() {
-                                                    @Override
-                                                    public void onGranted() {
-                                                        //去安装APK
-                                                        installApk(path);
-                                                    }
-
-                                                    @Override
-                                                    public void onDenied() {
-                                                        //还是不允许咋搞？
-                                                        //参数用作状态码；根据惯例，非 0 的状态码表示异常终止。
-//                                                        System.exit(0);
-                                                        Toast.makeText(getActivity(), "请到手机应用商城下载安装最新版本！", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                            }
-                                        })
-                                        .create();
-                                alertDialog.show();
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onLoading(long total, long current) {
-                        //下载中
-                    }
-
-                    @Override
-                    public void onFail(Exception e) {
-                        //下载失败
-                    }
-
-                    @Override
-                    public void cancle() {
-                        //下载取消
-                    }
-                })
-                //开始下载
-                .startDownload();
-
-
-    }
-
-    public void installApk(final String path) {
-        InstallUtils.installAPK(getActivity(), path, new InstallUtils.InstallCallBack() {
-            @Override
-            public void onSuccess() {
-                //onSuccess：表示系统的安装界面被打开
-                //防止用户取消安装，在这里可以关闭当前应用，以免出现安装被取消
-                Toast.makeText(getActivity(), "正在安装程序", Toast.LENGTH_SHORT).show();
-                String apkName = path.substring(path.lastIndexOf("/"));
-                File outputFile = new File(Environment.getExternalStoragePublicDirectory
-                        (Environment.DIRECTORY_DOWNLOADS), apkName);
-                if (outputFile.exists())
-                    outputFile.delete();
-            }
-
-            @Override
-            public void onFail(Exception e) {
-                Toast.makeText(getActivity(), "安装失败:" + e.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     @Override
     public void OnOnClickDialogListener(boolean isUpdata, int flag) {
         Log.i(TAG, "OnOnClickDialogListener: " + isUpdata + "====00===" + flag);
         if (flag == apkDownload && isUpdata) {
-            String fileDir = getActivity().getCacheDir().getAbsolutePath() + "/dsyt.apk"; //路径
-            DownloadApk(apkDownloadUrl, fileDir);
-//            if (file.exists()) {
-//                installApk(fileDir);
-//            } else {
-//            }
+            //路径
+            fileDir = getActivity().getCacheDir().getAbsolutePath() + "/dsyt.apk";
+            initNotification();
+            downLoadManager(apkDownloadUrl);
         }
 
         if (flag == apkUpdate) {
@@ -579,4 +493,116 @@ public class HomeFragment extends BaseFragment implements AlertDialogUtil.OnClic
 
     }
 
+    private void downLoadManager(String apkDownloadUrl) {
+
+        //下载APK
+        InstallUtils.with(getActivity())
+                //必须-下载地址
+                .setApkUrl(apkDownloadUrl)
+                //非必须-下载保存的文件的完整路径+/name.apk，使用自定义路径需要获取读写权限
+                .setApkPath(fileDir)
+                //非必须-下载回调
+                .setCallBack(HomeFragment.this)
+                .startDownload();
+    }
+
+    //初始化通知
+    private void initNotification() {
+        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        builder = new NotificationCompat.Builder(getActivity());
+        builder.setContentTitle("正在更新...") //设置通知标题
+                .setSmallIcon(R.mipmap.ic_log)
+                .setLargeIcon(BitmapFactory.decodeResource(getActivity().getResources(), R.mipmap.ic_log)) //设置通知的大图标
+                .setDefaults(Notification.DEFAULT_LIGHTS) //设置通知的提醒方式： 呼吸灯
+                .setPriority(NotificationCompat.PRIORITY_MAX) //设置通知的优先级：最大
+                .setAutoCancel(false)//设置通知被点击一次是否自动取消
+                .setContentText("下载进度:" + "0%")
+                .setProgress(100, 0, false);
+        //构建通知对象
+        notification = builder.build();
+    }
+
+
+    public void installApk() {
+        //安装APK
+        InstallUtils.installAPK(getActivity(), fileDir, new InstallUtils.InstallCallBack() {
+            @Override
+            public void onSuccess() {
+                //onSuccess：表示系统的安装界面被打开
+                //防止用户取消安装，在这里可以关闭当前应用，以免出现安装被取消
+                Toast.makeText(getActivity(), "正在安装程序", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                //安装出现异常，这里可以提示用用去用浏览器下载安装
+            }
+        });
+    }
+
+
+    @Override
+    public void onComplete(String path) {
+
+        //下载完成
+        //先判断有没有安装权限---适配8.0
+        //如果不想用封装好的，可以自己去实现8.0适配
+        InstallUtils.checkInstallPermission(getActivity(), new InstallUtils.InstallPermissionCallBack() {
+            @Override
+            public void onGranted() {
+                //去安装APK
+                installApk();
+            }
+
+            @Override
+            public void onDenied() {
+                //弹出弹框提醒用户
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setTitle("温馨提示")
+                        .setMessage("必须授权才能安装APK，请设置允许安装")
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //打开设置页面
+                                InstallUtils.openInstallPermissionSetting(getActivity(), new InstallUtils.InstallPermissionCallBack() {
+                                    @Override
+                                    public void onGranted() {
+                                        //去安装APK
+                                        installApk();
+                                    }
+
+                                    @Override
+                                    public void onDenied() {
+                                        //还是不允许咋搞？
+//                                                        Toast.makeText(context, "不允许安装咋搞？强制更新就退出应用程序吧！", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        })
+                        .create();
+                alertDialog.show();
+            }
+        });
+    }
+
+    @Override
+    public void onLoading(long total, long current) {
+        System.out.print("下载apk进度" + total);
+        System.out.print("下载apk进度" + current);
+        builder.setProgress(100, (int) (current / total * 100), false);
+        builder.setContentText("下载进度:" + (int) (current / total * 100) + "%");
+        notification = builder.build();
+        notificationManager.notify(1, notification);
+    }
+
+    @Override
+    public void onFail(Exception e) {
+        //下载失败
+    }
+
+    @Override
+    public void cancle() {
+        //下载取消
+    }
 }

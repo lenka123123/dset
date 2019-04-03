@@ -1,8 +1,9 @@
 package com.wokun.dset.hudongshop;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
+
 import android.support.design.widget.TabLayout;
-import android.support.v13.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -13,11 +14,10 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -32,24 +32,20 @@ import com.wokun.dset.response.BaseResponse2;
 import com.wokun.dset.utils.LocationUtils;
 import com.wokun.dset.utils.StringUtil;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-
-import butterknife.BindView;
 
 import static com.wokun.dset.utils.MD5.ParameterUtils.removeEmptyData;
 import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
 
-public class changeshopActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChangeshopActivity extends AppCompatActivity implements View.OnClickListener {
     /*    @BindView( R.id.finish)
         ImageView myfinish;*/
     private TabLayout mTab;
     private List<String> title;
     private VpAdapter vpAdapter;
-    private EditText mSearch;
+    private TextView mSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +54,6 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
         loadTitle();
         initView();
         // LocationUtils.getInstance().start(100, true, null);
-
     }
 
     private void initView() {
@@ -67,25 +62,10 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
         mTab = findViewById(R.id.tablayout);
         ViewPager mVp = findViewById(R.id.viewpager);
         mFinish.setOnClickListener(this);
+        mSearch.setOnClickListener(this);
         vpAdapter = new VpAdapter(getSupportFragmentManager());
         mVp.setAdapter(vpAdapter);
         mTab.setupWithViewPager(mVp);
-
-        mSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                Log.i("", "afterTextChanged: " + editable.toString());
-//                Fragment_near.getInstance(neetType, editable.toString());
-            }
-        });
     }
 
     private void loadTitle() {
@@ -111,9 +91,7 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
                         }
                     }
                 });
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -121,7 +99,9 @@ public class changeshopActivity extends AppCompatActivity implements View.OnClic
             case R.id.finish:
                 finish();
                 break;
-
+            case R.id.search:
+                startActivity(new Intent(ChangeshopActivity.this, changeshopSearchActivity.class));
+                break;
             default:
                 break;
         }

@@ -153,7 +153,7 @@ public class Fragment_near extends Fragment {
     }
 
 
-    class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolders> {
+    public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolders> {
         private OnItemClickListener mListener = null;
         private List<ShopBean> data;
 

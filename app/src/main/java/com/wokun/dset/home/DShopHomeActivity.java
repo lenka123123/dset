@@ -165,6 +165,7 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
                 startActivity(mIntent);
                 break;
             case R.id.jingxuan_ad_img:
+                if (jinxuanAd == null) return;
                 Intent intent = new Intent();
                 intent.putExtra(Constants.GOODS_ID, jinxuanAd.getGoods_id());
                 intent.setClass(DShopHomeActivity.this, DStoreDetailActivity.class);

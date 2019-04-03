@@ -40,6 +40,7 @@ import com.wokun.dset.MainActivity;
 import com.wokun.dset.R;
 import com.wokun.dset.callback.JsonCallback;
 import com.wokun.dset.home.DShopHomeActivity;
+import com.wokun.dset.hudongshop.ShopDetailsActivity;
 import com.wokun.dset.login.LoginMgr;
 import com.wokun.dset.model.Constants;
 import com.wokun.dset.response.BaseResponse;
@@ -175,7 +176,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
         findViewById(R.id.action_service).setOnClickListener(this);
         findViewById(R.id.action_shopping_cart).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
-
+        store_logo.setOnClickListener(this);
         webView.getSettings().setJavaScriptEnabled(true);
         Intent intent = getIntent();
 
@@ -545,6 +546,12 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                 mina.putExtra("main", "joincart");
                 DStoreDetailActivity.this.startActivity(mina);
                 DStoreDetailActivity.this.finish();
+                break;
+            case R.id.store_logo:
+                if (dataBean == null || dataBean.getShop_id() == null) return;
+//                Intent storeInfo = new Intent(context, ShopDetailsActivity.class);
+//                storeInfo.putExtra("shop_id", dataBean.getShop_id());
+//                context.startActivity(storeInfo);
                 break;
         }
 

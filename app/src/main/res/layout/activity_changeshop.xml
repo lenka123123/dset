@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.wokun.dset.hudongshop.changeshopActivity">
+    tools:context="com.wokun.dset.hudongshop.ChangeshopActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

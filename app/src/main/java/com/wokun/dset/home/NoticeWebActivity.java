@@ -33,13 +33,14 @@ import static com.wokun.dset.utils.MD5.ParameterUtils.sortMapByKey;
  * Created by Administrator on 2019\1\29 0029.
  */
 
-public class NoticeWebActivity  extends BaseBindingActivity{
+public class NoticeWebActivity extends BaseBindingActivity {
     @BindView(R.id.notic_time)
     TextView notic_time;
     @BindView(R.id.notic_title)
     TextView notic_title;
     @BindView(R.id.notic_content)
     TextView notic_content;
+
     @Override
     public int createView() {
         return R.layout.layout_noticeweb;
@@ -58,9 +59,9 @@ public class NoticeWebActivity  extends BaseBindingActivity{
         params.put("timestamp", StringUtil.getCurrentTime());
         Map<String, String> removeMap = removeEmptyData(params);
         Map<String, String> resultMap = sortMapByKey(removeMap);
-        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap ,params);
+        String sign = LoginMgr.getInstance().getSign(removeMap, resultMap, params);
         //  String sign = StringUtil.Md5Str(params, Constants.KEY);
-        Log.e("user",sign+"!!!!"+id);
+        Log.e("user", sign + "!!!!" + id);
         OkGo.<BaseResponse<NoticeDetailBean>>post(Constants.BASE_URL + Constants.NOTICE_DETAIL)
                 .tag(this)
                 .params("sign", sign)
@@ -70,31 +71,30 @@ public class NoticeWebActivity  extends BaseBindingActivity{
                     @Override
                     public void onSuccess(Response<BaseResponse<NoticeDetailBean>> response) {
                         BaseResponse body = response.body();
-                        if(body == null)return;
-                        Log.e("user","进来了2!!!!");
+                        if (body == null) return;
+                        Log.e("user", "进来了2!!!!");
                         if (body.getStatus().equals("0001")) {
 //                            RxToast.showShort(body.getMessage());
-                            NoticeDetailBean    user = (NoticeDetailBean) body.getData();
-                            Log.e("user",user+"!!!!");
-                            if(user == null){return;}
+                            NoticeDetailBean user = (NoticeDetailBean) body.getData();
+                            Log.e("user", user + "!!!!");
+                            if (notic_time == null || user == null) return;
                             notic_time.setText(user.getCreated_at());
-                            notic_time.setText(user.getCreated_at());
-                         //   notic_content.setText(user.getContent());
-                            if(user.getContent()==null){   notic_content.setText("");}else {
-                            CharSequence charSequence = Html.fromHtml(user.getContent());//支持html
-                            notic_content.setText(charSequence);
-                            notic_content.setMovementMethod(LinkMovementMethod.getInstance());//可以链接
-
+                            //   notic_content.setText(user.getContent());
+                            if (user.getContent() == null) {
+                                notic_content.setText("");
+                            } else {
+                                CharSequence charSequence = Html.fromHtml(user.getContent());//支持html
+                                notic_content.setText(charSequence);
+                                notic_content.setMovementMethod(LinkMovementMethod.getInstance());//可以链接
                             }
-
-
                         }
                     }
+
                     @Override
                     public void onError(Response response) {
                         dismissLP();
                         super.onError(response);
-                        Log.e("user",response+"!!!!");
+                        Log.e("user", response + "!!!!");
                         DsetApp.getInstance().setRefreshShopCart(false);
                     }
                 });

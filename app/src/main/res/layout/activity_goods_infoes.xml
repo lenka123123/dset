@@ -119,14 +119,14 @@
 
             <!--  选择规格  -->
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/search_size"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y85"
                 android:layout_below="@+id/price_linearlayout"
                 android:layout_marginTop="@dimen/y20"
                 android:background="@color/white"
-                android:paddingLeft="@dimen/x30">
+                android:paddingLeft="@dimen/x30"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -196,6 +196,7 @@
                         android:id="@+id/cash_deposit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/y6"
                         android:background="@drawable/real_goods" />
 
                 </LinearLayout>
@@ -282,10 +283,11 @@
                 android:layout_below="@+id/store_info"
                 android:paddingBottom="@dimen/y60" />
         </RelativeLayout>
+
     </ScrollView>
 
-
     <!-- 客服到支付 -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y123"
