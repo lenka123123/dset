@@ -125,4 +125,6 @@ dependencies {
     // https://github.com/pinguo-zhouwei/CustomPopwindow
     implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
     implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
+    implementation 'com.lijunhuayc.downloader:easyfiledownloader:1.1.5'
+    api 'com.allenliu.versionchecklib:library:2.1.9'
 }

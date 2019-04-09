@@ -217,7 +217,6 @@ public class DShopHomeActivity extends FragmentActivity implements View.OnClickL
                 }
             }
         });
-
     }
 
     private void addHeaderView() {

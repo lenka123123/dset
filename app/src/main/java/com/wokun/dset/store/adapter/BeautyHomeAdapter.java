@@ -1,6 +1,4 @@
 package com.wokun.dset.store.adapter;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -19,10 +17,11 @@ import com.wokun.dset.store.dstore.dstoredetail.DStoreDetailActivity;
 import com.wokun.dset.utils.ImageLoaderUtils;
 import com.wokun.dset.utils.ImageUtils;
 
-
 /**
  * Created by guanaj on 16/9/3.
  */
+
+
 public class BeautyHomeAdapter extends BaseQuickAdapter<DStoreHome.DataBean.TuijianBean, BaseViewHolder> {
 
     private Context context;
@@ -54,6 +53,7 @@ public class BeautyHomeAdapter extends BaseQuickAdapter<DStoreHome.DataBean.Tuij
             helper.getView(R.id.right_linearlayout).setVisibility(View.VISIBLE);
             helper.getView(R.id.left_linearlayout_item).setVisibility(View.VISIBLE);
         }
+
         helper.getView(R.id.root_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

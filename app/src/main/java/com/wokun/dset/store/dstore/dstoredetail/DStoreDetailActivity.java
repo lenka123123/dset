@@ -593,7 +593,7 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
                                 popupWindow.dismiss();
                             }
                         } else {
-                            RxToast.showShort("请选择规格");
+                            RxToast.showShort(goodesDetail.getMessage());
                         }
                     }
 
@@ -655,6 +655,8 @@ public class DStoreDetailActivity extends BaseActivity implements View.OnClickLi
 
                             DStoreDetailActivity.this.startActivity(intent);
                             DStoreDetailActivity.this.finish();
+                        } else {
+                            RxToast.showShort(goodesDetail.getMsg());
                         }
                     }
 
